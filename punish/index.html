@@ -43,15 +43,9 @@
       padding: 60px 20px 20px;
     }
 
-    header h1 {
-      font-size: 3.5em;
-      color: #3399ff;
-      text-shadow: 0 0 15px #3399ff99;
-    }
-
     header h2 {
-      font-size: 1.5em;
-      color: #ccc;
+      font-size: 3.5em;
+      color: #5bcbff;
       margin-top: 10px;
     }
 
@@ -206,11 +200,92 @@
     .faq-item.active .arrow {
       transform: rotate(180deg);
     }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #001a33;
+      padding: 10px 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .topbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .topbar .name {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #33aaff;
+    }
+
+    .topbar .nav {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex: 1;
+      font-size: 1.3em;
+    }
+
+    .topbar .nav a {
+      color: #f0f0f0;
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 5px;
+      transition: color 0.3s;
+    }
+
+    .topbar .nav a:hover {
+      color: #33aaff;
+    }
+
+    .topbar .nav a:nth-child(2)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: #33aaff;
+      border-radius: 2px;
+    }
+    @media (max-width: 600px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .topbar .nav {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="page-container">
+    <div class="content-wrap">
+      <div class="topbar">
+        <div class="logo">
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="X-rugen logo" />
+          <div class="name">X-rugen</div>
+        </div>
+        <div class="nav">
+          <a href="https://www.xrugen.ir/shop/" target="_blank">🏪 فروشگاه</a>
+          <a href="#">⚖️ لیست مجازات‌ها</a>
+        </div>
+      </div>
+<body>
   <header>
-    <h1>X-Rugen</h1>
     <h2>لیست مجازات‌ها</h2>
     <div class="ip-box" onclick="copyIP()">MC.Xrugen.IR</div>
   </header>
