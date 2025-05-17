@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>X-rugen - صفحه اصلی</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xrugen - صفحه اصلی</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
@@ -12,6 +12,7 @@
       background: #0a0f1a;
       color: #f0f0f0;
       font-family: 'Vazirmatn', sans-serif;
+      overflow-x: hidden;
     }
 
     .topbar {
@@ -20,7 +21,7 @@
       align-items: center;
       background: #001a33;
       padding: 10px 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
     .logo {
@@ -35,7 +36,7 @@
       border-radius: 8px;
     }
 
-    .logo .name {
+    .name {
       font-size: 1.4em;
       font-weight: bold;
       color: #33aaff;
@@ -52,8 +53,7 @@
     .nav a {
       color: #f0f0f0;
       text-decoration: none;
-      position: relative;
-      padding-bottom: 5px;
+      padding-bottom: 4px;
       transition: color 0.3s;
     }
 
@@ -61,110 +61,74 @@
       color: #33aaff;
     }
 
-    .main-section {
-      text-align: center;
-      padding: 50px 20px 30px;
-    }
-
-    .main-section h1 {
-      font-size: 2.8em;
-      color: #33aaff;
-      text-shadow: 0 0 15px #33aaff66;
-    }
-
-    .game-modes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    .gamemodes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
+      padding: 50px 20px 30px;
+      text-align: center;
+    }
+
+    .gamemode-card {
+      background: linear-gradient(145deg, #112244, #0a1a33);
+      border-radius: 16px;
       padding: 30px 20px;
-    }
-
-    .game-box {
-      background: linear-gradient(135deg, #10233d, #08121f);
-      border-radius: 18px;
-      width: 320px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-      padding: 20px;
-      position: relative;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
       transition: transform 0.3s;
+      position: relative;
     }
 
-    .game-box:hover {
-      transform: translateY(-6px);
+    .gamemode-card:hover {
+      transform: translateY(-5px);
     }
 
-    .game-logo {
-      width: 120px;
-      height: auto;
+    .gamemode-logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
       margin-bottom: 15px;
     }
 
-    .game-title {
-      font-size: 1.6em;
+    .gamemode-title {
+      font-size: 1.8em;
       color: #33bbff;
       margin-bottom: 10px;
+      font-weight: bold;
     }
 
-    .game-date {
+    .gamemode-date {
       font-size: 1.1em;
-      color: #ccc;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .info-icon {
       font-size: 1.3em;
-      cursor: pointer;
-      color: #ffaa33;
+      background: #223355;
+      color: #33bbff;
+      padding: 6px 10px;
+      border-radius: 10px;
       display: inline-block;
-      position: relative;
+      cursor: default;
     }
 
-    .info-icon:hover::after {
-      content: "به‌زودی";
-      position: absolute;
-      bottom: -30px;
-      right: -10px;
-      background: #222;
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.9em;
-      white-space: nowrap;
+    .bottom-text {
+      text-align: center;
+      font-size: 1.1em;
+      margin-top: 50px;
+      padding: 20px;
+      border-top: 1px solid #113355;
+      color: #99ccff;
+      animation: fadeInUp 1.5s ease;
     }
 
-    .floating-box {
-      position: fixed;
-      bottom: 20px;
-      padding: 10px 16px;
-      background: #113355;
-      color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 0.95em;
-      z-index: 999;
-      transition: transform 0.2s;
-    }
-
-    .floating-box:hover {
-      transform: scale(1.05);
-    }
-
-    .discord-box {
-      left: 20px;
-      text-decoration: none;
-    }
-
-    .ip-box {
-      right: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .game-modes {
-        flex-direction: column;
-        align-items: center;
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
@@ -173,8 +137,8 @@
 
   <div class="topbar">
     <div class="logo">
-      <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="X-rugen logo">
-      <div class="name">X-rugen</div>
+      <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Xrugen logo">
+      <div class="name">Xrugen</div>
     </div>
     <div class="nav">
       <a href="#">فروشگاه</a>
@@ -182,49 +146,39 @@
     </div>
   </div>
 
-  <div class="main-section">
-    <h1>سرور در حال توسعه است!</h1>
-  </div>
-
-  <div class="game-modes">
-    <div class="game-box">
-      <img class="game-logo" src="https://s5.uupload.ir/files/amirabbas8585/Ignore/smplogo.png" alt="SMP Logo">
-      <div class="game-title">SMP Custom</div>
-      <div class="game-date">1404/04/01</div>
-      <div class="info-icon bi bi-info-circle"></div>
+  <div class="gamemodes">
+    <div class="gamemode-card">
+      <img class="gamemode-logo" src="https://s5.uupload.ir/files/amirabbas8585/Ignore/smplogo.png" alt="SMP Logo">
+      <div class="gamemode-title">SMP Custom</div>
+      <div class="gamemode-date">تاریخ شروع: 1404/04/01</div>
+      <div class="info-icon" title="به‌زودی اطلاعات کامل این مود افزوده می‌شود">
+        <i class="bi bi-info-circle-fill"></i>
+      </div>
     </div>
 
-    <div class="game-box">
-      <img class="game-logo" src="https://s5.uupload.ir/files/amirabbas8585/Ignore/bedwarslogo.png" alt="BedWars Logo">
-      <div class="game-title">BedWars</div>
-      <div class="game-date">1404/04/05</div>
-      <div class="info-icon bi bi-info-circle"></div>
+    <div class="gamemode-card">
+      <img class="gamemode-logo" src="https://s5.uupload.ir/files/amirabbas8585/Ignore/bedwarslogo.png" alt="BedWars Logo">
+      <div class="gamemode-title">BedWars</div>
+      <div class="gamemode-date">تاریخ شروع: 1404/04/05</div>
+      <div class="info-icon" title="به‌زودی اطلاعات کامل این مود افزوده می‌شود">
+        <i class="bi bi-info-circle-fill"></i>
+      </div>
     </div>
 
-    <div class="game-box">
-      <img class="game-logo" src="https://s5.uupload.ir/files/amirabbas8585/Ignore/skyminelogo.png" alt="SkyMine Logo">
-      <div class="game-title">SkyMine</div>
-      <div class="game-date">1404/04/10</div>
-      <div class="info-icon bi bi-info-circle"></div>
+    <div class="gamemode-card">
+      <img class="gamemode-logo" src="https://s5.uupload.ir/files/amirabbas8585/Ignore/skyminelogo.png" alt="SkyMine Logo">
+      <div class="gamemode-title">SkyMine</div>
+      <div class="gamemode-date">تاریخ شروع: 1404/04/10</div>
+      <div class="info-icon" title="به‌زودی اطلاعات کامل این مود افزوده می‌شود">
+        <i class="bi bi-info-circle-fill"></i>
+      </div>
     </div>
   </div>
 
-  <!-- Floating Boxes -->
-  <div class="floating-box ip-box" onclick="copyToClipboard('MC.Xrugen.IR')">
-    IP سرور: MC.Xrugen.IR
+  <div class="bottom-text">
+    این سرور در حال توسعه است و به‌زودی راه‌اندازی خواهد شد.<br>
+    با ما همراه باشید برای یک تجربه متفاوت در <strong>Xrugen</strong>.
   </div>
-
-  <a href="https://discord.gg/AJBF5CPmYx" target="_blank" class="floating-box discord-box">
-    دیسکورد X-Rugen
-  </a>
-
-  <script>
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(function () {
-        alert("کپی شد: " + text);
-      });
-    }
-  </script>
 
 </body>
 </html>
