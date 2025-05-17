@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>X-Rugen - لیست مجازات‌ها</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: #000c1f;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+
+      /* مخفی کردن نوار اسکرول ولی فعال بودن اسکرول */
+      scrollbar-width: none;         /* Firefox */
+      -ms-overflow-style: none;      /* IE/Edge */
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar,
+    .table-container::-webkit-scrollbar {
+      display: none;                 /* Chrome, Safari */
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #004a99 0%, #000c1f 100%);
+      opacity: 0.1;
+      z-index: -2;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
+    }
+
+    header h1 {
+      font-size: 3.5em;
+      color: #3399ff;
+      text-shadow: 0 0 15px #3399ff99;
+    }
+
+    header h2 {
+      font-size: 1.5em;
+      color: #ccc;
+      margin-top: 10px;
+    }
+
+    .ip-box {
+      margin: 20px auto;
+      background: rgba(51, 153, 255, 0.1);
+      border-radius: 20px;
+      padding: 12px 25px;
+      display: inline-block;
+      font-weight: bold;
+      cursor: pointer;
+      color: #fff;
+      text-shadow: 0 0 5px #3399ff88;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(51, 153, 255, 0.4);
+    }
+
+    .ip-box:hover {
+      background: rgba(51, 153, 255, 0.2);
+      box-shadow: 0 0 25px rgba(51, 153, 255, 0.6);
+    }
+
+    .search-box {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .search-box input {
+      padding: 15px 25px;
+      width: 90%;
+      max-width: 500px;
+      font-size: 1.1em;
+      border-radius: 15px;
+      border: none;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(51, 153, 255, 0.3);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 0 20px 60px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1200px;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    th {
+      background-color: #007bff;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .ban { color: #ff6666; font-weight: bold; }
+    .permaban { color: #ff0000; font-weight: bold; }
+    .mute { color: #3399ff; font-weight: bold; }
+    .warn { color: #ffcc00; font-weight: bold; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      padding: 10px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #888;
+      z-index: 10;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    footer a {
+      color: #3399ff;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .faq-item {
+      background: rgba(255,255,255,0.02);
+      border-radius: 10px;
+      margin: 15px 20px;
+      padding: 15px 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+    }
+
+    .faq-item:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .faq-question {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1em;
+    }
+
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      color: #ccc;
+      margin-top: 10px;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      opacity: 1;
+    }
+
+    .arrow {
+      display: inline-block;
+      transition: transform 0.4s ease;
+    }
+
+    .faq-item.active .arrow {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>X-Rugen</h1>
+    <h2>لیست مجازات‌ها</h2>
+    <div class="ip-box" onclick="copyIP()">MC.Xrugen.IR</div>
+  </header>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 جستجو در تخلفات یا مجازات‌ها...">
+  </div>
+
+  <div class="table-container">
+    <table id="punishmentTable">
+      <thead>
+        <tr>
+          <th>تخلف</th>
+          <th>اخطار</th>
+          <th>بار اول</th>
+          <th>بار دوم</th>
+          <th>بار سوم</th>
+          <th>بار چهارم</th>
+          <th>بار پنجم</th>
+          <th>بار ششم</th>
+          <th>بار هفتم</th>
+          <th>بار هشتم</th>
+        </tr>
+      </thead>
+      <tbody id="punishmentBody"></tbody>
+    </table>
+  </div>
+
+  <section id="faq">
+    <h2 style="text-align: center; font-size: 2em; margin-bottom: 30px; color: #3399ff; text-shadow: 0 0 10px #3399ff88;">پرسش‌های متداول</h2>
+    <div class="faq-item" onclick="toggleFAQ(this)">
+      <div class="faq-question"><span class="arrow">▼</span><strong>چگونه آی‌پی سرور را کپی کنم؟</strong></div>
+      <div class="faq-answer">با کلیک روی باکس آبی آی‌پی، به صورت خودکار کپی خواهد شد.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFAQ(this)">
+      <div class="faq-question"><span class="arrow">▼</span><strong>اگر اشتباهاً مجازات شدم، چطور اعتراض کنم؟</strong></div>
+      <div class="faq-answer">می‌توانید از طریق دیسکورد رسمی سرور، درخواست بررسی ارسال کنید.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFAQ(this)">
+      <div class="faq-question"><span class="arrow">▼</span><strong>چگونه می‌توانیم با تیم استف ارتباط بگیریم؟</strong></div>
+      <div class="faq-answer">از طریق دیسکورد رسمی سرور می‌توانید با تیم مدیریت ارتباط بگیرید.</div>
+    </div>
+  </section>
+
+  <footer>
+    ساخته شده توسط تیم <a href="#">X-Rugen</a> | ارتباط با ما در <a href="https://discord.gg/AJBF5CPmYx" target="_blank">دیسکورد</a>
+  </footer>
+
+  <script>
+    const punishmentData = `چیت زدن	-	1D Ban	3D Ban	7D Ban	14D Ban	30D Ban	30D Ban	Permanent Ban	-
+فحاشی	2 Warns	2h Mute	6h Mute	1D Mute + 6h Ban	7D Mute + 1D Ban	7D Ban	7D Ban	Permanent Ban	-
+آزار و اذیت	1 Warns	2h Mute	6h Mute	1D Ban	3D Ban	7D Ban	7D Ban	Permanent Ban	-
+گریف کردن	-	6h Ban	1D Ban	2D Ban	3D Ban	7D Ban	14D Ban	14D Ban + Account Delete	Permanent Ban
+اکسپلویت یا سوء استفاده از باگ	-	6h Ban + Item Delete	1D Ban + Item Delete	7D Ban + Item Delete	14D Ban + Item Delete	30D Ban + Account Delete	Permanent Ban	-
+مود های نا عادلانه	-	6h Ban	1D Ban	3D Ban	7D Ban	14D Ban	30D Ban	Permanent Ban	-
+اسپم کردن	3 Warns	2h Mute	6h Mute	1D Mute + 2h Ban	2D Mute + 1D Ban	3D Mute + 1D Ban	3D Ban	7D Ban	Permanent Ban
+ازار پلیر خاص	-	6h Ban	1D Ban	3D Ban	7D Ban	14D Ban	14D Ban	Permanent Ban	-
+تبلیغلت	-	8h Mute	16h Mute	2D Mute	2D Ban	7D Ban	Permanent Ban	-	-
+بیلد های نامناسب	-	1D Ban + Remove	Permanent Ban	-	-	-	-	-	-
+اسم های نامناسب	-	Permanent Ban	-	-	-	-	-	-	-
+اسکین های نامناسب	Warns	1D Ban	7D Ban	Permanent Ban	-	-	-	-	-
+دادن اکانت به فرد دیگر	-	Permanent Ban	-	-	-	-	-	-	-
+فروش ایتم با پول واقعی	-	Permanent Ban	-	-	-	-	-	-	-
+فرار از مجازات	-	Ban Time x2	Ban Time x4	Ban Time x8	Permanent Ban	-	-	-	-
+بی احترامی به تیم مدیریت	-	12h Mute	1D Mute	1D Ban	7D Ban	7D Ban + Account Delete	Permanent Ban	-	-
+نفوذ به اکانت تیم مدیریت	-	Permanent Ban	-	-	-	-	-	-	-
+کلاه برداری	-	12h Ban	1D Ban	3D Ban	7D Ban	14D Ban + Account Delete	30D Ban + Account Delete	Permanent Ban	-
+طلف کردن وقت استف	-	8h Ban	16h Ban	2D Ban	5D Ban	15D Ban	Permanent Ban	-`;
+
+    const rows = punishmentData.trim().split("\n");
+    const tbody = document.getElementById("punishmentBody");
+
+    rows.forEach(row => {
+      let cells = row.split("\t");
+      while (cells.length < 10) cells.push("-");
+      const tr = document.createElement("tr");
+      tr.style.opacity = 0;
+      tr.style.transform = "translateY(40px)";
+      tr.style.transition = "all 0.8s ease";
+      cells.forEach(cell => {
+        const td = document.createElement("td");
+        let content = cell.trim();
+        if (/Permanent Ban/i.test(content)) td.className = "permaban";
+        else if (/Ban/i.test(content)) td.className = "ban";
+        else if (/Mute/i.test(content)) td.className = "mute";
+        else if (/Warn/i.test(content)) td.className = "warn";
+        td.textContent = content;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = "translateY(0)";
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll("#punishmentTable tbody tr").forEach(row => {
+      observer.observe(row);
+    });
+
+    const input = document.getElementById("searchInput");
+    input.addEventListener("keyup", function () {
+      const filter = input.value.toLowerCase();
+      const rows = document.querySelectorAll("#punishmentTable tbody tr");
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+      });
+    });
+
+    function copyIP() {
+      navigator.clipboard.writeText("MC.Xrugen.IR");
+      alert("✅ آی‌پی سرور کپی شد: MC.Xrugen.IR");
+    }
+
+    function toggleFAQ(element) {
+      element.classList.toggle("active");
+    }
+  </script>
+</body>
+</html>
