@@ -10,8 +10,8 @@
       height: 100%;
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
-      background: #0a0f1a;
-      color: #f0f0f0;
+      background: #0a1220;
+      color: #8ddcff;
       overflow-x: hidden;
     }
 
@@ -31,74 +31,82 @@
     }
 
     .topbar {
+      background: linear-gradient(90deg, #000c1f, #000c1f);
+      padding: 15px 25px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      background-color: #001a33;
-      padding: 10px 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid #33aaff55;
+      box-shadow: 0 0 15px #33aaff44;
     }
 
-    .topbar .logo {
+    .logo {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .topbar img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
+    .logo img {
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
     }
 
-    .topbar .name {
-      font-size: 1.4em;
-      font-weight: bold;
-      color: #33aaff;
-    }
-
-    .topbar .nav {
-      display: flex;
-      gap: 40px;
-      justify-content: center;
-      flex: 1;
+    .logo .name {
+      color: #4dcfff;
       font-size: 1.5em;
       font-weight: bold;
-    }
-
-    .topbar .nav a {
-      color: #bae4ff;
       text-decoration: none;
-      position: relative;
-      padding-bottom: 5px;
-      transition: color 0.3s;
+      text-shadow: 0 0 10px #33aaffaa;
+    }
+
+    .nav {
+      display: flex;
+      gap: 40px;
+    }
+
+    .nav a {
+      color: #b2eaff;
+      text-decoration: none;
+      font-size: 1.4em;
       font-weight: bold;
+      position: relative;
+      transition: color 0.3s, text-shadow 0.3s;
     }
 
-    .topbar .nav a:hover {
-      color: #33aaff;
-    }
-
-    .topbar .nav a:first-child::after {
+    .nav a::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      right: 0;
+      bottom: -4px;
       left: 0;
+      width: 0%;
       height: 2px;
       background: #33aaff;
-      border-radius: 2px;
+      box-shadow: 0 0 8px #33aaff;
+      transition: width 0.3s;
+    }
+
+    .nav a:hover {
+      color: #66d9ff;
+      text-shadow: 0 0 10px #33aaff;
+    }
+
+    .nav a:hover::after {
+      width: 100%;
     }
 
     header {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     header h1 {
       font-size: 2.8em;
-      color: #3399ff;
-      text-shadow: 0 0 15px #3399ff99;
+      color: #33bbff;
+      text-shadow: 0 0 20px #33bbffaa;
       margin-bottom: 10px;
     }
 
@@ -112,14 +120,15 @@
     .rank-card {
       background: linear-gradient(145deg, #112244, #0a1a33);
       border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      box-shadow: 0 0 12px #2288cc44;
       padding: 25px;
       text-align: center;
-      transition: transform 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .rank-card:hover {
       transform: translateY(-6px);
+      box-shadow: 0 0 18px #33bbffaa;
     }
 
     .rank-title {
@@ -127,6 +136,7 @@
       font-weight: bold;
       margin-bottom: 10px;
       color: #33bbff;
+      text-shadow: 0 0 10px #33bbff88;
     }
 
     .rank-price {
@@ -148,49 +158,59 @@
       border-radius: 10px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, box-shadow 0.3s;
     }
 
     .btn-buy {
       background: #33cc77;
       color: #fff;
+      box-shadow: 0 0 10px #33cc77aa;
     }
 
     .btn-buy:hover {
       background: #29b96a;
+      box-shadow: 0 0 12px #29b96aaa;
     }
 
     .btn-info {
       background: #3377cc;
       color: #fff;
+      box-shadow: 0 0 10px #3377ccaa;
     }
 
     .btn-info:hover {
       background: #2a66b3;
+      box-shadow: 0 0 12px #2a66b3aa;
     }
 
     footer.site-footer {
-      background: #001628;
-      color: #ccc;
+      background: linear-gradient(90deg, #000c1f, #000c1f);
+      color: #cbd6e2;
       text-align: center;
-      padding: 15px 10px;
+      padding: 16px 10px;
       font-size: 0.95em;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
-      border-top: 1px solid #113355;
+      border-top: 1px solid #224060;
+      box-shadow: 0 -3px 12px #33aaff33;
+      border-radius: 14px 14px 0 0;
+      user-select: none;
     }
 
     footer.site-footer span {
       color: #33aaff;
       font-weight: bold;
+      text-shadow: 0 0 8px #33aaff;
     }
 
     footer.site-footer a {
       color: #33aaff;
       text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s, text-shadow 0.3s;
     }
 
     footer.site-footer a:hover {
-      text-decoration: underline;
+      color: #ffffff;
+      text-shadow: 0 0 10px #ffffffaa;
     }
 
     @media (max-width: 600px) {
@@ -228,7 +248,7 @@
       <div class="ranks-grid">
         <div class="rank-card">
           <div class="rank-title">Hero</div>
-          <div class="rank-price">۵۰,۰۰۰ تومان</div>
+          <div class="rank-price">50,000 تومان</div>
           <div class="rank-actions">
             <button class="btn-info">دسترسی‌ها</button>
             <button class="btn-buy">خرید</button>
@@ -236,7 +256,7 @@
         </div>
         <div class="rank-card">
           <div class="rank-title">Hellborn</div>
-          <div class="rank-price">۱۰۰,۰۰۰ تومان</div>
+          <div class="rank-price">100,000 تومان</div>
           <div class="rank-actions">
             <button class="btn-info">دسترسی‌ها</button>
             <button class="btn-buy">خرید</button>
@@ -244,7 +264,7 @@
         </div>
         <div class="rank-card">
           <div class="rank-title">Mythic</div>
-          <div class="rank-price">۲۰۰,۰۰۰ تومان</div>
+          <div class="rank-price">200,000 تومان</div>
           <div class="rank-actions">
             <button class="btn-info">دسترسی‌ها</button>
             <button class="btn-buy">خرید</button>
@@ -252,7 +272,7 @@
         </div>
         <div class="rank-card">
           <div class="rank-title">Empire</div>
-          <div class="rank-price">۳۰۰,۰۰۰ تومان</div>
+          <div class="rank-price">300,000 تومان</div>
           <div class="rank-actions">
             <button class="btn-info">دسترسی‌ها</button>
             <button class="btn-buy">خرید</button>
