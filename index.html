@@ -5,25 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>X-rugen - سرور در حال توسعه</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
   <style>
     body {
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
-      background-color: #101828;
-      color: #f0f0f0;
+      background-color: #000c1f;
+      color: #8ddcff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
     .topbar {
-      background: linear-gradient(90deg, #1a2b45, #223b60);
-      padding: 10px 20px;
+      background: linear-gradient(90deg, #000c1f, #000c1f);
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
       flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #00bfff;
+      box-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff66;
+      opacity: 0.4;
     }
 
     .logo {
@@ -33,48 +48,66 @@
     }
 
     .logo img {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
     }
 
     .logo .name {
-      color: #4dcfff;
-      font-size: 1.4em;
+      font-size: 1.9em;
       font-weight: bold;
-      text-decoration: none;
+      text-shadow: 0 0 8px #00bfff99;
+    }
+
+    .logo .part1 {
+      color: #00bfff;
+    }
+
+    .logo .part2 {
+      color: #8ddcff;
     }
 
     .nav {
       display: flex;
-      gap: 40px;
+      gap: 30px;
     }
 
     .nav a {
-      color: #b2eaff;
+      color: #a5e9ff;
       text-decoration: none;
-      font-size: 1.5em;
-      padding-bottom: 7px;
-      transition: color 0.3s, text-shadow 0.3s;
+      font-size: 1.4em;
       font-weight: bold;
+      transition: 0.3s;
+      text-shadow: 0 0 6px #00bfff88;
     }
 
     .nav a:hover {
-      color: #66d9ff;
-      text-shadow: 0 0 8px #33aaff;
+      color: #ffffff;
+      text-shadow: 0 0 10px #00e0ff, 0 0 20px #00e0ff;
     }
 
     .section {
-      padding: 40px 20px;
+      padding: 50px 20px 30px;
       text-align: center;
       flex-grow: 1;
+    }
+
+    .section h2 {
+      font-size: 2em;
+      text-shadow: 0 0 10px #00bfff99;
+    }
+
+    .section p {
+      font-size: 1em;
+      color: #bbbbbb;
+      text-shadow: 0 0 6px #0e2f49;
     }
 
     .gamemode-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
-      margin-top: 30px;
+      margin-top: 40px;
     }
 
     .gamemode {
@@ -82,14 +115,13 @@
       background-size: cover;
       background-position: center;
       border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 24px rgba(0, 191, 255, 0.4);
       height: 280px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       padding: 20px;
       overflow: hidden;
-      cursor: default;
     }
 
     .gamemode::after {
@@ -106,17 +138,20 @@
       z-index: 1;
       color: #f0f0f0;
       text-align: center;
+      text-shadow: 0 0 6px #000000aa;
     }
 
     .gamemode-title {
       font-size: 1.8em;
       font-weight: bold;
       margin-bottom: 5px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #00e0ffcc;
     }
 
     .gamemode-date {
       font-size: 1em;
-      color: #bbb;
+      color: #ccc;
       margin-bottom: 10px;
     }
 
@@ -124,12 +159,11 @@
       font-size: 0.9em;
       color: #4dcfff;
       border: 1px solid #4dcfff;
-      display: inline-block;
       padding: 4px 10px;
       border-radius: 8px;
-      margin-top: 6px;
       background-color: rgba(255,255,255,0.05);
       user-select: none;
+      display: inline-block;
     }
 
     .info-boxes {
@@ -142,55 +176,56 @@
     }
 
     .info-box {
-      background: #1b2e4d;
+      background: #002874;
       padding: 15px 30px;
       border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 0 16px #00bfff80;
       font-size: 1.2em;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      color: #a9d1ff;
+      transition: 0.3s;
+      color: #b7e6ff;
       user-select: none;
       min-width: 180px;
       text-align: center;
     }
 
     .info-box:hover {
-      background: #284b78;
+      background: #009dff;
       transform: scale(1.05);
+      box-shadow: 0 0 22px #00e0ff;
     }
 
     footer.site-footer {
-      background: linear-gradient(90deg, #0a1c2f, #122a45);
+      background: linear-gradient(90deg, #000c1f, #000c1f);
       color: #cbd6e2;
       text-align: center;
       padding: 18px 12px 25px;
       font-size: 0.95em;
-      border-top: 1px solid #224060;
+      border-top: 1px solid #03254b;
       box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.5);
       margin-top: 60px;
       border-radius: 16px 16px 0 0;
-      flex-shrink: 0;
       position: relative;
+      z-index: 2;
       user-select: none;
     }
 
     footer.site-footer span {
-      color: #33aaff;
+      color: #00ffff;
       font-weight: bold;
     }
 
     footer.site-footer a {
-      color: #33aaff;
+      color: #00ccff;
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
+      font-weight: 900;
+      transition: 0.3s;
     }
 
     footer.site-footer a:hover {
       color: #ffffff;
-      text-decoration: underline;
+      text-shadow: 0 0 10px #00e0ff;
     }
 
     .copy-success {
@@ -198,9 +233,8 @@
       margin-top: 8px;
       color: #66d9ff;
       font-size: 0.9em;
-      transition: opacity 0.3s;
       font-weight: 600;
-      user-select: none;
+      text-shadow: 0 0 8px #00bfff;
     }
 
     @media (max-width: 768px) {
@@ -231,7 +265,9 @@
   <div class="topbar">
     <div class="logo">
       <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
-      <a href="https://www.xrugen.ir" class="name">X-rugen</a>
+      <div class="name">
+        <span class="part1">X</span><span class="part2">-Rugen</span>
+      </div>
     </div>
     <div class="nav">
       <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
@@ -241,7 +277,7 @@
 
   <div class="section">
     <h2>سرور در حال توسعه می‌باشد</h2>
-    <p style="margin-top: -10px; font-size: 0.95em; color: #bbbbbb;">اطلاعات بیشتر به‌زودی منتشر خواهد شد</p>
+    <p>اطلاعات بیشتر به‌زودی منتشر خواهد شد</p>
 
     <div class="gamemode-container">
       <div class="gamemode" style="background-image: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/bedwarslogo.png')">
@@ -268,13 +304,13 @@
     </div>
 
     <div class="info-boxes">
-      <div class="info-box" onclick="copyText('MC.Xrugen.IR')" title="کلیک برای کپی IP سرور">IP سرور: MC.Xrugen.IR</div>
-      <div class="info-box" onclick="window.open('https://discord.gg/AJBF5CPmYx', '_blank')" title="دیسکورد">دیسکورد: Discord</div>
+      <div class="info-box" onclick="copyText('MC.Xrugen.IR')">IP سرور: MC.Xrugen.IR</div>
+      <div class="info-box" onclick="window.open('https://discord.gg/AJBF5CPmYx', '_blank')">دیسکورد: Discord</div>
     </div>
     <div id="copy-success-msg" class="copy-success">کپی شد: MC.Xrugen.IR</div>
   </div>
 
-  <footer class="site-footer" dir="rtl">
+  <footer class="site-footer">
     ساخته شده توسط تیم <span>X-rugen</span> | ارتباط با ما در 
     <a href="https://discord.gg/AJBF5CPmYx" target="_blank" rel="noopener noreferrer">دیسکورد</a>
   </footer>
@@ -282,7 +318,6 @@
   <script>
     function copyText(text) {
       if (!navigator.clipboard) {
-        // fallback برای مرورگرهای قدیمی
         const textArea = document.createElement("textarea");
         textArea.value = text;
         document.body.appendChild(textArea);
