@@ -4,346 +4,1279 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>X-Rugen - لیست مجازات‌ها</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
+    :root {
+      --primary: #4aba27; 
+      --primary-dark: #3a8a1f;
+      --primary-light: #6edc47;
+      --accent: #ffb62f; 
+      --accent-dark: #e69a00;
+      --secondary: #00a8de; 
+      --secondary-dark: #0089b5;
+      --bg-dark: #222730;
+      --bg-darker: #1a1f26;
+      --bg-light: #2a2f38;
+      --text-light: #e8e8e8;
+      --text-lighter: #ffffff;
+      --dirt-brown: #866043;
+      --stone-gray: #7b7b7b;
+      --obsidian: #150d1a;
+      --warn-color: #ffcc00;
+      --mute-color: #55aaff;
+      --ban-color: #ff6666;
+      --permaban-color: #ff0000;
+    }
+
     html, body {
       height: 100%;
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
-      background: #0a1220;
-      color: #8ddcff;
+      background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
+      color: var(--text-light);
       overflow-x: hidden;
     }
 
+    
     ::-webkit-scrollbar {
-      width: 0;
-      background: transparent;
+      width: 10px;
+      background: var(--bg-darker);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-light);
+      box-shadow: 0 0 4px var(--primary-light);
+    }
+    
+    ::-webkit-scrollbar-thumb:horizontal {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar:horizontal {
+      height: 10px;
     }
 
     .page-container {
       min-height: 100%;
       display: flex;
       flex-direction: column;
+      position: relative;
+      background-image: 
+        url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png'),
+        linear-gradient(to bottom, rgba(25, 30, 40, 0.92), rgba(20, 24, 32, 0.96));
     }
 
-    .content-wrap {
-      flex: 1;
-    }
-
-    body::before {
-      content: "";
+    .particles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at center, #004a99 0%, #000c1f 100%);
-      opacity: 0.1;
-      z-index: -2;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      background-size: cover;
+      border-radius: 0; 
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      animation: float 20s infinite linear;
+      image-rendering: pixelated; 
     }
 
-    header {
+    .particle.dirt {
+      background-color: var(--dirt-brown);
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+    
+    .particle.stone {
+      background-color: var(--stone-gray);
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+    
+    .particle.emerald {
+      background-color: var(--primary);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--primary);
+    }
+    
+    .particle.gold {
+      background-color: var(--accent);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--accent);
+    }
+    
+    .particle.redstone {
+      background-color: var(--ban-color);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--ban-color);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .content-wrap {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      background: linear-gradient(90deg, rgba(20, 24, 32, 0.9), rgba(30, 36, 48, 0.9));
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .topbar::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.6;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo img {
+      width: 58px;
+      height: 58px;
+      border-radius: 6px;
+      box-shadow: 0 0 15px rgba(74, 186, 39, 0.5);
+      transition: all 0.3s ease;
+      border: 2px solid rgba(74, 186, 39, 0.3);
+      image-rendering: pixelated;
+    }
+    
+    .logo:hover img {
+      box-shadow: 0 0 20px rgba(74, 186, 39, 0.8);
+      transform: rotate(5deg);
+    }
+
+    .logo .name {
+      font-size: 2.2em;
+      font-weight: 900;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+      text-decoration: none;
+      color: var(--primary);
+    }
+
+    .logo .part1 {
+      color: var(--primary);
+      position: relative;
+    }
+    
+    .logo .part1::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      bottom: -4px;
+      left: 0;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+      box-shadow: 0 0 8px var(--primary);
+    }
+    
+    .logo:hover .part1::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    .logo .part2 {
+      color: var(--text-light);
+    }
+
+    .nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 1.4em;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+      position: relative;
+      padding: 8px 15px;
+      background: rgba(0,0,0,0.2);
+      border: 2px solid transparent;
+      border-radius: 4px;
+    }
+    
+    .nav a::after {
+      content: '';
+      position: absolute;
+      width: 90%;
+      height: 3px;
+      bottom: -3px;
+      left: 5%;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    .nav a:hover {
+      color: var(--text-lighter);
+      text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      transform: translateY(-3px);
+      border-color: var(--primary-dark);
+      background: rgba(74, 186, 39, 0.1);
+    }
+    
+    .nav a.active {
+      color: var(--text-lighter);
+      text-shadow: 0 0 10px var(--primary);
+      border-color: var(--primary);
+      background: rgba(74, 186, 39, 0.15);
+    }
+    
+    .punishment-header {
+      position: relative;
+      min-height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       text-align: center;
-      padding: 60px 20px 20px;
+      padding: 40px 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.4);
     }
-
-    header h2 {
-      font-size: 3.5em;
-      color: #5bcbff;
-      margin-top: 10px;
+    
+    .punishment-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/dirt_texture.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      opacity: 0.2;
+      z-index: -1;
+    }
+    
+    .punishment-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(74, 186, 39, 0.2) 0%, transparent 70%);
+      z-index: -1;
+      animation: pulse 5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
+    }
+    
+    .punishment-header h2 {
+      font-size: 3.2em;
+      margin: 0 0 20px;
+      color: var(--text-lighter);
+      font-weight: 900;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
+    }
+    
+    .punishment-header p {
+      font-size: 1.3em;
+      margin: 5px 0 0;
+      max-width: 700px;
+      color: var(--text-light);
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.8);
+      position: relative;
+      z-index: 1;
     }
 
     .search-box {
       text-align: center;
-      margin: 30px 0;
+      margin: 0 auto 30px;
+      max-width: 600px;
+      position: relative;
+      z-index: 2;
     }
 
     .search-box input {
-      padding: 15px 25px;
-      width: 90%;
-      max-width: 500px;
-      font-size: 1.1em;
-      border-radius: 15px;
-      border: none;
-      background: rgba(255, 255, 255, 0.05);
+      width: 100%;
+      padding: 15px 25px 15px 55px;
+      font-size: 1.2em;
+      border-radius: 6px;
+      border: 3px solid #5a3600;
+      background: rgba(20, 20, 20, 0.7);
       color: #fff;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(51, 153, 255, 0.3);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1), 0 5px 0 0 #5a3600, 0 8px 10px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+      font-family: 'Vazirmatn', sans-serif;
+      image-rendering: pixelated;
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      background: rgba(20, 20, 20, 0.8);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.15), 0 3px 0 0 #5a3600, 0 4px 6px rgba(0,0,0,0.4);
+      transform: translateY(2px);
+    }
+    
+    .search-box::before {
+      content: '\f002';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-size: 1.2em;
+      z-index: 2;
+      pointer-events: none;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .minecraft-btn {
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #ffffff;
+      border: 3px solid #5a3600;
+      padding: 14px 32px;
+      font-size: 1.3em;
+      font-weight: bold;
+      font-family: 'Minecraft', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #5a3600, 0 10px 10px rgba(0,0,0,0.5);
+      border-radius: 4px;
+    }
+    
+    .minecraft-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #5a3600, 0 12px 12px rgba(0,0,0,0.5);
+    }
+    
+    .minecraft-btn:active {
+      transform: translateY(4px);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #5a3600, 0 6px 6px rgba(0,0,0,0.5);
     }
 
     .table-container {
       overflow-x: auto;
-      margin: 0 20px 60px;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      margin: 0 auto 60px;
+      max-width: 1400px;
+      padding: 0 20px;
+      position: relative;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) var(--bg-dark);
+      border-radius: 8px;
+    }
+    
+    .table-container::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 40px;
+      background: linear-gradient(to left, var(--bg-dark), transparent);
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.8;
+      display: none;
+    }
+    
+    .table-container::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 40px;
+      background: linear-gradient(to right, var(--bg-dark), transparent);
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.8;
+      display: none;
+    }
+    
+    .table-container.has-overflow::before,
+    .table-container.has-overflow::after {
+      display: block;
     }
 
     table {
       width: 100%;
-      min-width: 1200px;
       border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(8px);
-      border-radius: 12px;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/planks_texture.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
-      animation: fadeInUp 1s ease forwards;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 0 4px #3e2912;
+    }
+    
+    table::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: -1;
     }
 
     th, td {
-      padding: 16px;
+      padding: 16px 20px;
       text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      position: relative;
     }
-
+    
     th {
-      background-color: #007bff;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/stone_texture.png');
+      background-size: 32px 32px;
       color: #fff;
       font-weight: bold;
+      font-size: 1.1em;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      font-family: 'Minecraft', sans-serif;
+      letter-spacing: 1px;
+    }
+    
+    th::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: -1;
+    }
+    
+    th:first-child {
+      position: sticky;
+      right: 0;
+      z-index: 3;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
     }
 
     tr:nth-child(even) {
-      background: rgba(255, 255, 255, 0.015);
+      background: rgba(0, 0, 0, 0.2);
     }
 
     tr:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(74, 186, 39, 0.08);
     }
-
-    .ban { color: #ff6666; font-weight: bold; }
-    .permaban { color: #ff0000; font-weight: bold; }
-    .mute { color: #3399ff; font-weight: bold; }
-    .warn { color: #ffcc00; font-weight: bold; }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    footer.site-footer {
-      background: linear-gradient(90deg, #0a1c2f, #122a45);
-      color: #cbd6e2;
-      text-align: center;
-      padding: 18px 12px 25px;
-      font-size: 0.95em;
-      border-top: 1px solid #224060;
-      box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.5);
-      margin-top: 60px;
-      border-radius: 16px 16px 0 0;
-      flex-shrink: 0;
-      position: relative;
-      user-select: none;
-    }
-
-    footer.site-footer {
-      background: linear-gradient(90deg, #000c1f, #000c1f);
-      color: #cbd6e2;
-      text-align: center;
-      padding: 16px 10px;
-      font-size: 0.95em;
-      border-top: 1px solid #224060;
-      box-shadow: 0 -3px 12px #33aaff33;
-      border-radius: 14px 14px 0 0;
-      user-select: none;
-    }
-
-    footer.site-footer span {
-      color: #33aaff;
+    
+    td:first-child {
       font-weight: bold;
-      text-shadow: 0 0 8px #33aaff;
+      color: var(--text-lighter);
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/obsidian_texture.png');
+      background-size: 32px 32px;
+      position: sticky;
+      right: 0;
+      z-index: 1;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    td:first-child::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: -1;
     }
 
-    footer.site-footer a {
-      color: #33aaff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s, text-shadow 0.3s;
+    .ban { 
+      color: var(--ban-color); 
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
     }
-
-    footer.site-footer a:hover {
-      color: #ffffff;
-      text-shadow: 0 0 10px #ffffffaa;
+    
+    .permaban { 
+      color: var(--permaban-color); 
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    .mute { 
+      color: var(--mute-color); 
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    .warn { 
+      color: var(--warn-color); 
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    .quick-guide {
+      max-width: 800px;
+      margin: 40px auto;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/dark_oak_planks.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 0 4px #3e2912;
+      position: relative;
+      border: 1px solid rgba(74, 186, 39, 0.2);
+    }
+    
+    .quick-guide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 0;
+      border-radius: 8px;
+    }
+    
+    .guide-title {
+      font-size: 1.6em;
+      color: var(--accent);
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-family: 'Minecraft', sans-serif;
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .guide-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .guide-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 6px;
+      min-width: 150px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(60, 60, 60, 0.5);
+    }
+    
+    .guide-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      font-size: 1.3em;
+    }
+    
+    .guide-warn {
+      background: rgba(255, 204, 0, 0.2);
+      color: var(--warn-color);
+      border: 2px solid rgba(255, 204, 0, 0.3);
+    }
+    
+    .guide-mute {
+      background: rgba(85, 170, 255, 0.2);
+      color: var(--mute-color);
+      border: 2px solid rgba(85, 170, 255, 0.3);
+    }
+    
+    .guide-ban {
+      background: rgba(255, 102, 102, 0.2);
+      color: var(--ban-color);
+      border: 2px solid rgba(255, 102, 102, 0.3);
+    }
+    
+    .guide-permaban {
+      background: rgba(255, 0, 0, 0.2);
+      color: var(--permaban-color);
+      border: 2px solid rgba(255, 0, 0, 0.3);
+    }
+    
+    .faq-section {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    
+    .faq-title {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 40px;
+      color: var(--text-lighter);
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
+    }
+    
+    .faq-title::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 5px;
+      background: var(--primary);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--primary);
     }
 
     .faq-item {
-      background: rgba(255,255,255,0.02);
-      border-radius: 10px;
-      margin: 15px 20px;
-      padding: 15px 20px;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/stone_texture.png');
+      background-size: 32px 32px;
+      image-rendering: pixelated;
+      border-radius: 8px;
+      margin: 20px 0;
+      padding: 0;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      transition: background 0.3s ease;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3), 0 0 0 3px #3e3e3e;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    
+    .faq-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 0;
     }
 
     .faq-item:hover {
-      background: rgba(255,255,255,0.04);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4), 0 0 0 3px #4a4a4a;
+      transform: translateY(-2px);
     }
 
     .faq-question {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.1em;
+      padding: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--text-lighter);
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .faq-item:hover .faq-question {
+      color: var(--accent);
+    }
+    
+    .faq-item.active .faq-question {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(255, 182, 47, 0.5);
     }
 
     .faq-answer {
       overflow: hidden;
       max-height: 0;
       opacity: 0;
-      transition: max-height 0.4s ease, opacity 0.4s ease;
-      color: #ccc;
-      margin-top: 10px;
+      transition: all 0.4s ease;
+      color: var(--text-light);
+      padding: 0 20px;
+      line-height: 1.6;
+      font-size: 1.1em;
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.5);
+      margin: 0 10px 10px;
+      border-radius: 6px;
     }
 
     .faq-item.active .faq-answer {
       max-height: 300px;
       opacity: 1;
+      padding: 20px;
     }
 
     .arrow {
+      margin-left: 10px;
+      margin-right: 10px;
       display: inline-block;
       transition: transform 0.4s ease;
+      color: var(--primary);
+      font-size: 1.2em;
     }
 
     .faq-item.active .arrow {
       transform: rotate(180deg);
-    }
-    .topbar {
-      background: linear-gradient(90deg, #000c1f, #000c1f);
-      padding: 15px 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      border-bottom: 1px solid #33aaff55;
-      box-shadow: 0 0 15px #33aaff44;
+      color: var(--accent);
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    footer.site-footer {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/obsidian_texture.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      color: var(--text-light);
+      text-align: center;
+      padding: 50px 12px 55px;
+      font-size: 1.1em;
+      border-top: 4px solid var(--primary-dark);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+      margin-top: 100px;
+      position: relative;
+      z-index: 2;
+      user-select: none;
     }
-
-    .logo img {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-    }
-
-    .logo .name {
-      color: #4dcfff;
-      font-size: 1.4em;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .nav {
-      display: flex;
-      gap: 40px;
-    }
-
-    .nav a {
-      color: #b2eaff;
-      text-decoration: none;
-      font-size: 1.5em;
-      padding-bottom: 7px;
-      transition: color 0.3s, text-shadow 0.3s;
-      font-weight: bold;
-    }
-
-    .nav a:hover {
-      color: #66d9ff;
-      text-shadow: 0 0 8px #33aaff;
-    }
-
-    .topbar .nav a:nth-child(2)::after {
+    
+    footer.site-footer::before {
       content: '';
       position: absolute;
-      bottom: 0;
-      right: 0;
+      top: 0;
       left: 0;
-      height: 2px;
-      background: #33aaff;
-      border-radius: 2px;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: -1;
     }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .footer-logo img {
+      width: 50px;
+      height: 50px;
+      margin-left: 15px;
+      border-radius: 6px;
+      border: 2px solid var(--primary-dark);
+    }
+    
+    .footer-logo .name {
+      font-size: 1.5em;
+      font-weight: bold;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .footer-nav {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    .footer-nav a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(255, 182, 47, 0.5);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .social-link {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--primary-dark);
+      border-radius: 8px;
+      color: var(--text-light);
+      font-size: 1.3em;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .social-link:hover {
+      background: var(--primary);
+      color: #ffffff;
+      transform: translateY(-5px) rotate(5deg);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      border-color: var(--accent);
+    }
+
+    footer.site-footer span {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    footer.site-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 900;
+      transition: 0.3s;
+    }
+
+    footer.site-footer a:hover {
+      color: var(--text-lighter);
+      text-shadow: 0 0 10px var(--primary);
+    }
+    
+    .minecraft-clouds {
+      position: fixed;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.03;
+    }
+    
+    .minecraft-cloud {
+      position: absolute;
+      background: white;
+      border-radius: 0;
+      opacity: 0.7;
+      animation: cloud-movement linear infinite;
+      image-rendering: pixelated;
+    }
+
+    @keyframes cloud-movement {
+      0% {
+        transform: translateX(-5%);
+      }
+      100% {
+        transform: translateX(105%);
+      }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    .slide-up {
+      animation: slideUp 1s ease forwards;
+    }
+    
+    .pop-in {
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      80% {
+        transform: scale(1.1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .punishment-header h2 {
+        font-size: 2.6em;
+      }
+      
+      .punishment-header p {
+        font-size: 1.1em;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .footer-logo {
+        justify-content: center;
+      }
+      
+      .guide-items {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .guide-item {
+        width: 100%;
+      }
+      
+      .logo .name {
+        font-size: 1.8em;
+      }
+    }
+    
     @media (max-width: 600px) {
       .topbar {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
+        padding: 15px;
       }
 
       .topbar .nav {
-        justify-content: center;
+        justify-content: flex-start;
         flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      .punishment-header {
+        height: auto;
+        padding: 30px 20px;
+      }
+      
+      .punishment-header h2 {
+        font-size: 2.2em;
+      }
+      
+      .faq-title {
+        font-size: 2em;
       }
     }
   </style>
 </head>
 <body>
   <div class="page-container">
+    <!-- Minecraft clouds animation -->
+    <div class="minecraft-clouds" id="minecraft-clouds"></div>
+    
+    <!-- Minecraft block particles -->
+    <div class="particles" id="particles"></div>
+    
     <div class="content-wrap">
       <div class="topbar">
         <div class="logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="X-rugen logo" />
-          <a href="https://www.xrugen.ir" class="name">X-rugen</a>
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+          <div class="name">
+            <span class="part1">X</span><span class="part2">-Rugen</span>
+          </div>
         </div>
         <div class="nav">
-          <a href="#">فروشگاه</a>
-          <a href="https://www.xrugen.ir/punish/">لیست مجازات‌ها</a>
+          <a href="https://www.xrugen.ir/shop/"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
+          <a href="#" class="active"><i class="fas fa-gavel"></i> لیست مجازات‌ها</a>
         </div>
       </div>
+
+      <div class="punishment-header">
+        <h2 class="fade-in">لیست مجازات‌ها</h2>
+        <p class="slide-up">قوانین سرور را بشناسید و از مجازات‌ها آگاه باشید</p>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="جستجو در تخلفات یا مجازات‌ها..." class="slide-up" style="animation-delay: 0.3s;">
+      </div>
       
-<body>
-  <header>
-    <h2>لیست مجازات‌ها</h2>
-  </header>
+      <div class="quick-guide slide-up" style="animation-delay: 0.4s;">
+        <div class="guide-title"><i class="fas fa-info-circle"></i> راهنمای مجازات‌ها</div>
+        <div class="guide-items">
+          <div class="guide-item">
+            <div class="guide-icon guide-warn"><i class="fas fa-exclamation-triangle"></i></div>
+            <div>اخطار</div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-icon guide-mute"><i class="fas fa-comment-slash"></i></div>
+            <div>میوت (سکوت)</div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-icon guide-ban"><i class="fas fa-ban"></i></div>
+            <div>بن موقت</div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-icon guide-permaban"><i class="fas fa-skull-crossbones"></i></div>
+            <div>بن دائم</div>
+          </div>
+        </div>
+      </div>
 
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="🔍 جستجو در تخلفات یا مجازات‌ها...">
-  </div>
+      <div class="table-container" id="tableContainer">
+        <table id="punishmentTable">
+          <thead>
+            <tr>
+              <th>تخلف</th>
+              <th>اخطار</th>
+              <th>بار اول</th>
+              <th>بار دوم</th>
+              <th>بار سوم</th>
+              <th>بار چهارم</th>
+              <th>بار پنجم</th>
+              <th>بار ششم</th>
+              <th>بار هفتم</th>
+              <th>بار هشتم</th>
+            </tr>
+          </thead>
+          <tbody id="punishmentBody"></tbody>
+        </table>
+      </div>
 
-  <div class="table-container">
-    <table id="punishmentTable">
-      <thead>
-        <tr>
-          <th>تخلف</th>
-          <th>اخطار</th>
-          <th>بار اول</th>
-          <th>بار دوم</th>
-          <th>بار سوم</th>
-          <th>بار چهارم</th>
-          <th>بار پنجم</th>
-          <th>بار ششم</th>
-          <th>بار هفتم</th>
-          <th>بار هشتم</th>
-        </tr>
-      </thead>
-      <tbody id="punishmentBody"></tbody>
-    </table>
-  </div>
-
-  <section id="faq">
-    <h2 style="text-align: center; font-size: 2em; margin-bottom: 30px; color: #3399ff; text-shadow: 0 0 10px #3399ff88;">پرسش‌های متداول</h2>
-    <div class="faq-item" onclick="toggleFAQ(this)">
-      <div class="faq-question"><span class="arrow">▼</span><strong>اگر اشتباهاً مجازات شدم، چطور اعتراض کنم؟</strong></div>
-      <div class="faq-answer">می‌توانید از طریق دیسکورد رسمی سرور، درخواست بررسی ارسال کنید.</div>
+      <section class="faq-section" id="faq">
+        <h2 class="faq-title">پرسش‌های متداول</h2>
+        
+        <div class="faq-item slide-up" style="animation-delay: 0.5s;" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+            <strong>اگر اشتباهاً مجازات شدم، چطور اعتراض کنم؟</strong>
+          </div>
+          <div class="faq-answer">
+            می‌توانید از طریق سرور دیسکورد رسمی X-rugen، درخواست بررسی ارسال کنید. در کانال #ticket-support یک تیکت باز کنید و توضیحات کامل را به همراه مدارک احتمالی ارائه دهید. تیم مدیریت سرور در اسرع وقت به درخواست شما رسیدگی خواهد کرد.
+          </div>
+        </div>
+        
+        <div class="faq-item slide-up" style="animation-delay: 0.6s;" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+            <strong>چگونه می‌توانم با تیم استف ارتباط بگیرم؟</strong>
+          </div>
+          <div class="faq-answer">
+            از طریق دیسکورد رسمی سرور X-rugen می‌توانید با تیم مدیریت ارتباط بگیرید. پس از پیوستن به دیسکورد، در کانال #staff-contact یا با ایجاد تیکت در کانال #ticket-support می‌توانید پیام خود را برای تیم مدیریت ارسال کنید. همچنین می‌توانید در سرور ماینکرفت از دستور !ticket استفاده کنید.
+          </div>
+        </div>
+        
+        <div class="faq-item slide-up" style="animation-delay: 0.7s;" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+            <strong>آیا بعد از مجازات، سابقه تخلفات من باقی می‌ماند؟</strong>
+          </div>
+          <div class="faq-answer">
+            بله، سیستم سرور به صورت خودکار سابقه تخلفات شما را نگهداری می‌کند. بعد از گذشت 30 روز بدون تخلف، یک مرحله از سوابق تخلف شما کاهش می‌یابد. برای مثال، اگر قبلاً دو بار مرتکب تخلفی شده‌اید و 30 روز بدون تخلف بمانید، در صورت تکرار همان تخلف، مجازات بار دوم (به جای بار سوم) برای شما اعمال خواهد شد.
+          </div>
+        </div>
+        
+        <div class="faq-item slide-up" style="animation-delay: 0.8s;" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+            <strong>آیا امکان بخشش یا کاهش مجازات وجود دارد؟</strong>
+          </div>
+          <div class="faq-answer">
+            در شرایط خاص، تیم مدیریت می‌تواند مجازات را کاهش دهد یا ببخشد. برای درخواست بخشش، باید از طریق دیسکورد یک تیکت باز کنید و دلایل خود را به صورت کامل شرح دهید. توجه داشته باشید که این تصمیم نهایی به صلاحدید تیم مدیریت سرور بستگی دارد و برای همه تخلفات، امکان بخشش وجود ندارد.
+          </div>
+        </div>
+      </section>
     </div>
-    <div class="faq-item" onclick="toggleFAQ(this)">
-      <div class="faq-question"><span class="arrow">▼</span><strong>چگونه می‌توانیم با تیم استف ارتباط بگیریم؟</strong></div>
-      <div class="faq-answer">از طریق دیسکورد رسمی سرور می‌توانید با تیم مدیریت ارتباط بگیرید.</div>
-    </div>
-  </section>
 
-  <footer class="site-footer" dir="rtl">
-    ساخته شده توسط تیم <span>X-rugen</span> | ارتباط با ما در 
-    <a href="https://discord.gg/AJBF5CPmYx" target="_blank" rel="noopener noreferrer">دیسکورد</a>
-  </footer>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+          <div class="name">
+            <span class="part1">X</span><span class="part2">-Rugen</span>
+          </div>
+        </div>
+        
+        <div class="footer-nav">
+          <a href="https://www.xrugen.ir/">صفحه اصلی</a>
+          <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
+          <a href="#">لیست مجازات‌ها</a>
+          <a href="#">قوانین</a>
+          <a href="#">درباره ما</a>
+        </div>
+        
+        <div>
+          ساخته شده با <span>♥</span> توسط تیم <span>X-rugen</span>
+        </div>
+        
+        <div class="social-links">
+          <a href="https://discord.gg/AJBF5CPmYx" class="social-link" target="_blank">
+            <i class="fab fa-discord"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-telegram"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <script>
+    // Create Minecraft-style block particles
+    document.addEventListener('DOMContentLoaded', function() {
+      const particles = document.getElementById('particles');
+      const particleCount = 30;
+      const blockTypes = ['dirt', 'stone', 'emerald', 'gold', 'redstone'];
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random block type
+        const blockType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
+        particle.classList.add(blockType);
+        
+        // Random positioning and size
+        const size = Math.random() * 20 + 8;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        
+        // Random animation duration and delay
+        const duration = Math.random() * 25 + 15;
+        const delay = Math.random() * 15;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        particles.appendChild(particle);
+      }
+      
+      // Create Minecraft clouds
+      const clouds = document.getElementById('minecraft-clouds');
+      const cloudCount = 8;
+      
+      for (let i = 0; i < cloudCount; i++) {
+        const cloud = document.createElement('div');
+        cloud.classList.add('minecraft-cloud');
+        
+        // Random cloud size and position
+        const width = Math.random() * 300 + 200;
+        const height = Math.random() * 80 + 40;
+        cloud.style.width = `${width}px`;
+        cloud.style.height = `${height}px`;
+        cloud.style.top = `${Math.random() * 500}px`;
+        
+        // Random animation duration
+        const duration = Math.random() * 120 + 80;
+        cloud.style.animationDuration = `${duration}s`;
+        cloud.style.animationDelay = `-${Math.random() * 80}s`;
+        
+        clouds.appendChild(cloud);
+      }
+    });
+
     const punishmentData = `چیت زدن	-	1D Ban	3D Ban	7D Ban	14D Ban	30D Ban	30D Ban	Permanent Ban	-
 فحاشی	2 Warns	2h Mute	6h Mute	1D Mute + 6h Ban	7D Mute + 1D Ban	7D Ban	7D Ban	Permanent Ban	-
 آزار و اذیت	1 Warns	2h Mute	6h Mute	1D Ban	3D Ban	7D Ban	7D Ban	Permanent Ban	-
@@ -367,55 +1300,165 @@
     const rows = punishmentData.trim().split("\n");
     const tbody = document.getElementById("punishmentBody");
 
-    rows.forEach(row => {
+    rows.forEach((row, index) => {
       let cells = row.split("\t");
       while (cells.length < 10) cells.push("-");
       const tr = document.createElement("tr");
-      tr.style.opacity = 0;
-      tr.style.transform = "translateY(40px)";
-      tr.style.transition = "all 0.8s ease";
-      cells.forEach(cell => {
+      
+      // Apply fade-in and slide-up animation with increasing delay
+      tr.classList.add('fade-in');
+      tr.style.animationDelay = `${0.1 + (index * 0.05)}s`;
+      
+      cells.forEach((cell, cellIndex) => {
         const td = document.createElement("td");
         let content = cell.trim();
-        if (/Permanent Ban/i.test(content)) td.className = "permaban";
-        else if (/Ban/i.test(content)) td.className = "ban";
-        else if (/Mute/i.test(content)) td.className = "mute";
-        else if (/Warn/i.test(content)) td.className = "warn";
-        td.textContent = content;
+        
+        if (/Permanent Ban/i.test(content)) {
+          td.className = "permaban";
+          // Add icon for permaban
+          content = `<i class="fas fa-skull-crossbones"></i> ${content}`;
+        }
+        else if (/Ban/i.test(content)) {
+          td.className = "ban";
+          // Add icon for temporary ban
+          content = `<i class="fas fa-ban"></i> ${content}`;
+        }
+        else if (/Mute/i.test(content)) {
+          td.className = "mute";
+          // Add icon for mute
+          content = `<i class="fas fa-comment-slash"></i> ${content}`;
+        }
+        else if (/Warn/i.test(content)) {
+          td.className = "warn";
+          // Add icon for warning
+          content = `<i class="fas fa-exclamation-triangle"></i> ${content}`;
+        }
+        
+        td.innerHTML = content;
         tr.appendChild(td);
       });
+      
       tbody.appendChild(tr);
     });
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = 1;
-          entry.target.style.transform = "translateY(0)";
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
-
-    document.querySelectorAll("#punishmentTable tbody tr").forEach(row => {
-      observer.observe(row);
-    });
-
+    // Search functionality
     const input = document.getElementById("searchInput");
     input.addEventListener("keyup", function () {
       const filter = input.value.toLowerCase();
       const rows = document.querySelectorAll("#punishmentTable tbody tr");
+      
+      let anyMatch = false;
+      
       rows.forEach(row => {
         const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(filter) ? "" : "none";
+        const match = text.includes(filter);
+        row.style.display = match ? "" : "none";
+        
+        if (match) {
+          anyMatch = true;
+          
+          // Highlight the matching text if not empty search
+          if (filter.trim() !== '') {
+            const cells = row.querySelectorAll('td');
+            cells.forEach(cell => {
+              let html = cell.innerHTML;
+              // Remove any existing highlights first
+              html = html.replace(/<mark class="highlight">(.*?)<\/mark>/g, '$1');
+              
+              // Only add highlight if not an icon-only cell
+              if (!html.trim().startsWith('<i class="fas') || html.trim().length > html.indexOf('</i>') + 4) {
+                // Create regex that ignores HTML tags
+                const regex = new RegExp(`(${filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                html = html.replace(regex, '<mark class="highlight">$1</mark>');
+              }
+              
+              cell.innerHTML = html;
+            });
+          } else {
+            // Remove highlights if search is empty
+            const highlights = row.querySelectorAll('mark.highlight');
+            highlights.forEach(h => {
+              const parent = h.parentNode;
+              parent.replaceChild(document.createTextNode(h.textContent), h);
+              parent.normalize();
+            });
+          }
+        }
       });
+      
+      // Add some styling for the highlight
+      let style = document.getElementById('highlight-style');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = 'highlight-style';
+        style.textContent = `
+          mark.highlight {
+            background-color: rgba(74, 186, 39, 0.3);
+            color: #ffffff;
+            padding: 2px 1px;
+            border-radius: 3px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // Show a message if no results
+      let noResults = document.getElementById('no-results');
+      if (!anyMatch && filter.trim() !== '') {
+        if (!noResults) {
+          noResults = document.createElement('div');
+          noResults.id = 'no-results';
+          noResults.style.textAlign = 'center';
+          noResults.style.padding = '20px';
+          noResults.style.color = '#e8e8e8';
+          noResults.style.fontSize = '1.1em';
+          noResults.style.fontFamily = 'Minecraft, sans-serif';
+          noResults.style.textShadow = '2px 2px 0 rgba(0,0,0,0.8)';
+          noResults.innerHTML = 'هیچ نتیجه‌ای یافت نشد <i class="fas fa-search"></i>';
+          document.querySelector('.table-container').appendChild(noResults);
+        }
+      } else if (noResults) {
+        noResults.remove();
+      }
     });
 
+    // Toggle FAQ items
     function toggleFAQ(element) {
-      element.classList.toggle("active");
+      const isActive = element.classList.contains('active');
+      
+      // Close all other FAQs
+      document.querySelectorAll('.faq-item.active').forEach(item => {
+        if (item !== element) {
+          item.classList.remove('active');
+        }
+      });
+      
+      // Toggle the clicked FAQ
+      element.classList.toggle('active', !isActive);
+      
+      // Add Minecraft click sound effect
+      const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
+      audio.volume = 0.3;
+      audio.play().catch(e => {});
     }
+    
+    // Check if table needs horizontal scroll indicators
+    function checkTableOverflow() {
+      const tableContainer = document.getElementById('tableContainer');
+      const table = document.getElementById('punishmentTable');
+      
+      if (table.offsetWidth > tableContainer.offsetWidth) {
+        tableContainer.classList.add('has-overflow');
+      } else {
+        tableContainer.classList.remove('has-overflow');
+      }
+    }
+    
+    // Run on load and resize
+    window.addEventListener('load', checkTableOverflow);
+    window.addEventListener('resize', checkTableOverflow);
   </script>
 </body>
 </html>
