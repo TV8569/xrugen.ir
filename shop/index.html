@@ -4,287 +4,1156 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>X-rugen - فروشگاه</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
+    :root {
+      --primary: #4aba27; 
+      --primary-dark: #3a8a1f;
+      --primary-light: #6edc47;
+      --accent: #ffb62f; 
+      --accent-dark: #e69a00;
+      --secondary: #00a8de; 
+      --secondary-dark: #0089b5;
+      --bg-dark: #222730;
+      --bg-darker: #1a1f26;
+      --bg-light: #2a2f38;
+      --text-light: #e8e8e8;
+      --text-lighter: #ffffff;
+      --dirt-brown: #866043;
+      --stone-gray: #7b7b7b;
+      --obsidian: #150d1a;
+      --diamond-blue: #03a9f4;
+      --emerald-green: #4aba27;
+      --gold-yellow: #ffb62f;
+      --redstone-red: #ff5252;
+    }
+
     html, body {
       height: 100%;
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
-      background: #0a1220;
-      color: #8ddcff;
+      background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
+      color: var(--text-light);
       overflow-x: hidden;
     }
 
     ::-webkit-scrollbar {
-      width: 0;
-      background: transparent;
+      width: 10px;
+      background: var(--bg-darker);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-light);
+      box-shadow: 0 0 4px var(--primary-light);
     }
 
     .page-container {
       min-height: 100%;
       display: flex;
       flex-direction: column;
+      position: relative;
+      background-image: 
+        url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png'),
+        linear-gradient(to bottom, rgba(25, 30, 40, 0.92), rgba(20, 24, 32, 0.96));
+    }
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      background-size: cover;
+      border-radius: 0; 
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      animation: float 20s infinite linear;
+      image-rendering: pixelated; 
+    }
+
+    .particle.dirt {
+      background-color: var(--dirt-brown);
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+    
+    .particle.stone {
+      background-color: var(--stone-gray);
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+    
+    .particle.emerald {
+      background-color: var(--primary);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--primary);
+    }
+    
+    .particle.gold {
+      background-color: var(--accent);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--accent);
+    }
+    
+    .particle.diamond {
+      background-color: var(--diamond-blue);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--diamond-blue);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .content-wrap {
       flex: 1;
+      position: relative;
+      z-index: 1;
     }
 
     .topbar {
-      background: linear-gradient(90deg, #000c1f, #000c1f);
-      padding: 15px 25px;
+      background: linear-gradient(90deg, rgba(20, 24, 32, 0.9), rgba(30, 36, 48, 0.9));
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      flex-shrink: 0;
       position: sticky;
       top: 0;
       z-index: 999;
-      border-bottom: 1px solid #33aaff55;
-      box-shadow: 0 0 15px #33aaff44;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .topbar::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.6;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
     }
 
     .logo img {
-      width: 42px;
-      height: 42px;
+      width: 58px;
+      height: 58px;
       border-radius: 6px;
+      box-shadow: 0 0 15px rgba(74, 186, 39, 0.5);
+      transition: all 0.3s ease;
+      border: 2px solid rgba(74, 186, 39, 0.3);
+      image-rendering: pixelated;
+    }
+    
+    .logo:hover img {
+      box-shadow: 0 0 20px rgba(74, 186, 39, 0.8);
+      transform: rotate(5deg);
     }
 
     .logo .name {
-      color: #4dcfff;
-      font-size: 1.5em;
-      font-weight: bold;
+      font-size: 2.2em;
+      font-weight: 900;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
       text-decoration: none;
-      text-shadow: 0 0 10px #33aaffaa;
+      color: var(--primary);
+    }
+
+    .logo .part1 {
+      color: var(--primary);
+      position: relative;
+    }
+    
+    .logo .part1::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      bottom: -4px;
+      left: 0;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+      box-shadow: 0 0 8px var(--primary);
+    }
+    
+    .logo:hover .part1::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    .logo .part2 {
+      color: var(--text-light);
     }
 
     .nav {
       display: flex;
-      gap: 40px;
+      gap: 30px;
     }
 
     .nav a {
-      color: #b2eaff;
+      color: var(--text-light);
       text-decoration: none;
       font-size: 1.4em;
       font-weight: bold;
+      transition: all 0.3s ease;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
       position: relative;
-      transition: color 0.3s, text-shadow 0.3s;
+      padding: 8px 15px;
+      background: rgba(0,0,0,0.2);
+      border: 2px solid transparent;
+      border-radius: 4px;
     }
-
+    
     .nav a::after {
       content: '';
       position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: #33aaff;
-      box-shadow: 0 0 8px #33aaff;
-      transition: width 0.3s;
+      width: 90%;
+      height: 3px;
+      bottom: -3px;
+      left: 5%;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
     }
 
     .nav a:hover {
-      color: #66d9ff;
-      text-shadow: 0 0 10px #33aaff;
+      color: var(--text-lighter);
+      text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      transform: translateY(-3px);
+      border-color: var(--primary-dark);
+      background: rgba(74, 186, 39, 0.1);
+    }
+    
+    .nav a.active {
+      color: var(--text-lighter);
+      text-shadow: 0 0 10px var(--primary);
+      border-color: var(--primary);
+      background: rgba(74, 186, 39, 0.15);
     }
 
-    .nav a:hover::after {
-      width: 100%;
-    }
-
-    header {
+    .shop-header {
+      position: relative;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       text-align: center;
-      margin-top: 30px;
+      padding: 40px 20px;
+      margin-bottom: 40px;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.4);
     }
-
-    header h1 {
-      font-size: 2.8em;
-      color: #33bbff;
-      text-shadow: 0 0 20px #33bbffaa;
-      margin-bottom: 10px;
+    
+    .shop-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/gold_block.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      opacity: 0.1;
+      z-index: -1;
+    }
+    
+    .shop-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(255, 182, 47, 0.2) 0%, transparent 70%);
+      z-index: -1;
+      animation: pulse 5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
+    }
+    
+    .shop-header h1 {
+      font-size: 3.2em;
+      margin-bottom: 20px;
+      color: var(--text-lighter);
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
+    }
+    
+    .shop-header p {
+      font-size: 1.3em;
+      margin: 5px 0 0;
+      max-width: 700px;
+      color: var(--text-light);
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.8);
+      position: relative;
+      z-index: 1;
     }
 
     .ranks-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 40px 20px;
+      gap: 40px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .rank-card {
-      background: linear-gradient(145deg, #112244, #0a1a33);
-      border-radius: 16px;
-      box-shadow: 0 0 12px #2288cc44;
-      padding: 25px;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/dark_oak_planks.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      border-radius: 8px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 0 4px #3e2912;
+      padding: 30px 25px;
       text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 2px solid rgba(60, 30, 15, 0.8);
+      height: 100%;
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
-
+    
+    .rank-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 0;
+    }
+    
     .rank-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 18px #33bbffaa;
+      transform: translateY(-10px) rotateX(5deg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 4px #5a3e1f;
+      border-color: var(--accent-dark);
+    }
+    
+    .rank-card.hero {
+      border-color: var(--diamond-blue);
+    }
+    
+    .rank-card.hellborn {
+      border-color: var(--redstone-red);
+    }
+    
+    .rank-card.mythic {
+      border-color: var(--emerald-green);
+    }
+    
+    .rank-card.empire {
+      border-color: var(--gold-yellow);
+    }
+    
+    .rank-icon {
+      margin: 0 auto 20px;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2em;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 1;
+      transform-style: preserve-3d;
+    }
+    
+    .rank-icon::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      background-size: 32px 32px;
+      image-rendering: pixelated;
+      transform: translateZ(-10px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+    
+    .hero .rank-icon {
+      color: var(--diamond-blue);
+      text-shadow: 0 0 10px var(--diamond-blue);
+    }
+    
+    .hero .rank-icon::before {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/diamond_block.png');
+      border: 2px solid var(--diamond-blue);
+    }
+    
+    .hellborn .rank-icon {
+      color: var(--redstone-red);
+      text-shadow: 0 0 10px var(--redstone-red);
+    }
+    
+    .hellborn .rank-icon::before {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/redstone_block.png');
+      border: 2px solid var(--redstone-red);
+    }
+    
+    .mythic .rank-icon {
+      color: var(--emerald-green);
+      text-shadow: 0 0 10px var(--emerald-green);
+    }
+    
+    .mythic .rank-icon::before {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/emerald_block.png');
+      border: 2px solid var(--emerald-green);
+    }
+    
+    .empire .rank-icon {
+      color: var(--gold-yellow);
+      text-shadow: 0 0 10px var(--gold-yellow);
+    }
+    
+    .empire .rank-icon::before {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/gold_block.png');
+      border: 2px solid var(--gold-yellow);
+    }
+    
+    .rank-card:hover .rank-icon {
+      transform: translateY(-8px) translateZ(30px) scale(1.1);
     }
 
     .rank-title {
-      font-size: 1.8em;
-      font-weight: bold;
+      font-size: 2.2em;
+      font-weight: 900;
       margin-bottom: 10px;
-      color: #33bbff;
-      text-shadow: 0 0 10px #33bbff88;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+      font-family: 'Minecraft', sans-serif;
+    }
+    
+    .hero .rank-title {
+      color: var(--diamond-blue);
+    }
+    
+    .hellborn .rank-title {
+      color: var(--redstone-red);
+    }
+    
+    .mythic .rank-title {
+      color: var(--emerald-green);
+    }
+    
+    .empire .rank-title {
+      color: var(--gold-yellow);
+    }
+    
+    .rank-card:hover .rank-title {
+      transform: translateZ(20px);
+      text-shadow: 0 0 15px rgba(255,255,255,0.5);
     }
 
     .rank-price {
-      font-size: 1.2em;
+      font-size: 1.3em;
       margin-bottom: 20px;
-      color: #eee;
+      color: var(--text-lighter);
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      transition: all 0.3s ease;
+    }
+    
+    .rank-card:hover .rank-price {
+      transform: translateZ(15px);
+    }
+    
+    .rank-benefits {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 0 25px;
+      text-align: center;
+      flex-grow: 1;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .rank-benefits li {
+      padding: 8px 0;
+      color: var(--text-light);
+      position: relative;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    .rank-benefits li::before {
+      content: '✓';
+      color: var(--primary);
+      margin-right: 8px;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(74, 186, 39, 0.5);
+    }
+    
+    .rank-card:hover .rank-benefits li {
+      opacity: 1;
+      transform: translateY(-2px) translateZ(10px);
+      transition-delay: calc(0.05s * var(--i));
     }
 
     .rank-actions {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
     }
 
-    .rank-actions button {
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
+    .minecraft-btn {
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #ffffff;
+      border: 3px solid #5a3600;
+      padding: 14px 32px;
+      font-size: 1.3em;
       font-weight: bold;
+      font-family: 'Minecraft', sans-serif;
       cursor: pointer;
-      transition: background 0.3s, box-shadow 0.3s;
+      transition: all 0.2s ease;
+      position: relative;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #5a3600, 0 10px 10px rgba(0,0,0,0.5);
+      border-radius: 4px;
+    }
+    
+    .minecraft-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #5a3600, 0 12px 12px rgba(0,0,0,0.5);
+    }
+    
+    .minecraft-btn:active {
+      transform: translateY(4px);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #5a3600, 0 6px 6px rgba(0,0,0,0.5);
     }
 
     .btn-buy {
-      background: #33cc77;
-      color: #fff;
-      box-shadow: 0 0 10px #33cc77aa;
+      background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-dark) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1), 0 8px 0 0 #2c6619, 0 10px 10px rgba(0,0,0,0.4);
+      border: 3px solid #2c6619;
     }
 
     .btn-buy:hover {
-      background: #29b96a;
-      box-shadow: 0 0 12px #29b96aaa;
+      background: linear-gradient(to bottom, var(--primary-light) 0%, var(--primary) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #2c6619, 0 12px 12px rgba(0,0,0,0.4);
+    }
+    
+    .btn-buy:active {
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #2c6619, 0 6px 6px rgba(0,0,0,0.4);
     }
 
     .btn-info {
-      background: #3377cc;
-      color: #fff;
-      box-shadow: 0 0 10px #3377ccaa;
+      background: linear-gradient(to bottom, var(--secondary) 0%, var(--secondary-dark) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1), 0 8px 0 0 #006680, 0 10px 10px rgba(0,0,0,0.4);
+      border: 3px solid #006680;
     }
 
     .btn-info:hover {
-      background: #2a66b3;
-      box-shadow: 0 0 12px #2a66b3aa;
+      background: linear-gradient(to bottom, #00bdf2 0%, var(--secondary) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #006680, 0 12px 12px rgba(0,0,0,0.4);
+    }
+    
+    .btn-info:active {
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #006680, 0 6px 6px rgba(0,0,0,0.4);
+    }
+    
+    .popular-badge {
+      position: absolute;
+      top: 15px;
+      right: -30px;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/redstone_block.png');
+      background-size: 32px 32px;
+      color: white;
+      padding: 6px 40px;
+      font-size: 0.9em;
+      font-weight: bold;
+      transform: rotate(45deg);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+      z-index: 2;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      border: 2px solid #5a0000;
+    }
+    
+    .popular-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      z-index: -1;
+    }
+    
+    .best-value-badge {
+      position: absolute;
+      top: 15px;
+      right: -30px;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/emerald_block.png');
+      background-size: 32px 32px;
+      color: white;
+      padding: 6px 40px;
+      font-size: 0.9em;
+      font-weight: bold;
+      transform: rotate(45deg);
+      box-shadow: 0 0 15px rgba(74, 186, 39, 0.4);
+      z-index: 2;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      border: 2px solid #2c6619;
+    }
+    
+    .best-value-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      z-index: -1;
     }
 
     footer.site-footer {
-      background: linear-gradient(90deg, #000c1f, #000c1f);
-      color: #cbd6e2;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/obsidian_texture.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      color: var(--text-light);
       text-align: center;
-      padding: 16px 10px;
-      font-size: 0.95em;
-      border-top: 1px solid #224060;
-      box-shadow: 0 -3px 12px #33aaff33;
-      border-radius: 14px 14px 0 0;
+      padding: 50px 12px 55px;
+      font-size: 1.1em;
+      border-top: 4px solid var(--primary-dark);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+      margin-top: 100px;
+      position: relative;
+      z-index: 2;
       user-select: none;
+    }
+    
+    footer.site-footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: -1;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .footer-logo img {
+      width: 50px;
+      height: 50px;
+      margin-left: 15px;
+      border-radius: 6px;
+      border: 2px solid var(--primary-dark);
+    }
+    
+    .footer-logo .name {
+      font-size: 1.5em;
+      font-weight: bold;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .footer-nav {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    .footer-nav a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(255, 182, 47, 0.5);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .social-link {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--primary-dark);
+      border-radius: 8px;
+      color: var(--text-light);
+      font-size: 1.3em;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .social-link:hover {
+      background: var(--primary);
+      color: #ffffff;
+      transform: translateY(-5px) rotate(5deg);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      border-color: var(--accent);
     }
 
     footer.site-footer span {
-      color: #33aaff;
+      color: var(--accent);
       font-weight: bold;
-      text-shadow: 0 0 8px #33aaff;
     }
 
     footer.site-footer a {
-      color: #33aaff;
+      color: var(--primary);
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s, text-shadow 0.3s;
+      font-weight: 900;
+      transition: 0.3s;
     }
 
     footer.site-footer a:hover {
-      color: #ffffff;
-      text-shadow: 0 0 10px #ffffffaa;
+      color: var(--text-lighter);
+      text-shadow: 0 0 10px var(--primary);
+    }
+    
+    .minecraft-clouds {
+      position: fixed;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.03;
+    }
+    
+    .minecraft-cloud {
+      position: absolute;
+      background: white;
+      border-radius: 0;
+      opacity: 0.7;
+      animation: cloud-movement linear infinite;
+      image-rendering: pixelated;
     }
 
+    @keyframes cloud-movement {
+      0% {
+        transform: translateX(-5%);
+      }
+      100% {
+        transform: translateX(105%);
+      }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    .slide-up {
+      animation: slideUp 1s ease forwards;
+    }
+    
+    .pop-in {
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      80% {
+        transform: scale(1.1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .shop-header h1 {
+        font-size: 2.6em;
+      }
+      
+      .shop-header p {
+        font-size: 1.1em;
+      }
+      
+      .popular-badge,
+      .best-value-badge {
+        right: -40px;
+        padding: 4px 40px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .footer-logo {
+        justify-content: center;
+      }
+      
+      .logo .name {
+        font-size: 1.8em;
+      }
+    }
+    
     @media (max-width: 600px) {
       .topbar {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
+        padding: 15px;
       }
 
       .topbar .nav {
-        justify-content: center;
+        justify-content: flex-start;
         flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      .shop-header {
+        height: auto;
+        padding: 30px 20px;
+      }
+      
+      .shop-header h1 {
+        font-size: 2.2em;
+      }
+      
+      .rank-title {
+        font-size: 1.8em;
       }
     }
   </style>
 </head>
 <body>
   <div class="page-container">
+    <!-- Minecraft clouds animation -->
+    <div class="minecraft-clouds" id="minecraft-clouds"></div>
+    
+    <!-- Minecraft block particles -->
+    <div class="particles" id="particles"></div>
+    
     <div class="content-wrap">
       <div class="topbar">
         <div class="logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="X-rugen logo" />
-          <a href="https://www.xrugen.ir" class="name">X-rugen</a>
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+          <div class="name">
+            <span class="part1">X</span><span class="part2">-Rugen</span>
+          </div>
         </div>
         <div class="nav">
-          <a href="#">فروشگاه</a>
-          <a href="https://www.xrugen.ir/punish/">لیست مجازات‌ها</a>
+          <a href="https://www.xrugen.ir/shop/" class="active"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
+          <a href="https://www.xrugen.ir/punish/"><i class="fas fa-gavel"></i> لیست مجازات‌ها</a>
         </div>
       </div>
 
-      <header>
-        <h1>فروشگاه</h1>
-      </header>
+      <div class="shop-header">
+        <h1 class="fade-in">فروشگاه X-rugen</h1>
+        <p class="slide-up">با خرید رنک‌های VIP از امکانات ویژه در سرور بهره‌مند شوید</p>
+      </div>
 
       <div class="ranks-grid">
-        <div class="rank-card">
+        <div class="rank-card hero fade-in" style="animation-delay: 0.1s;">
+          <div class="rank-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
           <div class="rank-title">Hero</div>
           <div class="rank-price">50,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">دسترسی به 3 ست کیت اختصاصی</li>
+            <li style="--i:2;">امکان استفاده از 5 هوم</li>
+            <li style="--i:3;">رنگ نام در چت</li>
+            <li style="--i:4;">تگ VIP در تب لیست</li>
+          </ul>
           <div class="rank-actions">
-            <button class="btn-info">دسترسی‌ها</button>
-            <button class="btn-buy">خرید</button>
+            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
-        <div class="rank-card">
+        
+        <div class="rank-card hellborn fade-in" style="animation-delay: 0.2s;">
+          <div class="popular-badge">محبوب</div>
+          <div class="rank-icon">
+            <i class="fas fa-fire"></i>
+          </div>
           <div class="rank-title">Hellborn</div>
           <div class="rank-price">100,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">تمام مزایای رنک Hero</li>
+            <li style="--i:2;">دسترسی به 5 ست کیت اختصاصی</li>
+            <li style="--i:3;">امکان استفاده از 8 هوم</li>
+            <li style="--i:4;">امکان پرواز در لابی</li>
+            <li style="--i:5;">افکت‌های ویژه</li>
+          </ul>
           <div class="rank-actions">
-            <button class="btn-info">دسترسی‌ها</button>
-            <button class="btn-buy">خرید</button>
+            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
-        <div class="rank-card">
+        
+        <div class="rank-card mythic fade-in" style="animation-delay: 0.3s;">
+          <div class="best-value-badge">بهترین ارزش</div>
+          <div class="rank-icon">
+            <i class="fas fa-crown"></i>
+          </div>
           <div class="rank-title">Mythic</div>
           <div class="rank-price">200,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">تمام مزایای رنک Hellborn</li>
+            <li style="--i:2;">دسترسی به 8 ست کیت اختصاصی</li>
+            <li style="--i:3;">امکان استفاده از 12 هوم</li>
+            <li style="--i:4;">دسترسی به دستورات ویژه</li>
+            <li style="--i:5;">پت‌های اختصاصی</li>
+            <li style="--i:6;">اولویت در ورود به سرور</li>
+          </ul>
           <div class="rank-actions">
-            <button class="btn-info">دسترسی‌ها</button>
-            <button class="btn-buy">خرید</button>
+            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
-        <div class="rank-card">
+        
+        <div class="rank-card empire fade-in" style="animation-delay: 0.4s;">
+          <div class="rank-icon">
+            <i class="fas fa-gem"></i>
+          </div>
           <div class="rank-title">Empire</div>
           <div class="rank-price">300,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">تمام مزایای رنک Mythic</li>
+            <li style="--i:2;">دسترسی نامحدود به کیت‌ها</li>
+            <li style="--i:3;">امکان استفاده از 20 هوم</li>
+            <li style="--i:4;">رزرو اسلات اختصاصی</li>
+            <li style="--i:5;">دسترسی به ابزارهای مدیریتی محدود</li>
+            <li style="--i:6;">افکت‌های منحصر به فرد</li>
+            <li style="--i:7;">کانال تخصصی در دیسکورد</li>
+          </ul>
           <div class="rank-actions">
-            <button class="btn-info">دسترسی‌ها</button>
-            <button class="btn-buy">خرید</button>
+            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
       </div>
     </div>
 
     <footer class="site-footer">
-      ساخته شده توسط تیم <span>X-rugen</span> | ارتباط با ما در 
-      <a href="https://discord.gg/AJBF5CPmYx" target="_blank">دیسکورد</a>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+          <div class="name">
+            <span class="part1">X</span><span class="part2">-Rugen</span>
+          </div>
+        </div>
+        
+        <div class="footer-nav">
+          <a href="https://www.xrugen.ir/">صفحه اصلی</a>
+          <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
+          <a href="https://www.xrugen.ir/punish/">لیست مجازات‌ها</a>
+          <a href="#">قوانین</a>
+          <a href="#">درباره ما</a>
+        </div>
+        
+        <div>
+          ساخته شده با <span>♥</span> توسط تیم <span>X-rugen</span>
+        </div>
+        
+        <div class="social-links">
+          <a href="https://discord.gg/AJBF5CPmYx" class="social-link" target="_blank">
+            <i class="fab fa-discord"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-telegram"></i>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
     </footer>
   </div>
+
+  <script>
+    // Create Minecraft-style block particles
+    document.addEventListener('DOMContentLoaded', function() {
+      const particles = document.getElementById('particles');
+      const particleCount = 30;
+      const blockTypes = ['dirt', 'stone', 'emerald', 'gold', 'diamond'];
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random block type
+        const blockType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
+        particle.classList.add(blockType);
+        
+        // Random positioning and size
+        const size = Math.random() * 20 + 8;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        
+        // Random animation duration and delay
+        const duration = Math.random() * 25 + 15;
+        const delay = Math.random() * 15;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        particles.appendChild(particle);
+      }
+      
+      // Create Minecraft clouds
+      const clouds = document.getElementById('minecraft-clouds');
+      const cloudCount = 8;
+      
+      for (let i = 0; i < cloudCount; i++) {
+        const cloud = document.createElement('div');
+        cloud.classList.add('minecraft-cloud');
+        
+        // Random cloud size and position
+        const width = Math.random() * 300 + 200;
+        const height = Math.random() * 80 + 40;
+        cloud.style.width = `${width}px`;
+        cloud.style.height = `${height}px`;
+        cloud.style.top = `${Math.random() * 500}px`;
+        
+        // Random animation duration
+        const duration = Math.random() * 120 + 80;
+        cloud.style.animationDuration = `${duration}s`;
+        cloud.style.animationDelay = `-${Math.random() * 80}s`;
+        
+        clouds.appendChild(cloud);
+      }
+      
+      // Add Minecraft-style button click sound effects
+      const buttons = document.querySelectorAll('.minecraft-btn');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
+          audio.volume = 0.3;
+          audio.play().catch(e => {});
+        });
+      });
+    });
+  </script>
 </body>
 </html>
