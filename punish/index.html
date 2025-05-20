@@ -1002,6 +1002,15 @@
         transform: scale(1);
       }
     }
+
+    mark.highlight {
+      background-color: rgba(30, 136, 229, 0.3);
+      color: #ffffff;
+      padding: 2px 1px;
+      border-radius: 3px;
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    }
     
     @media (max-width: 768px) {
       .punishment-header h2 {
@@ -1342,7 +1351,7 @@
       tbody.appendChild(tr);
     });
 
-    // Search functionality
+    // Fixed Search functionality that properly handles HTML elements
     const input = document.getElementById("searchInput");
     input.addEventListener("keyup", function () {
       const filter = input.value.toLowerCase();
@@ -1355,55 +1364,95 @@
         const match = text.includes(filter);
         row.style.display = match ? "" : "none";
         
-        if (match) {
+        if (match && filter.trim() !== '') {
           anyMatch = true;
           
-          // Highlight the matching text if not empty search
-          if (filter.trim() !== '') {
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-              let html = cell.innerHTML;
-              // Remove any existing highlights first
-              html = html.replace(/<mark class="highlight">(.*?)<\/mark>/g, '$1');
+          // Highlight the matching text, respecting HTML structure
+          const cells = row.querySelectorAll('td');
+          cells.forEach(cell => {
+            // Create a temporary element to work with
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = cell.innerHTML;
+            
+            // Function to process text nodes
+            const walkTextNodes = function(node, action) {
+              if (node.nodeType === 3) { // Text node
+                action(node);
+              } else if (node.nodeType === 1) { // Element node
+                for (let i = 0; i < node.childNodes.length; i++) {
+                  walkTextNodes(node.childNodes[i], action);
+                }
+              }
+            };
+            
+            // Remove existing highlights
+            const removeHighlights = function(parentNode) {
+              const highlights = parentNode.querySelectorAll('mark.highlight');
+              highlights.forEach(h => {
+                const textNode = document.createTextNode(h.textContent);
+                h.parentNode.replaceChild(textNode, h);
+              });
               
-              // Only add highlight if not an icon-only cell
-              if (!html.trim().startsWith('<i class="fas') || html.trim().length > html.indexOf('</i>') + 4) {
-                // Create regex that ignores HTML tags
-                const regex = new RegExp(`(${filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-                html = html.replace(regex, '<mark class="highlight">$1</mark>');
+              // Normalize to combine adjacent text nodes
+              parentNode.normalize();
+            };
+            
+            removeHighlights(tempDiv);
+            
+            // Find and highlight text
+            const nodesToProcess = [];
+            walkTextNodes(tempDiv, node => {
+              if (node.nodeValue.toLowerCase().includes(filter)) {
+                nodesToProcess.push(node);
+              }
+            });
+            
+            // Process nodes that contain the search text
+            nodesToProcess.forEach(textNode => {
+              const content = textNode.nodeValue;
+              const regex = new RegExp(`(${filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+              
+              const documentFragment = document.createDocumentFragment();
+              let lastIndex = 0;
+              let match;
+              
+              while ((match = regex.exec(content)) !== null) {
+                // Add text before match
+                if (match.index > lastIndex) {
+                  documentFragment.appendChild(document.createTextNode(content.substring(lastIndex, match.index)));
+                }
+                
+                // Add highlighted match
+                const mark = document.createElement('mark');
+                mark.className = 'highlight';
+                mark.appendChild(document.createTextNode(match[0]));
+                documentFragment.appendChild(mark);
+                
+                lastIndex = match.index + match[0].length;
               }
               
-              cell.innerHTML = html;
+              // Add remaining text
+              if (lastIndex < content.length) {
+                documentFragment.appendChild(document.createTextNode(content.substring(lastIndex)));
+              }
+              
+              // Replace original text node with new content
+              textNode.parentNode.replaceChild(documentFragment, textNode);
             });
-          } else {
-            // Remove highlights if search is empty
-            const highlights = row.querySelectorAll('mark.highlight');
-            highlights.forEach(h => {
-              const parent = h.parentNode;
-              parent.replaceChild(document.createTextNode(h.textContent), h);
-              parent.normalize();
-            });
-          }
+            
+            // Update the cell with highlighted content
+            cell.innerHTML = tempDiv.innerHTML;
+          });
+        } else if (filter.trim() === '') {
+          // Remove all highlights if search is empty
+          const highlights = row.querySelectorAll('mark.highlight');
+          highlights.forEach(h => {
+            const parent = h.parentNode;
+            parent.replaceChild(document.createTextNode(h.textContent), h);
+            parent.normalize();
+          });
         }
       });
-      
-      // Add some styling for the highlight
-      let style = document.getElementById('highlight-style');
-      if (!style) {
-        style = document.createElement('style');
-        style.id = 'highlight-style';
-        style.textContent = `
-          mark.highlight {
-            background-color: rgba(30, 136, 229, 0.3);
-            color: #ffffff;
-            padding: 2px 1px;
-            border-radius: 3px;
-            font-weight: bold;
-            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
-          }
-        `;
-        document.head.appendChild(style);
-      }
       
       // Show a message if no results
       let noResults = document.getElementById('no-results');
