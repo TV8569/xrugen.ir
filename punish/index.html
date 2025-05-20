@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #4aba27; 
-      --primary-dark: #3a8a1f;
-      --primary-light: #6edc47;
+      --primary: #1e88e5; 
+      --primary-dark: #1565c0;
+      --primary-light: #42a5f5;
       --accent: #ffb62f; 
       --accent-dark: #e69a00;
       --secondary: #00a8de; 
@@ -39,7 +39,6 @@
       overflow-x: hidden;
     }
 
-    
     ::-webkit-scrollbar {
       width: 10px;
       background: var(--bg-darker);
@@ -188,14 +187,14 @@
       width: 58px;
       height: 58px;
       border-radius: 6px;
-      box-shadow: 0 0 15px rgba(74, 186, 39, 0.5);
+      box-shadow: 0 0 15px rgba(30, 136, 229, 0.5);
       transition: all 0.3s ease;
-      border: 2px solid rgba(74, 186, 39, 0.3);
+      border: 2px solid rgba(30, 136, 229, 0.3);
       image-rendering: pixelated;
     }
     
     .logo:hover img {
-      box-shadow: 0 0 20px rgba(74, 186, 39, 0.8);
+      box-shadow: 0 0 20px rgba(30, 136, 229, 0.8);
       transform: rotate(5deg);
     }
 
@@ -282,14 +281,14 @@
       text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
       transform: translateY(-3px);
       border-color: var(--primary-dark);
-      background: rgba(74, 186, 39, 0.1);
+      background: rgba(30, 136, 229, 0.1);
     }
     
     .nav a.active {
       color: var(--text-lighter);
       text-shadow: 0 0 10px var(--primary);
       border-color: var(--primary);
-      background: rgba(74, 186, 39, 0.15);
+      background: rgba(30, 136, 229, 0.15);
     }
     
     .punishment-header {
@@ -327,7 +326,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: radial-gradient(circle at center, rgba(74, 186, 39, 0.2) 0%, transparent 70%);
+      background: radial-gradient(circle at center, rgba(30, 136, 229, 0.2) 0%, transparent 70%);
       z-index: -1;
       animation: pulse 5s ease-in-out infinite;
     }
@@ -545,7 +544,7 @@
     }
 
     tr:hover {
-      background: rgba(74, 186, 39, 0.08);
+      background: rgba(30, 136, 229, 0.08);
     }
     
     td:first-child {
@@ -605,7 +604,7 @@
       padding: 25px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 0 4px #3e2912;
       position: relative;
-      border: 1px solid rgba(74, 186, 39, 0.2);
+      border: 1px solid rgba(30, 136, 229, 0.2);
     }
     
     .quick-guide::before {
@@ -1075,12 +1074,14 @@
     
     <div class="content-wrap">
       <div class="topbar">
-        <div class="logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
-          <div class="name">
-            <span class="part1">X</span><span class="part2">-Rugen</span>
+        <a href="https://www.xrugen.ir/" style="text-decoration: none;">
+          <div class="logo">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+            <div class="name">
+              <span class="part1">X</span><span class="part2">-Rugen</span>
+            </div>
           </div>
-        </div>
+        </a>
         <div class="nav">
           <a href="https://www.xrugen.ir/shop/"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
           <a href="#" class="active"><i class="fas fa-gavel"></i> لیست مجازات‌ها</a>
@@ -1393,7 +1394,7 @@
         style.id = 'highlight-style';
         style.textContent = `
           mark.highlight {
-            background-color: rgba(74, 186, 39, 0.3);
+            background-color: rgba(30, 136, 229, 0.3);
             color: #ffffff;
             padding: 2px 1px;
             border-radius: 3px;
