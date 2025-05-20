@@ -407,7 +407,7 @@
       border-color: var(--redstone-red);
     }
     
-    .rank-card.mythic {
+    .rank-card.champions {
       border-color: var(--emerald-green);
     }
     
@@ -422,23 +422,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.2em;
       transition: all 0.4s ease;
       position: relative;
       z-index: 1;
       transform-style: preserve-3d;
     }
     
-    .rank-icon::before {
-      content: '';
-      position: absolute;
+    .rank-icon img {
       width: 100%;
       height: 100%;
-      border-radius: 8px;
-      background-size: 32px 32px;
-      image-rendering: pixelated;
-      transform: translateZ(-10px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    }
+    
+    .rank-icon i {
+      font-size: 2.2em;
     }
     
     .hero .rank-icon {
@@ -446,39 +444,19 @@
       text-shadow: 0 0 10px var(--diamond-blue);
     }
     
-    .hero .rank-icon::before {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/diamond_block.png');
-      border: 2px solid var(--diamond-blue);
-    }
-    
     .hellborn .rank-icon {
       color: var(--redstone-red);
       text-shadow: 0 0 10px var(--redstone-red);
     }
     
-    .hellborn .rank-icon::before {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/redstone_block.png');
-      border: 2px solid var(--redstone-red);
-    }
-    
-    .mythic .rank-icon {
+    .champions .rank-icon {
       color: var(--emerald-green);
       text-shadow: 0 0 10px var(--emerald-green);
-    }
-    
-    .mythic .rank-icon::before {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/emerald_block.png');
-      border: 2px solid var(--emerald-green);
     }
     
     .empire .rank-icon {
       color: var(--gold-yellow);
       text-shadow: 0 0 10px var(--gold-yellow);
-    }
-    
-    .empire .rank-icon::before {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/gold_block.png');
-      border: 2px solid var(--gold-yellow);
     }
     
     .rank-card:hover .rank-icon {
@@ -504,7 +482,7 @@
       color: var(--redstone-red);
     }
     
-    .mythic .rank-title {
+    .champions .rank-title {
       color: var(--emerald-green);
     }
     
@@ -882,6 +860,270 @@
         transform: scale(1);
       }
     }
+
+    .minecraft-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(3px);
+    }
+    
+    .minecraft-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .minecraft-modal {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/planks.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      width: 90%;
+      max-width: 600px;
+      border: 6px solid #5c3d24;
+      box-shadow: 0 0 0 3px #271b11, 0 0 30px rgba(0, 0, 0, 0.7);
+      position: relative;
+      transform: translateY(50px) scale(0.9);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 4px;
+    }
+    
+    .minecraft-modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: -1;
+    }
+    
+    .minecraft-modal-overlay.active .minecraft-modal {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    
+    .minecraft-modal-header {
+      padding: 15px 20px;
+      border-bottom: 4px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+    }
+    
+    .minecraft-modal-header h2 {
+      margin: 0;
+      font-family: 'Minecraft', sans-serif;
+      font-size: 1.8em;
+      color: var(--text-lighter);
+      text-shadow: 2px 2px 0 #000;
+    }
+    
+    .hero-modal .minecraft-modal-header {
+      border-bottom-color: var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-modal-header {
+      border-bottom-color: var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-modal-header {
+      border-bottom-color: var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-modal-header {
+      border-bottom-color: var(--gold-yellow);
+    }
+    
+    .minecraft-modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    
+    .minecraft-modal-close:hover {
+      color: var(--accent);
+      transform: scale(1.1);
+      text-shadow: 0 0 10px var(--accent);
+    }
+    
+    .minecraft-modal-body {
+      padding: 25px;
+    }
+    
+    .minecraft-modal-title {
+      font-family: 'Minecraft', sans-serif;
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .hero-modal .minecraft-modal-title {
+      color: var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-modal-title {
+      color: var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-modal-title {
+      color: var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-modal-title {
+      color: var(--gold-yellow);
+    }
+    
+    .minecraft-permission-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .minecraft-permission-category {
+      margin-bottom: 25px;
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: calc(var(--i) * 0.1s);
+      opacity: 0;
+    }
+    
+    .minecraft-permission-category h3 {
+      font-family: 'Minecraft', sans-serif;
+      font-size: 1.4em;
+      margin: 0 0 15px;
+      padding: 8px 15px;
+      background: rgba(0,0,0,0.4);
+      border-right: 3px solid;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .hero-modal .minecraft-permission-category h3 {
+      border-color: var(--diamond-blue);
+      color: var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-permission-category h3 {
+      border-color: var(--redstone-red);
+      color: var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-permission-category h3 {
+      border-color: var(--emerald-green);
+      color: var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-permission-category h3 {
+      border-color: var(--gold-yellow);
+      color: var(--gold-yellow);
+    }
+    
+    .minecraft-permission-item {
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 3px;
+      position: relative;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      animation: slideUp 0.5s ease forwards;
+      animation-delay: calc((var(--j) + var(--i)) * 0.05s + 0.2s);
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    
+    .minecraft-permission-item:hover {
+      background: rgba(30, 136, 229, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .minecraft-permission-item::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      margin-left: 10px;
+      box-shadow: 0 0 5px var(--primary);
+    }
+    
+    .hero-modal .minecraft-permission-item::before {
+      background-color: var(--diamond-blue);
+      box-shadow: 0 0 5px var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-permission-item::before {
+      background-color: var(--redstone-red);
+      box-shadow: 0 0 5px var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-permission-item::before {
+      background-color: var(--emerald-green);
+      box-shadow: 0 0 5px var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-permission-item::before {
+      background-color: var(--gold-yellow);
+      box-shadow: 0 0 5px var(--gold-yellow);
+    }
+    
+    .minecraft-modal-footer {
+      padding: 20px;
+      border-top: 3px solid #3e2912;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+      text-align: center;
+    }
+    
+    .block-breaking {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .breaking-particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      animation: breakingParticle 0.8s ease-out forwards;
+    }
+    
+    @keyframes breakingParticle {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) rotate(var(--r));
+        opacity: 0;
+      }
+    }
     
     @media (max-width: 768px) {
       .shop-header h1 {
@@ -910,6 +1152,10 @@
       .logo .name {
         font-size: 1.8em;
       }
+
+      .minecraft-modal {
+        width: 95%;
+      }
     }
     
     @media (max-width: 600px) {
@@ -937,6 +1183,18 @@
       
       .rank-title {
         font-size: 1.8em;
+      }
+
+      .minecraft-modal-header h2 {
+        font-size: 1.4em;
+      }
+      
+      .minecraft-modal-title {
+        font-size: 1.6em;
+      }
+      
+      .minecraft-permission-category h3 {
+        font-size: 1.2em;
       }
     }
   </style>
@@ -967,10 +1225,11 @@
 
       <div class="shop-header">
         <h1 class="fade-in">فروشگاه X-rugen</h1>
-        <p class="slide-up">با خرید رنک‌های VIP از امکانات ویژه در سرور بهره‌مند شوید</p>
+        <p class="slide-up">با خرید رنک ها از امکانات ویژه در سرور بهره مند شوید</p>
       </div>
 
       <div class="ranks-grid">
+        <!-- Hero Rank -->
         <div class="rank-card hero fade-in" style="animation-delay: 0.1s;">
           <div class="rank-icon">
             <i class="fas fa-user-shield"></i>
@@ -981,18 +1240,19 @@
             <li style="--i:1;">دسترسی به 3 ست کیت اختصاصی</li>
             <li style="--i:2;">امکان استفاده از 5 هوم</li>
             <li style="--i:3;">رنگ نام در چت</li>
-            <li style="--i:4;">تگ VIP در تب لیست</li>
+            <li style="--i:4;">تگ HERO در تب لیست</li>
           </ul>
           <div class="rank-actions">
-            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-info" data-rank="hero">دسترسی‌ها</button>
             <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
         
+        <!-- Hellborn Rank -->
         <div class="rank-card hellborn fade-in" style="animation-delay: 0.2s;">
           <div class="popular-badge">محبوب</div>
           <div class="rank-icon">
-            <i class="fas fa-fire"></i>
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/HellBorn_Rank.png" alt="Hellborn Rank" />
           </div>
           <div class="rank-title">Hellborn</div>
           <div class="rank-price">100,000 تومان</div>
@@ -1004,17 +1264,17 @@
             <li style="--i:5;">افکت‌های ویژه</li>
           </ul>
           <div class="rank-actions">
-            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-info" data-rank="hellborn">دسترسی‌ها</button>
             <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
         
-        <div class="rank-card mythic fade-in" style="animation-delay: 0.3s;">
-          <div class="best-value-badge">بهترین ارزش</div>
+        <!-- Empire Rank -->
+        <div class="rank-card empire fade-in" style="animation-delay: 0.3s;">
           <div class="rank-icon">
-            <i class="fas fa-crown"></i>
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Empire_Rank.png" alt="Empire Rank" />
           </div>
-          <div class="rank-title">Mythic</div>
+          <div class="rank-title">Empire</div>
           <div class="rank-price">200,000 تومان</div>
           <ul class="rank-benefits">
             <li style="--i:1;">تمام مزایای رنک Hellborn</li>
@@ -1025,19 +1285,21 @@
             <li style="--i:6;">اولویت در ورود به سرور</li>
           </ul>
           <div class="rank-actions">
-            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-info" data-rank="empire">دسترسی‌ها</button>
             <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
         
-        <div class="rank-card empire fade-in" style="animation-delay: 0.4s;">
+        <!-- Champions Rank (formerly Mythic) -->
+        <div class="rank-card champions fade-in" style="animation-delay: 0.4s;">
+          <div class="best-value-badge">بهترین ارزش</div>
           <div class="rank-icon">
-            <i class="fas fa-gem"></i>
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Champions_Rank.png" alt="Champions Rank" />
           </div>
-          <div class="rank-title">Empire</div>
+          <div class="rank-title">Champions</div>
           <div class="rank-price">300,000 تومان</div>
           <ul class="rank-benefits">
-            <li style="--i:1;">تمام مزایای رنک Mythic</li>
+            <li style="--i:1;">تمام مزایای رنک Empire</li>
             <li style="--i:2;">دسترسی نامحدود به کیت‌ها</li>
             <li style="--i:3;">امکان استفاده از 20 هوم</li>
             <li style="--i:4;">رزرو اسلات اختصاصی</li>
@@ -1046,7 +1308,7 @@
             <li style="--i:7;">کانال تخصصی در دیسکورد</li>
           </ul>
           <div class="rank-actions">
-            <button class="minecraft-btn btn-info">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-info" data-rank="champions">دسترسی‌ها</button>
             <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
@@ -1090,6 +1352,200 @@
         </div>
       </div>
     </footer>
+  </div>
+
+  <!-- Hero Rank Modal -->
+  <div class="minecraft-modal-overlay" id="hero-modal">
+    <div class="minecraft-modal hero-modal">
+      <div class="minecraft-modal-header">
+        <h2><i class="fas fa-user-shield"></i> رنک Hero</h2>
+        <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="minecraft-modal-body">
+        <div class="minecraft-modal-title">دسترسی‌های رنک Hero</div>
+        <div class="minecraft-permission-list">
+          <div class="minecraft-permission-category" style="--i:1;">
+            <h3>کیت‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">کیت Hero با آیتم‌های الماس</div>
+            <div class="minecraft-permission-item" style="--j:2;">کیت غذای اختصاصی</div>
+            <div class="minecraft-permission-item" style="--j:3;">کیت ابزار معدنکاری ویژه</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:2;">
+            <h3>هوم‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">5 عدد هوم</div>
+            <div class="minecraft-permission-item" style="--j:2;">امکان تله‌پورت به هوم‌ها با دستور /home</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:3;">
+            <h3>چت</h3>
+            <div class="minecraft-permission-item" style="--j:1;">رنگ آبی روشن در چت</div>
+            <div class="minecraft-permission-item" style="--j:2;">تگ [Hero] در تب لیست</div>
+            <div class="minecraft-permission-item" style="--j:3;">امکان استفاده از ایموجی‌های اختصاصی</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:4;">
+            <h3>سایر مزایا</h3>
+            <div class="minecraft-permission-item" style="--j:1;">30 روز مدت اعتبار رنک</div>
+            <div class="minecraft-permission-item" style="--j:2;">10,000 سکه در هنگام خرید رنک</div>
+          </div>
+        </div>
+      </div>
+      <div class="minecraft-modal-footer">
+        <button class="minecraft-btn btn-buy">خرید رنک Hero</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Hellborn Rank Modal -->
+  <div class="minecraft-modal-overlay" id="hellborn-modal">
+    <div class="minecraft-modal hellborn-modal">
+      <div class="minecraft-modal-header">
+        <h2><i class="fas fa-fire"></i> رنک Hellborn</h2>
+        <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="minecraft-modal-body">
+        <div class="minecraft-modal-title">دسترسی‌های رنک Hellborn</div>
+        <div class="minecraft-permission-list">
+          <div class="minecraft-permission-category" style="--i:1;">
+            <h3>تمام مزایای Hero به علاوه:</h3>
+          </div>
+          <div class="minecraft-permission-category" style="--i:2;">
+            <h3>کیت‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">کیت Hellborn با آیتم‌های الماس ارتقا یافته</div>
+            <div class="minecraft-permission-item" style="--j:2;">کیت زره‌های ویژه با اینچنت‌های قوی</div>
+            <div class="minecraft-permission-item" style="--j:3;">کیت پوشن‌های قدرتمند</div>
+            <div class="minecraft-permission-item" style="--j:4;">کیت ساختمانی با بلاک‌های کمیاب</div>
+            <div class="minecraft-permission-item" style="--j:5;">کیت آیتم‌های تزئینی خاص</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:3;">
+            <h3>هوم‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">8 عدد هوم</div>
+            <div class="minecraft-permission-item" style="--j:2;">امکان تله‌پورت به هوم‌ها با دستور /home</div>
+            <div class="minecraft-permission-item" style="--j:3;">امکان تنظیم نام برای هوم‌ها</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:4;">
+            <h3>امکانات ویژه</h3>
+            <div class="minecraft-permission-item" style="--j:1;">امکان پرواز در لابی با دستور /fly</div>
+            <div class="minecraft-permission-item" style="--j:2;">افکت‌های ویژه مانند ذرات آتش و دود</div>
+            <div class="minecraft-permission-item" style="--j:3;">دسترسی به چت اختصاصی Hellborn</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:5;">
+            <h3>سایر مزایا</h3>
+            <div class="minecraft-permission-item" style="--j:1;">60 روز مدت اعتبار رنک</div>
+            <div class="minecraft-permission-item" style="--j:2;">20,000 سکه در هنگام خرید رنک</div>
+            <div class="minecraft-permission-item" style="--j:3;">نقشه با زوم بالاتر</div>
+          </div>
+        </div>
+      </div>
+      <div class="minecraft-modal-footer">
+        <button class="minecraft-btn btn-buy">خرید رنک Hellborn</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Empire Rank Modal -->
+  <div class="minecraft-modal-overlay" id="empire-modal">
+    <div class="minecraft-modal empire-modal">
+      <div class="minecraft-modal-header">
+        <h2><i class="fas fa-crown"></i> رنک Empire</h2>
+        <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="minecraft-modal-body">
+        <div class="minecraft-modal-title">دسترسی‌های رنک Empire</div>
+        <div class="minecraft-permission-list">
+          <div class="minecraft-permission-category" style="--i:1;">
+            <h3>تمام مزایای Hellborn به علاوه:</h3>
+          </div>
+          <div class="minecraft-permission-category" style="--i:2;">
+            <h3>کیت‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">دسترسی به 8 ست کیت اختصاصی</div>
+            <div class="minecraft-permission-item" style="--j:2;">کیت Empire با آیتم‌های ندرایت</div>
+            <div class="minecraft-permission-item" style="--j:3;">کیت آیتم‌های کمیاب ندر</div>
+            <div class="minecraft-permission-item" style="--j:4;">کیت آیتم‌های کمیاب اند</div>
+            <div class="minecraft-permission-item" style="--j:5;">کیت منابع ارزشمند (الماس، طلا، امرالد)</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:3;">
+            <h3>هوم‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">12 عدد هوم</div>
+            <div class="minecraft-permission-item" style="--j:2;">امکان تله‌پورت بدون محدودیت به هوم‌ها</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:4;">
+            <h3>دستورات ویژه</h3>
+            <div class="minecraft-permission-item" style="--j:1;">دستور /hat برای گذاشتن آیتم روی سر</div>
+            <div class="minecraft-permission-item" style="--j:2;">دستور /enderchest برای دسترسی به صندوق اندر</div>
+            <div class="minecraft-permission-item" style="--j:3;">دستور /nick برای تغییر نام</div>
+            <div class="minecraft-permission-item" style="--j:4;">دستور /repair برای تعمیر وسایل</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:5;">
+            <h3>پت‌ها و موارد اختصاصی</h3>
+            <div class="minecraft-permission-item" style="--j:1;">دسترسی به پت‌های اختصاصی Empire</div>
+            <div class="minecraft-permission-item" style="--j:2;">اولویت در ورود به سرور</div>
+            <div class="minecraft-permission-item" style="--j:3;">امکان شخصی‌سازی ظاهر اسلش‌ها با دستور /pseteffect</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:6;">
+            <h3>سایر مزایا</h3>
+            <div class="minecraft-permission-item" style="--j:1;">90 روز مدت اعتبار رنک</div>
+            <div class="minecraft-permission-item" style="--j:2;">50,000 سکه در هنگام خرید رنک</div>
+          </div>
+        </div>
+      </div>
+      <div class="minecraft-modal-footer">
+        <button class="minecraft-btn btn-buy">خرید رنک Empire</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Champions Rank Modal -->
+  <div class="minecraft-modal-overlay" id="champions-modal">
+    <div class="minecraft-modal champions-modal">
+      <div class="minecraft-modal-header">
+        <h2><i class="fas fa-trophy"></i> رنک Champions</h2>
+        <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="minecraft-modal-body">
+        <div class="minecraft-modal-title">دسترسی‌های رنک Champions</div>
+        <div class="minecraft-permission-list">
+          <div class="minecraft-permission-category" style="--i:1;">
+            <h3>تمام مزایای Empire به علاوه:</h3>
+          </div>
+          <div class="minecraft-permission-category" style="--i:2;">
+            <h3>کیت‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">دسترسی نامحدود به تمام کیت‌های سرور</div>
+            <div class="minecraft-permission-item" style="--j:2;">کیت Champions منحصر به فرد</div>
+            <div class="minecraft-permission-item" style="--j:3;">کیت‌های فصلی و ویژه‌ی ایونت‌ها</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:3;">
+            <h3>هوم‌ها و اسلات‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">20 عدد هوم با قابلیت تله‌پورت فوری</div>
+            <div class="minecraft-permission-item" style="--j:2;">رزرو اسلات اختصاصی در سرور</div>
+            <div class="minecraft-permission-item" style="--j:3;">قابلیت ایجاد سیستم وارپ اختصاصی</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:4;">
+            <h3>دستورات مدیریتی</h3>
+            <div class="minecraft-permission-item" style="--j:1;">دسترسی به ابزارهای مدیریتی محدود</div>
+            <div class="minecraft-permission-item" style="--j:2;">دستور /fly در تمام مناطق</div>
+            <div class="minecraft-permission-item" style="--j:3;">دستور /god برای حالت نامیرایی</div>
+            <div class="minecraft-permission-item" style="--j:4;">دستور /time و /weather برای تغییر زمان و آب و هوا</div>
+            <div class="minecraft-permission-item" style="--j:5;">دستور /vanish برای مخفی شدن</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:5;">
+            <h3>افکت‌های ویژه و پت‌ها</h3>
+            <div class="minecraft-permission-item" style="--j:1;">افکت‌های منحصر به فرد Champions</div>
+            <div class="minecraft-permission-item" style="--j:2;">پت‌های نادر و خاص</div>
+            <div class="minecraft-permission-item" style="--j:3;">امکان استفاده از پارتیکل‌های سفارشی</div>
+          </div>
+          <div class="minecraft-permission-category" style="--i:6;">
+            <h3>سایر مزایا</h3>
+            <div class="minecraft-permission-item" style="--j:1;">180 روز مدت اعتبار رنک</div>
+            <div class="minecraft-permission-item" style="--j:2;">100,000 سکه در هنگام خرید رنک</div>
+            <div class="minecraft-permission-item" style="--j:3;">کانال تخصصی در دیسکورد</div>
+            <div class="minecraft-permission-item" style="--j:4;">دسترسی به آپدیت‌ها قبل از عرضه عمومی</div>
+            <div class="minecraft-permission-item" style="--j:5;">مشاوره مستقیم با ادمین‌های سرور</div>
+          </div>
+        </div>
+      </div>
+      <div class="minecraft-modal-footer">
+        <button class="minecraft-btn btn-buy">خرید رنک Champions</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1154,6 +1610,169 @@
           audio.volume = 0.3;
           audio.play().catch(e => {});
         });
+      });
+      
+      // NEW: Modal functionality
+      const infoButtons = document.querySelectorAll('.btn-info');
+      const modalOverlays = document.querySelectorAll('.minecraft-modal-overlay');
+      const closeButtons = document.querySelectorAll('.minecraft-modal-close');
+      
+      // Function to close all modals
+      function closeAllModals() {
+        modalOverlays.forEach(overlay => {
+          overlay.classList.remove('active');
+        });
+        
+        // Remove existing breaking particles
+        const existingParticles = document.querySelectorAll('.block-breaking');
+        existingParticles.forEach(particle => {
+          particle.remove();
+        });
+      }
+      
+      // Open modal when info button is clicked
+      infoButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          const rank = this.getAttribute('data-rank');
+          const modal = document.getElementById(`${rank}-modal`);
+          
+          // Play breaking sound
+          const breakSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/stone1.mp3');
+          breakSound.volume = 0.4;
+          breakSound.play().catch(e => {});
+          
+          // Create block breaking animation
+          const blockBreaking = document.createElement('div');
+          blockBreaking.classList.add('block-breaking');
+          
+          // Add particles
+          for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('breaking-particle');
+            
+            // Random position around the button
+            const btnRect = button.getBoundingClientRect();
+            const centerX = btnRect.left + btnRect.width / 2;
+            const centerY = btnRect.top + btnRect.height / 2;
+            
+            particle.style.left = `${centerX}px`;
+            particle.style.top = `${centerY}px`;
+            
+            // Random color based on rank
+            let color;
+            switch(rank) {
+              case 'hero':
+                color = 'rgba(3, 169, 244, 0.8)';
+                break;
+              case 'hellborn':
+                color = 'rgba(255, 82, 82, 0.8)';
+                break;
+              case 'empire':
+                color = 'rgba(255, 182, 47, 0.8)';
+                break;
+              case 'champions':
+                color = 'rgba(74, 186, 39, 0.8)';
+                break;
+              default:
+                color = 'rgba(255, 255, 255, 0.8)';
+            }
+            
+            particle.style.backgroundColor = color;
+            
+            // Random direction
+            const tx = (Math.random() - 0.5) * 200;
+            const ty = (Math.random() - 0.5) * 200;
+            const r = Math.random() * 360;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            particle.style.setProperty('--r', `${r}deg`);
+            
+            blockBreaking.appendChild(particle);
+          }
+          
+          document.body.appendChild(blockBreaking);
+          
+          // Show modal with delay for animation
+          setTimeout(() => {
+            closeAllModals();
+            modal.classList.add('active');
+            
+            // Play open sound
+            const openSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+            openSound.volume = 0.3;
+            openSound.play().catch(e => {});
+          }, 400);
+        });
+      });
+      
+      // Close modal when close button is clicked
+      closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const modal = this.closest('.minecraft-modal-overlay');
+          
+          // Create closing animation
+          const modalElement = this.closest('.minecraft-modal');
+          modalElement.style.transform = 'scale(0.9) translateY(20px)';
+          modalElement.style.opacity = '0';
+          
+          // Play close sound
+          const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+          closeSound.volume = 0.2;
+          closeSound.play().catch(e => {});
+          
+          setTimeout(() => {
+            modal.classList.remove('active');
+            modalElement.style.transform = '';
+            modalElement.style.opacity = '';
+          }, 300);
+        });
+      });
+      
+      // Close modal when clicking outside
+      modalOverlays.forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+          if (e.target === this) {
+            const modalElement = this.querySelector('.minecraft-modal');
+            modalElement.style.transform = 'scale(0.9) translateY(20px)';
+            modalElement.style.opacity = '0';
+            
+            // Play close sound
+            const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+            closeSound.volume = 0.2;
+            closeSound.play().catch(e => {});
+            
+            setTimeout(() => {
+              this.classList.remove('active');
+              modalElement.style.transform = '';
+              modalElement.style.opacity = '';
+            }, 300);
+          }
+        });
+      });
+      
+      // Close modal with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const activeModal = document.querySelector('.minecraft-modal-overlay.active');
+          if (activeModal) {
+            const modalElement = activeModal.querySelector('.minecraft-modal');
+            modalElement.style.transform = 'scale(0.9) translateY(20px)';
+            modalElement.style.opacity = '0';
+            
+            // Play close sound
+            const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+            closeSound.volume = 0.2;
+            closeSound.play().catch(e => {});
+            
+            setTimeout(() => {
+              activeModal.classList.remove('active');
+              modalElement.style.transform = '';
+              modalElement.style.opacity = '';
+            }, 300);
+          }
+        }
       });
     });
   </script>
