@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>X-rugen - سرور ماینکرفت حرفه‌ای</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <title>X-rugen - فروشگاه</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #1e88e5; 
+      --primary: #1e88e5;
       --primary-dark: #1565c0;
       --primary-light: #42a5f5;
       --accent: #ffb62f; 
@@ -24,6 +24,10 @@
       --dirt-brown: #866043;
       --stone-gray: #7b7b7b;
       --obsidian: #150d1a;
+      --diamond-blue: #03a9f4;
+      --emerald-green: #4aba27;
+      --gold-yellow: #ffb62f;
+      --redstone-red: #ff5252;
     }
 
     html, body {
@@ -102,6 +106,12 @@
       border: 1px solid rgba(0,0,0,0.2);
       box-shadow: 0 0 8px var(--accent);
     }
+    
+    .particle.diamond {
+      background-color: var(--diamond-blue);
+      border: 1px solid rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px var(--diamond-blue);
+    }
 
     @keyframes float {
       0% {
@@ -126,29 +136,6 @@
       z-index: 1;
     }
 
-    .pixelated-border {
-      position: relative;
-    }
-    
-    .pixelated-border::before {
-      content: '';
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      bottom: -4px;
-      left: -4px;
-      background: repeating-linear-gradient(
-        to right,
-        var(--primary-dark),
-        var(--primary-dark) 8px,
-        var(--primary) 8px,
-        var(--primary) 16px
-      );
-      z-index: -1;
-      border-radius: 4px;
-      opacity: 0.4;
-    }
-
     .topbar {
       background: linear-gradient(90deg, rgba(20, 24, 32, 0.9), rgba(30, 36, 48, 0.9));
       padding: 15px 20px;
@@ -157,8 +144,9 @@
       align-items: center;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       flex-shrink: 0;
-      position: relative;
-      z-index: 5;
+      position: sticky;
+      top: 0;
+      z-index: 999;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 2px solid var(--primary);
@@ -208,6 +196,8 @@
       text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
       transition: all 0.3s ease;
       letter-spacing: 1px;
+      text-decoration: none;
+      color: var(--primary);
     }
 
     .logo .part1 {
@@ -271,7 +261,8 @@
       box-shadow: 0 0 8px var(--accent);
     }
     
-    .nav a:hover::after {
+    .nav a:hover::after,
+    .nav a.active::after {
       transform: scaleX(1);
       transform-origin: bottom left;
     }
@@ -283,88 +274,283 @@
       border-color: var(--primary-dark);
       background: rgba(30, 136, 229, 0.1);
     }
+    
+    .nav a.active {
+      color: var(--text-lighter);
+      text-shadow: 0 0 10px var(--primary);
+      border-color: var(--primary);
+      background: rgba(30, 136, 229, 0.15);
+    }
 
-    .hero {
+    .shop-header {
       position: relative;
-      min-height: 480px;
+      min-height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      padding: 60px 20px;
+      padding: 40px 20px;
+      margin-bottom: 40px;
       overflow: hidden;
       background-color: rgba(0,0,0,0.4);
     }
     
-    .hero::before {
+    .shop-header::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/panorama.png') center center / cover no-repeat;
-      opacity: 0.3;
-      filter: blur(2px);
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/gold_block.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      opacity: 0.1;
       z-index: -1;
-      animation: pan 60s infinite alternate ease-in-out;
     }
     
-    @keyframes pan {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
-    
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      background: rgba(0,0,0,0.6);
-      padding: 40px;
-      border-radius: 12px;
-      border: 4px solid var(--primary-dark);
-      box-shadow: 0 0 30px rgba(0,0,0,0.7);
-      max-width: 800px;
-      width: 90%;
-    }
-    
-    .hero-content::before {
+    .shop-header::after {
       content: '';
       position: absolute;
-      top: -8px;
-      left: -8px;
-      right: -8px;
-      bottom: -8px;
-      background: repeating-linear-gradient(
-        45deg,
-        var(--primary-dark),
-        var(--primary-dark) 10px,
-        transparent 10px,
-        transparent 20px
-      );
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(30, 136, 229, 0.2) 0%, transparent 70%);
       z-index: -1;
-      border-radius: 16px;
-      opacity: 0.2;
+      animation: pulse 5s ease-in-out infinite;
     }
     
-    .hero h1 {
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
+    }
+    
+    .shop-header h1 {
       font-size: 3.2em;
       margin-bottom: 20px;
       color: var(--text-lighter);
       font-weight: 900;
-      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
       font-family: 'Minecraft', sans-serif;
       text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
     }
     
-    .hero p {
-      font-size: 1.4em;
-      margin-bottom: 30px;
+    .shop-header p {
+      font-size: 1.3em;
+      margin: 5px 0 0;
       max-width: 700px;
       color: var(--text-light);
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.8);
+      position: relative;
+      z-index: 1;
+    }
+
+    .ranks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .rank-card {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/dark_oak_planks.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      border-radius: 8px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 0 4px #3e2912;
+      padding: 30px 25px;
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 2px solid rgba(60, 30, 15, 0.8);
+      height: 100%;
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
     
+    .rank-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 0;
+    }
+    
+    .rank-card:hover {
+      transform: translateY(-10px) rotateX(5deg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 4px #5a3e1f;
+      border-color: var(--accent-dark);
+    }
+    
+    .rank-card.hero {
+      border-color: var(--diamond-blue);
+    }
+    
+    .rank-card.hellborn {
+      border-color: var(--redstone-red);
+    }
+    
+    .rank-card.champions {
+      border-color: var(--emerald-green);
+    }
+    
+    .rank-card.empire {
+      border-color: var(--gold-yellow);
+    }
+    
+    .rank-icon {
+      margin: 0 auto 20px;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 1;
+      transform-style: preserve-3d;
+    }
+    
+    .rank-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    }
+    
+    .rank-icon i {
+      font-size: 2.2em;
+    }
+    
+    .hero .rank-icon {
+      color: var(--diamond-blue);
+      text-shadow: 0 0 10px var(--diamond-blue);
+    }
+    
+    .hellborn .rank-icon {
+      color: var(--redstone-red);
+      text-shadow: 0 0 10px var(--redstone-red);
+    }
+    
+    .champions .rank-icon {
+      color: var(--emerald-green);
+      text-shadow: 0 0 10px var(--emerald-green);
+    }
+    
+    .empire .rank-icon {
+      color: var(--gold-yellow);
+      text-shadow: 0 0 10px var(--gold-yellow);
+    }
+    
+    .rank-card:hover .rank-icon {
+      transform: translateY(-8px) translateZ(30px) scale(1.1);
+    }
+
+    .rank-title {
+      font-size: 2.2em;
+      font-weight: 900;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+      font-family: 'Minecraft', sans-serif;
+    }
+    
+    .hero .rank-title {
+      color: var(--diamond-blue);
+    }
+    
+    .hellborn .rank-title {
+      color: var(--redstone-red);
+    }
+    
+    .champions .rank-title {
+      color: var(--emerald-green);
+    }
+    
+    .empire .rank-title {
+      color: var(--gold-yellow);
+    }
+    
+    .rank-card:hover .rank-title {
+      transform: translateZ(20px);
+      text-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .rank-price {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: var(--text-lighter);
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      transition: all 0.3s ease;
+    }
+    
+    .rank-card:hover .rank-price {
+      transform: translateZ(15px);
+    }
+    
+    .rank-benefits {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 0 25px;
+      text-align: center;
+      flex-grow: 1;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .rank-benefits li {
+      padding: 8px 0;
+      color: var(--text-light);
+      position: relative;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+    }
+    
+    .rank-benefits li::before {
+      content: '✓';
+      color: var(--primary);
+      margin-right: 8px;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(30, 136, 229, 0.5);
+    }
+    
+    .rank-card:hover .rank-benefits li {
+      opacity: 1;
+      transform: translateY(-2px) translateZ(10px);
+      transition-delay: calc(0.05s * var(--i));
+    }
+
+    .rank-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
     .minecraft-btn {
       background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-dark) 100%);
       color: #ffffff;
@@ -390,396 +576,93 @@
       transform: translateY(4px);
       box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #5a3600, 0 6px 6px rgba(0,0,0,0.5);
     }
-    
-    .minecraft-btn i {
-      margin-left: 12px;
+
+    .btn-buy {
+      background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-dark) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1), 0 8px 0 0 #0d47a1, 0 10px 10px rgba(0,0,0,0.4);
+      border: 3px solid #0d47a1;
     }
 
-    .section {
-      padding: 40px 20px 50px;
-      text-align: center;
-      flex-grow: 1;
-      position: relative;
-      z-index: 1;
-      margin-top: 40px;
+    .btn-buy:hover {
+      background: linear-gradient(to bottom, var(--primary-light) 0%, var(--primary) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #0d47a1, 0 12px 12px rgba(0,0,0,0.4);
+    }
+    
+    .btn-buy:active {
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #0d47a1, 0 6px 6px rgba(0,0,0,0.4);
     }
 
-    .section-title {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 50px;
+    .btn-info {
+      background: linear-gradient(to bottom, var(--secondary) 0%, var(--secondary-dark) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1), 0 8px 0 0 #006680, 0 10px 10px rgba(0,0,0,0.4);
+      border: 3px solid #006680;
+    }
+
+    .btn-info:hover {
+      background: linear-gradient(to bottom, #00bdf2 0%, var(--secondary) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #006680, 0 12px 12px rgba(0,0,0,0.4);
     }
     
-    .section-title h2 {
-      font-size: 2.8em;
-      font-weight: 900;
-      font-family: 'Minecraft', sans-serif;
-      position: relative;
-      z-index: 1;
-      color: var(--text-lighter);
-      margin: 0;
-      text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
+    .btn-info:active {
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #006680, 0 6px 6px rgba(0,0,0,0.4);
     }
     
-    .section-title::before {
-      content: '';
+    .popular-badge {
       position: absolute;
-      width: 80px;
-      height: 5px;
-      background: var(--primary);
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 2px;
-      box-shadow: 0 0 10px var(--primary);
-    }
-    
-    .section-title::after {
-      content: '';
-      position: absolute;
-      width: 40%;
-      height: 2px;
-      background: rgba(30, 136, 229, 0.2);
-      bottom: -8px;
-      left: 30%;
-      border-radius: 2px;
-    }
-
-    .section p {
-      font-size: 1.3em;
-      color: #bbbbbb;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-      max-width: 800px;
-      margin: 0 auto 40px;
-    }
-
-    .gamemode-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-      margin-top: 50px;
-      padding: 0 20px;
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .gamemode {
-      position: relative;
-      background-size: cover;
-      background-position: center;
-      border-radius: 12px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-      height: 380px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 25px;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      border: 3px solid var(--primary-dark);
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-    
-    .gamemode:hover {
-      transform: translateY(-15px) rotateX(5deg);
-      box-shadow: 0 25px 50px rgba(30, 136, 229, 0.4);
-      border: 3px solid var(--primary);
-    }
-
-    .gamemode::before {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4), rgba(0,0,0,0.1));
-      border-radius: 9px;
-      z-index: 0;
-      transition: all 0.4s ease;
-    }
-    
-    .gamemode:hover::before {
-      background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.3), rgba(0,0,0,0));
-    }
-    
-    .gamemode::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 40%;
-      bottom: -5px;
-      left: 0;
-      background: linear-gradient(to top, var(--primary), transparent);
-      opacity: 0;
-      transition: all 0.4s ease;
-      z-index: 0;
-      filter: blur(20px);
-    }
-    
-    .gamemode:hover::after {
-      opacity: 0.2;
-    }
-
-    .gamemode-content {
-      position: relative;
-      z-index: 1;
-      color: #f0f0f0;
-      text-align: center;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-      transform: translateY(0);
-      transition: all 0.4s ease;
-    }
-    
-    .gamemode:hover .gamemode-content {
-      transform: translateY(-15px);
-    }
-
-    .gamemode-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 15px;
-      opacity: 0.9;
-      transition: all 0.4s ease;
-      transform: translateY(20px);
-      image-rendering: pixelated;
-      filter: drop-shadow(0 0 8px rgba(0,0,0,0.7));
-      border: 3px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 5px;
-      background-color: rgba(0,0,0,0.3);
-    }
-    
-    .gamemode:hover .gamemode-icon {
-      transform: translateY(0) scale(1.1);
-      opacity: 1;
-      background-color: rgba(0,0,0,0.5);
-      border-color: var(--primary);
-    }
-
-    .gamemode-title {
-      font-size: 2.2em;
-      font-weight: 900;
-      margin-bottom: 10px;
-      color: #ffffff;
-      text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
-      font-family: 'Minecraft', sans-serif;
-      letter-spacing: 1px;
-    }
-
-    .gamemode-date {
-      font-size: 1.1em;
-      color: var(--accent);
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
-
-    .tooltip {
-      font-size: 1em;
-      color: var(--text-light);
-      border: 2px solid var(--primary);
-      padding: 10px 20px;
-      border-radius: 8px;
-      background-color: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      user-select: none;
-      display: inline-block;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-      transform: translateY(10px);
-      opacity: 0.9;
+      top: 15px;
+      right: -30px;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/redstone_block.png');
+      background-size: 32px 32px;
+      color: white;
+      padding: 6px 40px;
+      font-size: 0.9em;
       font-weight: bold;
-    }
-    
-    .gamemode:hover .tooltip {
-      background-color: rgba(30, 136, 229, 0.2);
-      color: #ffffff;
-      box-shadow: 0 0 15px rgba(30, 136, 229, 0.5);
-      transform: translateY(0);
-      opacity: 1;
-    }
-    
-    .gamemode-desc {
-      max-width: 280px;
-      margin: 0 auto;
-      height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: all 0.4s ease;
-      color: #e8e8e8;
-      font-size: 1.1em;
-      letter-spacing: 0.5px;
-      line-height: 1.6;
-    }
-    
-    .gamemode:hover .gamemode-desc {
-      height: auto;
-      margin-top: 15px;
-      margin-bottom: 20px;
-      opacity: 1;
-    }
-
-    .info-section {
-      position: relative;
-      padding: 60px 20px;
-      margin-top: 80px;
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/stone_texture.png');
-      background-size: 128px 128px;
-      image-rendering: pixelated;
-      border-top: 4px solid var(--primary-dark);
-      border-bottom: 4px solid var(--primary-dark);
-      box-shadow: 0 0 40px rgba(0,0,0,0.8) inset;
-    }
-    
-    .info-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      z-index: 0;
-    }
-    
-    .info-section::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
-      opacity: 0.1;
-      z-index: 0;
-    }
-
-    .info-boxes {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 20px;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .info-box {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/planks_texture.png');
-      background-size: 64px 64px;
-      image-rendering: pixelated;
-      padding: 25px 40px;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 0 4px #3e2912;
-      font-size: 1.3em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: #ffffff;
-      user-select: none;
-      min-width: 240px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      transform: rotate(45deg);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+      z-index: 2;
       font-family: 'Minecraft', sans-serif;
       text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      border: 2px solid #5a0000;
     }
     
-    .info-box::before {
+    .popular-badge::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.4);
+      background-color: rgba(0,0,0,0.3);
       z-index: -1;
     }
-
-    .info-box:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7), 0 0 0 4px #5a3e1f;
-    }
     
-    .info-box i {
-      margin-left: 12px;
-      font-size: 1.3em;
-      color: var(--accent);
-      text-shadow: 0 0 10px rgba(255, 182, 47, 0.6);
-    }
-
-    .copy-success {
-      display: none;
-      margin-top: 20px;
-      color: var(--primary-light);
-      font-size: 1.1em;
-      font-weight: 600;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
-      padding: 12px 20px;
-      background: rgba(30, 136, 229, 0.15);
-      border-radius: 8px;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      animation: fadeInUp 0.5s ease;
-      z-index: 2;
-      position: relative;
-      border: 2px solid var(--primary-dark);
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .stats-container {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin: 70px auto 50px;
-      max-width: 1000px;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .stat-item {
-      text-align: center;
-      padding: 25px;
-      min-width: 220px;
-      background: rgba(0,0,0,0.3);
-      border-radius: 10px;
-      border: 3px solid var(--primary-dark);
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
-    
-    .stat-item:hover {
-      transform: translateY(-10px);
-      border-color: var(--primary);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(30, 136, 229, 0.3);
-    }
-    
-    .stat-number {
-      font-size: 3em;
-      font-weight: 900;
-      color: var(--accent);
-      margin-bottom: 15px;
-      text-shadow: 3px 3px 0 rgba(0,0,0,0.8);
-      font-family: 'Minecraft', sans-serif;
-    }
-    
-    .stat-label {
-      font-size: 1.2em;
-      color: var(--text-light);
+    .best-value-badge {
+      position: absolute;
+      top: 15px;
+      right: -30px;
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/emerald_block.png');
+      background-size: 32px 32px;
+      color: white;
+      padding: 6px 40px;
+      font-size: 0.9em;
       font-weight: bold;
+      transform: rotate(45deg);
+      box-shadow: 0 0 15px rgba(74, 186, 39, 0.4);
+      z-index: 2;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      border: 2px solid #2c6619;
+    }
+    
+    .best-value-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      z-index: -1;
     }
 
     footer.site-footer {
@@ -906,7 +789,7 @@
       color: var(--text-lighter);
       text-shadow: 0 0 10px var(--primary);
     }
-
+    
     .minecraft-clouds {
       position: fixed;
       top: 100px;
@@ -915,15 +798,16 @@
       height: 100%;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.05;
+      opacity: 0.03;
     }
     
     .minecraft-cloud {
       position: absolute;
       background: white;
-      border-radius: 10px;
+      border-radius: 0;
       opacity: 0.7;
       animation: cloud-movement linear infinite;
+      image-rendering: pixelated;
     }
 
     @keyframes cloud-movement {
@@ -934,67 +818,13 @@
         transform: translateX(105%);
       }
     }
-
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.3em;
-      }
-      
-      .hero p {
-        font-size: 1.1em;
-      }
-      
-      .section-title h2 {
-        font-size: 2.2em;
-      }
-      
-      .info-boxes {
-        flex-direction: column;
-        gap: 25px;
-      }
-
-      .nav {
-        gap: 15px;
-      }
-
-      .nav a {
-        font-size: 1.1em;
-        padding: 6px 10px;
-      }
-
-      .gamemode-container {
-        grid-template-columns: 1fr;
-      }
-
-      .info-box {
-        min-width: unset;
-        width: 100%;
-      }
-      
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .footer-logo {
-        justify-content: center;
-      }
-      
-      .logo .name {
-        font-size: 1.8em;
-      }
-      
-      .stat-item {
-        width: 100%;
-      }
-    }
     
     .fade-in {
-      animation: fadeIn 1s ease;
+      animation: fadeIn 1s ease forwards;
     }
     
     .slide-up {
-      animation: slideUp 1s ease;
+      animation: slideUp 1s ease forwards;
     }
     
     .pop-in {
@@ -1030,101 +860,464 @@
         transform: scale(1);
       }
     }
+
+    .minecraft-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(3px);
+    }
+    
+    .minecraft-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .minecraft-modal {
+      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/planks.png');
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      width: 90%;
+      max-width: 600px;
+      border: 6px solid #5c3d24;
+      box-shadow: 0 0 0 3px #271b11, 0 0 30px rgba(0, 0, 0, 0.7);
+      position: relative;
+      transform: translateY(50px) scale(0.9);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 4px;
+    }
+    
+    .minecraft-modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: -1;
+    }
+    
+    .minecraft-modal-overlay.active .minecraft-modal {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    
+    .minecraft-modal-header {
+      padding: 15px 20px;
+      border-bottom: 4px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+    }
+    
+    .minecraft-modal-header h2 {
+      margin: 0;
+      font-family: 'Minecraft', sans-serif;
+      font-size: 1.8em;
+      color: var(--text-lighter);
+      text-shadow: 2px 2px 0 #000;
+    }
+    
+    .hero-modal .minecraft-modal-header {
+      border-bottom-color: var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-modal-header {
+      border-bottom-color: var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-modal-header {
+      border-bottom-color: var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-modal-header {
+      border-bottom-color: var(--gold-yellow);
+    }
+    
+    .minecraft-modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    
+    .minecraft-modal-close:hover {
+      color: var(--accent);
+      transform: scale(1.1);
+      text-shadow: 0 0 10px var(--accent);
+    }
+    
+    .minecraft-modal-body {
+      padding: 25px;
+    }
+    
+    .minecraft-modal-title {
+      font-family: 'Minecraft', sans-serif;
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .hero-modal .minecraft-modal-title {
+      color: var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-modal-title {
+      color: var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-modal-title {
+      color: var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-modal-title {
+      color: var(--gold-yellow);
+    }
+    
+    .minecraft-permission-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .minecraft-permission-category {
+      margin-bottom: 25px;
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: calc(var(--i) * 0.1s);
+      opacity: 0;
+    }
+    
+    .minecraft-permission-category h3 {
+      font-family: 'Minecraft', sans-serif;
+      font-size: 1.4em;
+      margin: 0 0 15px;
+      padding: 8px 15px;
+      background: rgba(0,0,0,0.4);
+      border-right: 3px solid;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    }
+    
+    .hero-modal .minecraft-permission-category h3 {
+      border-color: var(--diamond-blue);
+      color: var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-permission-category h3 {
+      border-color: var(--redstone-red);
+      color: var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-permission-category h3 {
+      border-color: var(--emerald-green);
+      color: var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-permission-category h3 {
+      border-color: var(--gold-yellow);
+      color: var(--gold-yellow);
+    }
+    
+    .minecraft-permission-item {
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 3px;
+      position: relative;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      animation: slideUp 0.5s ease forwards;
+      animation-delay: calc((var(--j) + var(--i)) * 0.05s + 0.2s);
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    
+    .minecraft-permission-item:hover {
+      background: rgba(30, 136, 229, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .minecraft-permission-item::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      margin-left: 10px;
+      box-shadow: 0 0 5px var(--primary);
+    }
+    
+    .hero-modal .minecraft-permission-item::before {
+      background-color: var(--diamond-blue);
+      box-shadow: 0 0 5px var(--diamond-blue);
+    }
+    
+    .hellborn-modal .minecraft-permission-item::before {
+      background-color: var(--redstone-red);
+      box-shadow: 0 0 5px var(--redstone-red);
+    }
+    
+    .champions-modal .minecraft-permission-item::before {
+      background-color: var(--emerald-green);
+      box-shadow: 0 0 5px var(--emerald-green);
+    }
+    
+    .empire-modal .minecraft-permission-item::before {
+      background-color: var(--gold-yellow);
+      box-shadow: 0 0 5px var(--gold-yellow);
+    }
+    
+    .minecraft-modal-footer {
+      padding: 20px;
+      border-top: 3px solid #3e2912;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+      text-align: center;
+    }
+    
+    .block-breaking {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .breaking-particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      animation: breakingParticle 0.8s ease-out forwards;
+    }
+    
+    @keyframes breakingParticle {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) rotate(var(--r));
+        opacity: 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .shop-header h1 {
+        font-size: 2.6em;
+      }
+      
+      .shop-header p {
+        font-size: 1.1em;
+      }
+      
+      .popular-badge,
+      .best-value-badge {
+        right: -40px;
+        padding: 4px 40px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .footer-logo {
+        justify-content: center;
+      }
+      
+      .logo .name {
+        font-size: 1.8em;
+      }
+
+      .minecraft-modal {
+        width: 95%;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px;
+      }
+
+      .topbar .nav {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      .shop-header {
+        height: auto;
+        padding: 30px 20px;
+      }
+      
+      .shop-header h1 {
+        font-size: 2.2em;
+      }
+      
+      .rank-title {
+        font-size: 1.8em;
+      }
+
+      .minecraft-modal-header h2 {
+        font-size: 1.4em;
+      }
+      
+      .minecraft-modal-title {
+        font-size: 1.6em;
+      }
+      
+      .minecraft-permission-category h3 {
+        font-size: 1.2em;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="page-container">
-    <!-- Minecraft clouds animation -->
+    
     <div class="minecraft-clouds" id="minecraft-clouds"></div>
     
-    <!-- Animated block particles -->
+    
     <div class="particles" id="particles"></div>
     
-    <div class="topbar">
-      <a href="https://www.xrugen.ir/" style="text-decoration: none;">
-        <div class="logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
-          <div class="name">
-            <span class="part1">X</span><span class="part2">-Rugen</span>
+    <div class="content-wrap">
+      <div class="topbar">
+        <a href="https://www.xrugen.ir/" style="text-decoration: none;">
+          <div class="logo">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+            <div class="name">
+              <span class="part1">X</span><span class="part2">-Rugen</span>
+            </div>
+          </div>
+        </a>
+        <div class="nav">
+          <a href="https://www.xrugen.ir/shop/" class="active"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
+          <a href="https://www.xrugen.ir/punish/"><i class="fas fa-gavel"></i> لیست مجازات‌ها</a>
+        </div>
+      </div>
+
+      <div class="shop-header">
+        <h1 class="fade-in">فروشگاه X-rugen</h1>
+        <p class="slide-up">با خرید رنک ها از امکانات ویژه در سرور بهره مند شوید</p>
+      </div>
+
+      <div class="ranks-grid">
+        
+        <div class="rank-card hero fade-in" style="animation-delay: 0.1s;">
+          <div class="rank-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div class="rank-title">Hero</div>
+          <div class="rank-price">50,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">🎨 چت رنگی و فرمت‌شده</li>
+            <li style="--i:2;">🏡 قابلیت تنظیم ۳ نقطه خانه</li>
+            <li style="--i:3;">🧰 دسترسی به ابزارهای ویژه</li>
+            <li style="--i:4;">🕊️ پرواز در لابی BedWars</li>
+			<li style="--i:5;">🎁 کیت اختصاصی HERO</li>
+          </ul>
+          <div class="rank-actions">
+            <button class="minecraft-btn btn-info" data-rank="hero">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
           </div>
         </div>
-      </a>
-      <div class="nav">
-        <a href="https://www.xrugen.ir/shop/"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
-        <a href="https://www.xrugen.ir/punish/"><i class="fas fa-gavel"></i> لیست مجازات‌ها</a>
+        
+        
+        <div class="rank-card hellborn fade-in" style="animation-delay: 0.2s;">
+          <div class="popular-badge">محبوب</div>
+          <div class="rank-icon">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/HellBorn_Rank.png" alt="Hellborn Rank" />
+          </div>
+          <div class="rank-title">Hellborn</div>
+          <div class="rank-price">100,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">تمام مزایای رنک Hero</li>
+            <li style="--i:2;">🏷️ تغییر نام نمایشی با رنگ دلخواه</li>
+            <li style="--i:3;">🏡 قابلیت تنظیم ۶ نقطه خانه</li>
+            <li style="--i:4;">🎮 امکان ساخت بازی خصوصی</li>
+            <li style="--i:5;">🗃️ دسترسی به Ender Chest</li>
+			<li style="--i:6;">🎁 کیت اختصاصی HELLBORN</li>
+          </ul>
+          <div class="rank-actions">
+            <button class="minecraft-btn btn-info" data-rank="hellborn">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
+          </div>
+        </div>
+        
+        
+        <div class="rank-card empire fade-in" style="animation-delay: 0.3s;">
+          <div class="rank-icon">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Empire_Rank.png" alt="Empire Rank" />
+          </div>
+          <div class="rank-title">Empire</div>
+          <div class="rank-price">200,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">تمام مزایای رنک Hellborn</li>
+            <li style="--i:2;">🏡 تنظیم ۹ نقطه خانه</li>
+            <li style="--i:3;">ا🧲 کندن Spawner</li>
+            <li style="--i:4;">💾 حفظ XP پس از مرگ</li>
+            <li style="--i:5;">❤️ پرکردن کامل نوار قلب</li>
+            <li style="--i:6;">🚀 شروع فوری بازی BedWars</li>
+			<li style="--i:7;">👑 کیت اختصاصی EMPIRE</li>
+          </ul>
+          <div class="rank-actions">
+            <button class="minecraft-btn btn-info" data-rank="empire">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
+          </div>
+        </div>
+        
+        
+        <div class="rank-card champions fade-in" style="animation-delay: 0.4s;">
+          <div class="best-value-badge">بهترین ارزش</div>
+          <div class="rank-icon">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Champions_Rank.png" alt="Champions Rank" />
+          </div>
+          <div class="rank-title">Champions</div>
+          <div class="rank-price">300,000 تومان</div>
+          <ul class="rank-benefits">
+            <li style="--i:1;">تمام مزایای رنک Empire</li>
+			<li style="--i:2;">🏡 تنظیم ۱۲ نقطه خانه</li>
+            <li style="--i:3;">🛡️ نامیرا شدن در جزیره خود</li>
+            <li style="--i:4;">🛠️🧰 تعمیر تمام آیتم‌ها یکجا</li>
+            <li style="--i:5;">💖 پرکردن نوار قلب دیگران</li>
+            <li style="--i:6;">💸 فروش در /ah تا ۲۰ آیتم</li>
+            <li style="--i:7;">🏆 کیت انحصاری CHAMPIONS</li>
+          </ul>
+          <div class="rank-actions">
+            <button class="minecraft-btn btn-info" data-rank="champions">دسترسی‌ها</button>
+            <button class="minecraft-btn btn-buy">خرید</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="hero">
-      <div class="hero-content">
-        <h1 class="fade-in">سرور مرجع ماینکرفت ایران</h1>
-        <p class="slide-up">به زودی با تجربه‌ای جدید از بازی ماینکرفت به شما ملحق خواهیم شد!</p>
-        <button class="minecraft-btn pop-in" onclick="window.open('https://discord.gg/AJBF5CPmYx', '_blank')">
-          <i class="fab fa-discord"></i> پیوستن به دیسکورد
-        </button>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">
-        <h2>سرور در حال توسعه می‌باشد</h2>
-      </div>
-      <p>تیم ما در حال آماده‌سازی تجربه‌ای منحصر به فرد از بازی ماینکرفت برای شماست. اطلاعات بیشتر به‌زودی منتشر خواهد شد.</p>
-
-      <div class="gamemode-container">
-        <div class="gamemode pixelated-border" style="background-image: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/bedwarslogo.png')">
-          <div class="gamemode-content">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/bedwarslogo.png" alt="BedWars" class="gamemode-icon" />
-            <div class="gamemode-title">BedWars</div>
-            <div class="gamemode-date">Release: 1404/04/05</div>
-            <div class="gamemode-desc">مبارزه کنید، از تخت خود محافظت کنید و تخت‌های تیم‌های دیگر را نابود کنید!</div>
-            <div class="tooltip"><i class="fas fa-clock"></i> به‌زودی</div>
-          </div>
-        </div>
-        <div class="gamemode pixelated-border" style="background-image: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/skyminelogo.png')">
-          <div class="gamemode-content">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/skyminelogo.png" alt="SkyMine" class="gamemode-icon" />
-            <div class="gamemode-title">SkyMine</div>
-            <div class="gamemode-date">Release: 1404/04/10</div>
-            <div class="gamemode-desc">در آسمان جزیره خود را بسازید، منابع جمع‌آوری کنید و امپراتوری خود را گسترش دهید!</div>
-            <div class="tooltip"><i class="fas fa-clock"></i> به‌زودی</div>
-          </div>
-        </div>
-        <div class="gamemode pixelated-border" style="background-image: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/smplogo.png')">
-          <div class="gamemode-content">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/smplogo.png" alt="SMP" class="gamemode-icon" />
-            <div class="gamemode-title">SMP</div>
-            <div class="gamemode-date">Release: 1404/04/01</div>
-            <div class="gamemode-desc">تجربه بقا در دنیایی بزرگ همراه با دوستان، ساخت و ساز، و ماجراجویی!</div>
-            <div class="tooltip"><i class="fas fa-clock"></i> به‌زودی</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="stats-container">
-        <div class="stat-item">
-          <div class="stat-number">+3</div>
-          <div class="stat-label">گیم‌مود جذاب</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">24/7</div>
-          <div class="stat-label">پشتیبانی آنلاین</div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="info-section">
-      <div class="info-boxes">
-        <div class="info-box" onclick="copyText('MC.Xrugen.IR')">
-          <i class="fas fa-server"></i> IP سرور: MC.Xrugen.IR
-        </div>
-        <div class="info-box" onclick="window.open('https://discord.gg/AJBF5CPmYx', '_blank')">
-          <i class="fab fa-discord"></i> دیسکورد: Discord
-        </div>
-      </div>
-      <div id="copy-success-msg" class="copy-success"><i class="fas fa-check-circle"></i> کپی شد: MC.Xrugen.IR</div>
-    </div>
-    
     <footer class="site-footer">
       <div class="footer-content">
         <div class="footer-logo">
@@ -1135,6 +1328,7 @@
         </div>
         
         <div class="footer-nav">
+          <a href="https://www.xrugen.ir/">صفحه اصلی</a>
           <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
           <a href="https://www.xrugen.ir/punish/">لیست مجازات‌ها</a>
           <a href="#">قوانین</a>
@@ -1163,12 +1357,364 @@
     </footer>
   </div>
 
+
+<div class="minecraft-modal-overlay" id="hero-modal">
+  <div class="minecraft-modal hero-modal">
+    <div class="minecraft-modal-header">
+      <h2><i class="fas fa-user-shield"></i> رنک Hero</h2>
+      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="minecraft-modal-body">
+      <div class="minecraft-modal-title">دسترسی‌های رنک Hero</div>
+      <div class="minecraft-permission-list">
+        <div class="minecraft-permission-category" style="--i:1;">
+          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🎨 استفاده از چت رنگی و فرمت‌شده در چت‌ها</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:2;">
+          <h3>🛏️ BedWars</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز در لابی گیم‌مود BedWars</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:3;">
+          <h3>🌍 SMP</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🖌️ استفاده از رنگ و فرمت در تابلوها و انویل</div>
+          <div class="minecraft-permission-item" style="--j:2;">🏡 قابلیت تنظیم ۳ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:3;">🧰 دسترسی به ابزارهای ویژه</div>
+          <div class="minecraft-permission-item" style="--j:4;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:5;">🗑️ منوی سطل زباله</div>
+          <div class="minecraft-permission-item" style="--j:6;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:7;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:8;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:9;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:10;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:11;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:12;">🎩 امکان قرار دادن آیتم‌ها روی سر</div>
+          <div class="minecraft-permission-item" style="--j:13;">💸 افزایش ظرفیت فروش در /ah تا ۵ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:14;">👁️ مشاهده بازیکنان اطراف با /near</div>
+          <div class="minecraft-permission-item" style="--j:15;">🎁 دریافت کیت اختصاصی HERO</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:4;">
+          <h3>☁️ SkyMine</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز فقط در جزیره شخصی</div>
+          <div class="minecraft-permission-item" style="--j:2;">🖌️ استفاده از رنگ و فرمت در تابلوها و انویل</div>
+          <div class="minecraft-permission-item" style="--j:3;">🏡 قابلیت تنظیم ۳ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:4;">🧰 دسترسی کامل به ابزارهای زیر:</div>
+          <div class="minecraft-permission-item" style="--j:5;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:6;">🗑️ منوی سطل زباله</div>
+          <div class="minecraft-permission-item" style="--j:7;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:8;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:9;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:10;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:11;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:12;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:13;">🎩 امکان قرار دادن آیتم‌ها روی سر</div>
+          <div class="minecraft-permission-item" style="--j:14;">💸 افزایش ظرفیت فروش در /ah تا ۵ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:15;">👁️ مشاهده بازیکنان اطراف با /near</div>
+          <div class="minecraft-permission-item" style="--j:16;">🎁 دریافت کیت اختصاصی HERO</div>
+        </div>
+      </div>
+    </div>
+    <div class="minecraft-modal-footer">
+      <button class="minecraft-btn btn-buy">خرید رنک Hero</button>
+    </div>
+  </div>
+</div>
+  
+
+<div class="minecraft-modal-overlay" id="hellborn-modal">
+  <div class="minecraft-modal hellborn-modal">
+    <div class="minecraft-modal-header">
+      <h2><i class="fas fa-fire"></i> رنک Hellborn</h2>
+      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="minecraft-modal-body">
+      <div class="minecraft-modal-title">دسترسی‌های رنک Hellborn</div>
+      <div class="minecraft-permission-list">
+        <div class="minecraft-permission-category" style="--i:1;">
+          <h3>تمام مزایای Hero به علاوه:</h3>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:2;">
+          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🎨 استفاده از چت رنگی و فرمت‌شده</div>
+          <div class="minecraft-permission-item" style="--j:2;">🏷️ امکان تغییر نام نمایشی با رنگ و فرمت دلخواه</div>
+          <div class="minecraft-permission-item" style="--j:3;">✨ دسترسی به منوی Glow افکت درخشان</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:3;">
+          <h3>🛏️ BedWars</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز در لابی گیم‌مود BedWars</div>
+          <div class="minecraft-permission-item" style="--j:2;">🎮 امکان ساخت بازی خصوصی (Private Game)</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:4;">
+          <h3>🌍 SMP</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🖌️ استفاده از رنگ و فرمت در تابلوها و انویل</div>
+          <div class="minecraft-permission-item" style="--j:2;">🏡 قابلیت تنظیم ۶ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:3;">🧰 دسترسی کامل به ابزارهای ویژه:</div>
+          <div class="minecraft-permission-item" style="--j:4;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:5;">🗃️ Ender Chest</div>
+          <div class="minecraft-permission-item" style="--j:6;">🗑️ منوی سطل زباله</div>
+          <div class="minecraft-permission-item" style="--j:7;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:8;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:9;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:10;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:11;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:12;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:13;">🎩 قرار دادن آیتم‌ها روی سر</div>
+          <div class="minecraft-permission-item" style="--j:14;">💸 افزایش ظرفیت فروش در /ah تا ۱۰ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:15;">👁️ مشاهده بازیکنان اطراف با /near</div>
+          <div class="minecraft-permission-item" style="--j:16;">🌙 دسترسی به دید در شب (Night Vision)</div>
+          <div class="minecraft-permission-item" style="--j:17;">🍗 پرکردن نوار گرسنگی خود در هر زمان</div>
+          <div class="minecraft-permission-item" style="--j:18;">🧱 تبدیل Ingot به Block با یک دستور</div>
+          <div class="minecraft-permission-item" style="--j:19;">🎁 دریافت کیت‌های:</div>
+          <div class="minecraft-permission-item" style="--j:20;">🛡️ HERO</div>
+          <div class="minecraft-permission-item" style="--j:21;">🔥 HELLBORN</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:5;">
+          <h3>☁️ SkyMine</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز فقط در جزیره شخصی</div>
+          <div class="minecraft-permission-item" style="--j:2;">🖌️ استفاده از رنگ و فرمت در تابلوها و انویل</div>
+          <div class="minecraft-permission-item" style="--j:3;">🏡 قابلیت تنظیم ۳ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:4;">🧰 دسترسی کامل به ابزارهای زیر:</div>
+          <div class="minecraft-permission-item" style="--j:5;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:6;">🗃️ Ender Chest</div>
+          <div class="minecraft-permission-item" style="--j:7;">🗑️ منوی سطل زباله</div>
+          <div class="minecraft-permission-item" style="--j:8;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:9;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:10;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:11;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:12;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:13;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:14;">🎩 قرار دادن آیتم‌ها روی سر</div>
+          <div class="minecraft-permission-item" style="--j:15;">💸 افزایش ظرفیت فروش در /ah تا ۱۰ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:16;">👁️ مشاهده بازیکنان اطراف با /near</div>
+          <div class="minecraft-permission-item" style="--j:17;">🧱 تبدیل Ingot به Block</div>
+          <div class="minecraft-permission-item" style="--j:18;">🎁 دریافت کیت‌های:</div>
+          <div class="minecraft-permission-item" style="--j:19;">🛡️ HERO</div>
+          <div class="minecraft-permission-item" style="--j:20;">🔥 HELLBORN</div>
+        </div>
+      </div>
+    </div>
+    <div class="minecraft-modal-footer">
+      <button class="minecraft-btn btn-buy">خرید رنک Hellborn</button>
+    </div>
+  </div>
+</div>
+  
+
+<div class="minecraft-modal-overlay" id="empire-modal">
+  <div class="minecraft-modal empire-modal">
+    <div class="minecraft-modal-header">
+      <h2><i class="fas fa-crown"></i> رنک Empire</h2>
+      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="minecraft-modal-body">
+      <div class="minecraft-modal-title">دسترسی‌های رنک Empire</div>
+      <div class="minecraft-permission-list">
+        <div class="minecraft-permission-category" style="--i:1;">
+          <h3>تمام مزایای Hellborn به علاوه:</h3>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:2;">
+          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🎨 چت رنگی و فرمت‌شده</div>
+          <div class="minecraft-permission-item" style="--j:2;">🏷️ تغییر نام نمایشی با رنگ و فرمت دلخواه</div>
+          <div class="minecraft-permission-item" style="--j:3;">✨ منوی Glow (درخشان)</div>
+          <div class="minecraft-permission-item" style="--j:4;">💤 عبور از محدودیت AFK (عدم کیک شدن در حالت Away)</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:3;">
+          <h3>🛏️ BedWars</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز در لابی گیم‌مود BedWars</div>
+          <div class="minecraft-permission-item" style="--j:2;">🎮 ساخت بازی خصوصی (Private Game)</div>
+          <div class="minecraft-permission-item" style="--j:3;">🚀 شروع فوری بازی بدون نیاز به انتظار تایمر</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:4;">
+          <h3>🌍 SMP</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🖌️ استفاده از رنگ و فرمت در تابلوها و انویل</div>
+          <div class="minecraft-permission-item" style="--j:2;">🏡 تنظیم ۹ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:3;">🧰 دسترسی کامل به ابزارهای کاربردی:</div>
+          <div class="minecraft-permission-item" style="--j:4;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:5;">🗃️ Ender Chest</div>
+          <div class="minecraft-permission-item" style="--j:6;">🗑️ Trash Menu</div>
+          <div class="minecraft-permission-item" style="--j:7;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:8;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:9;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:10;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:11;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:12;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:13;">🎩 قرار دادن آیتم روی سر (Wearable Items)</div>
+          <div class="minecraft-permission-item" style="--j:14;">💸 فروش در /ah تا ۱۵ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:15;">👁️ دیدن پلیرهای اطراف با /near</div>
+          <div class="minecraft-permission-item" style="--j:16;">🌙 دید در شب (Night Vision)</div>
+          <div class="minecraft-permission-item" style="--j:17;">🍗 پرکردن غذای خود</div>
+          <div class="minecraft-permission-item" style="--j:18;">🍽️ پر کردن غذای دیگران</div>
+          <div class="minecraft-permission-item" style="--j:19;">❤️ پرکردن کامل نوار قلب</div>
+          <div class="minecraft-permission-item" style="--j:20;">🧱 تبدیل Ingot به Block</div>
+          <div class="minecraft-permission-item" style="--j:21;">💾 حفظ XP پس از مرگ</div>
+          <div class="minecraft-permission-item" style="--j:22;">🛠️ تعمیر آیتم در دست</div>
+          <div class="minecraft-permission-item" style="--j:23;">🧲 کندن Spawner</div>
+          <div class="minecraft-permission-item" style="--j:24;">⏱️ حذف تأخیر در تلپورت (No TP Wait)</div>
+          <div class="minecraft-permission-item" style="--j:25;">🎁 دریافت کیت‌های ویژه:</div>
+          <div class="minecraft-permission-item" style="--j:26;">🛡️ HERO</div>
+          <div class="minecraft-permission-item" style="--j:27;">🔥 HELLBORN</div>
+          <div class="minecraft-permission-item" style="--j:28;">👑 EMPIRE</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:5;">
+          <h3>☁️ SkyMine</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز در جزیره شخصی</div>
+          <div class="minecraft-permission-item" style="--j:2;">🖌️ استفاده از رنگ و فرمت در تابلوها و انویل</div>
+          <div class="minecraft-permission-item" style="--j:3;">🏡 تنظیم ۹ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:4;">🧰 دسترسی کامل به ابزارها:</div>
+          <div class="minecraft-permission-item" style="--j:5;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:6;">🗃️ Ender Chest</div>
+          <div class="minecraft-permission-item" style="--j:7;">🗑️ Trash Menu</div>
+          <div class="minecraft-permission-item" style="--j:8;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:9;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:10;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:11;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:12;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:13;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:14;">🎩 قرار دادن آیتم روی سر</div>
+          <div class="minecraft-permission-item" style="--j:15;">💸 فروش در /ah تا ۱۵ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:16;">👁️ دیدن پلیرهای اطراف با /near</div>
+          <div class="minecraft-permission-item" style="--j:17;">🍗 پرکردن غذای خود</div>
+          <div class="minecraft-permission-item" style="--j:18;">🍽️ پرکردن غذای دیگران</div>
+          <div class="minecraft-permission-item" style="--j:19;">❤️ پر کردن نوار قلب</div>
+          <div class="minecraft-permission-item" style="--j:20;">🧱 تبدیل Ingot به Block</div>
+          <div class="minecraft-permission-item" style="--j:21;">🛠️ تعمیر آیتم در دست</div>
+          <div class="minecraft-permission-item" style="--j:22;">⏱️ حذف تأخیر در تلپورت</div>
+          <div class="minecraft-permission-item" style="--j:23;">🎁 دریافت کیت‌های ویژه:</div>
+          <div class="minecraft-permission-item" style="--j:24;">🛡️ HERO</div>
+          <div class="minecraft-permission-item" style="--j:25;">🔥 HELLBORN</div>
+          <div class="minecraft-permission-item" style="--j:26;">👑 EMPIRE</div>
+        </div>
+      </div>
+    </div>
+    <div class="minecraft-modal-footer">
+      <button class="minecraft-btn btn-buy">خرید رنک Empire</button>
+    </div>
+  </div>
+</div>
+  
+
+<div class="minecraft-modal-overlay" id="champions-modal">
+  <div class="minecraft-modal champions-modal">
+    <div class="minecraft-modal-header">
+      <h2><i class="fas fa-trophy"></i> رنک Champions</h2>
+      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="minecraft-modal-body">
+      <div class="minecraft-modal-title">دسترسی‌های رنک Champions</div>
+      <div class="minecraft-permission-list">
+        <div class="minecraft-permission-category" style="--i:1;">
+          <h3>تمام مزایای Empire به علاوه:</h3>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:2;">
+          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🎨 چت رنگی و فرمت‌شده</div>
+          <div class="minecraft-permission-item" style="--j:2;">🏷️ تغییر نام نمایشی با رنگ و فرمت دلخواه</div>
+          <div class="minecraft-permission-item" style="--j:3;">✨ منوی Glow (درخشان)</div>
+          <div class="minecraft-permission-item" style="--j:4;">💤 عبور از محدودیت AFK (عدم کیک شدن)</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:3;">
+          <h3>🛏️ BedWars</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز در لابی BedWars</div>
+          <div class="minecraft-permission-item" style="--j:2;">🎮 ساخت بازی خصوصی (Private Game)</div>
+          <div class="minecraft-permission-item" style="--j:3;">🚀 شروع فوری بازی بدون انتظار تایمر</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:4;">
+          <h3>🌍 SMP</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🖌️ استفاده از رنگ و فرمت در تابلو و انویل</div>
+          <div class="minecraft-permission-item" style="--j:2;">🏡 تنظیم ۱۲ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:3;">🧰 دسترسی کامل به ابزارهای کاربردی:</div>
+          <div class="minecraft-permission-item" style="--j:4;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:5;">🗃️ Ender Chest</div>
+          <div class="minecraft-permission-item" style="--j:6;">🗑️ Trash Menu</div>
+          <div class="minecraft-permission-item" style="--j:7;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:8;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:9;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:10;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:11;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:12;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:13;">🎩 قرار دادن آیتم روی سر</div>
+          <div class="minecraft-permission-item" style="--j:14;">💸 فروش در /ah تا ۲۰ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:15;">👁️ دیدن پلیرهای اطراف با /near</div>
+          <div class="minecraft-permission-item" style="--j:16;">🌙 دید در شب (Night Vision)</div>
+          <div class="minecraft-permission-item" style="--j:17;">🍗 پرکردن غذای خود</div>
+          <div class="minecraft-permission-item" style="--j:18;">🍽️ پرکردن غذای دیگران</div>
+          <div class="minecraft-permission-item" style="--j:19;">❤️ پرکردن نوار قلب خود</div>
+          <div class="minecraft-permission-item" style="--j:20;">💖 پرکردن نوار قلب دیگران</div>
+          <div class="minecraft-permission-item" style="--j:21;">🧱 تبدیل Ingot به Block</div>
+          <div class="minecraft-permission-item" style="--j:22;">💾 حفظ XP پس از مرگ</div>
+          <div class="minecraft-permission-item" style="--j:23;">🛠️ تعمیر آیتم در دست</div>
+          <div class="minecraft-permission-item" style="--j:24;">🛠️🧰 تعمیر تمام آیتم‌ها</div>
+          <div class="minecraft-permission-item" style="--j:25;">🧲 کندن Spawner</div>
+          <div class="minecraft-permission-item" style="--j:26;">⏱️ حذف تأخیر در تلپورت</div>
+          <div class="minecraft-permission-item" style="--j:27;">🎁 دریافت کیت‌های ویژه:</div>
+          <div class="minecraft-permission-item" style="--j:28;">🛡️ HERO</div>
+          <div class="minecraft-permission-item" style="--j:29;">🔥 HELLBORN</div>
+          <div class="minecraft-permission-item" style="--j:30;">👑 EMPIRE</div>
+          <div class="minecraft-permission-item" style="--j:31;">🏆 CHAMPIONS</div>
+        </div>
+        
+        <div class="minecraft-permission-category" style="--i:5;">
+          <h3>☁️ SkyMine</h3>
+          <div class="minecraft-permission-item" style="--j:1;">🕊️ پرواز در جزیره شخصی</div>
+          <div class="minecraft-permission-item" style="--j:2;">🛡️ نامیرا شدن در جزیره خود (God Mode Island Only)</div>
+          <div class="minecraft-permission-item" style="--j:3;">🖌️ استفاده از رنگ و فرمت در تابلو و انویل</div>
+          <div class="minecraft-permission-item" style="--j:4;">🏡 تنظیم ۱۲ نقطه خانه (SetHome)</div>
+          <div class="minecraft-permission-item" style="--j:5;">🧰 دسترسی کامل به ابزارها:</div>
+          <div class="minecraft-permission-item" style="--j:6;">🛠️ Crafting Table</div>
+          <div class="minecraft-permission-item" style="--j:7;">🗃️ Ender Chest</div>
+          <div class="minecraft-permission-item" style="--j:8;">🗑️ Trash Menu</div>
+          <div class="minecraft-permission-item" style="--j:9;">⚒️ Grindstone</div>
+          <div class="minecraft-permission-item" style="--j:10;">🗺️ Cartography Table</div>
+          <div class="minecraft-permission-item" style="--j:11;">🪓 Anvil</div>
+          <div class="minecraft-permission-item" style="--j:12;">🪨 Stonecutter</div>
+          <div class="minecraft-permission-item" style="--j:13;">🔧 Smithing Table</div>
+          <div class="minecraft-permission-item" style="--j:14;">🧵 Loom</div>
+          <div class="minecraft-permission-item" style="--j:15;">🎩 قرار دادن آیتم روی سر</div>
+          <div class="minecraft-permission-item" style="--j:16;">💸 فروش در /ah تا ۲۰ آیتم</div>
+          <div class="minecraft-permission-item" style="--j:17;">👁️ دیدن پلیرهای اطراف</div>
+          <div class="minecraft-permission-item" style="--j:18;">🍗 پرکردن غذای خود</div>
+          <div class="minecraft-permission-item" style="--j:19;">🍽️ پرکردن غذای دیگران</div>
+          <div class="minecraft-permission-item" style="--j:20;">❤️ پر کردن نوار قلب خود</div>
+          <div class="minecraft-permission-item" style="--j:21;">💖 پر کردن نوار قلب دیگران</div>
+          <div class="minecraft-permission-item" style="--j:22;">🧱 تبدیل Ingot به Block</div>
+          <div class="minecraft-permission-item" style="--j:23;">🛠️ تعمیر آیتم در دست</div>
+          <div class="minecraft-permission-item" style="--j:24;">🛠️🧰 تعمیر تمام آیتم‌ها</div>
+          <div class="minecraft-permission-item" style="--j:25;">⏱️ حذف تأخیر در تلپورت</div>
+          <div class="minecraft-permission-item" style="--j:26;">🎁 دریافت کیت‌های ویژه:</div>
+          <div class="minecraft-permission-item" style="--j:27;">🛡️ HERO</div>
+          <div class="minecraft-permission-item" style="--j:28;">🔥 HELLBORN</div>
+          <div class="minecraft-permission-item" style="--j:29;">👑 EMPIRE</div>
+          <div class="minecraft-permission-item" style="--j:30;">🏆 CHAMPIONS</div>
+        </div>
+      </div>
+    </div>
+    <div class="minecraft-modal-footer">
+      <button class="minecraft-btn btn-buy">خرید رنک Champions</button>
+    </div>
+  </div>
+</div>
+
   <script>
     // Create Minecraft-style block particles
     document.addEventListener('DOMContentLoaded', function() {
       const particles = document.getElementById('particles');
       const particleCount = 30;
-      const blockTypes = ['dirt', 'stone', 'emerald', 'gold'];
+      const blockTypes = ['dirt', 'stone', 'emerald', 'gold', 'diamond'];
       
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
@@ -1216,49 +1762,180 @@
         
         clouds.appendChild(cloud);
       }
-    });
-
-    function copyText(text) {
-      if (!navigator.clipboard) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-          document.execCommand('copy');
-          showCopySuccess();
-        } catch (err) {
-          alert('کپی نشد! لطفا دستی کپی کنید.');
-        }
-        document.body.removeChild(textArea);
-        return;
-      }
-
-      navigator.clipboard.writeText(text).then(() => {
-        showCopySuccess();
-      }).catch(() => {
-        alert('کپی نشد! لطفا دستی کپی کنید.');
+      
+      // Add Minecraft-style button click sound effects
+      const buttons = document.querySelectorAll('.minecraft-btn');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
+          audio.volume = 0.3;
+          audio.play().catch(e => {});
+        });
       });
-    }
-
-    function showCopySuccess() {
-      const msg = document.getElementById("copy-success-msg");
-      msg.style.display = "block";
       
-      // Sound effect for Minecraft feel (optional)
-      const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
-      audio.volume = 0.3;
-      audio.play().catch(e => {});
+      // NEW: Modal functionality
+      const infoButtons = document.querySelectorAll('.btn-info');
+      const modalOverlays = document.querySelectorAll('.minecraft-modal-overlay');
+      const closeButtons = document.querySelectorAll('.minecraft-modal-close');
       
-      // Fade out after 2 seconds
-      setTimeout(() => {
-        msg.style.opacity = "0";
-        setTimeout(() => { 
-          msg.style.display = "none";
-          msg.style.opacity = "1";
-        }, 500);
-      }, 2000);
-    }
+      // Function to close all modals
+      function closeAllModals() {
+        modalOverlays.forEach(overlay => {
+          overlay.classList.remove('active');
+        });
+        
+        // Remove existing breaking particles
+        const existingParticles = document.querySelectorAll('.block-breaking');
+        existingParticles.forEach(particle => {
+          particle.remove();
+        });
+      }
+      
+      // Open modal when info button is clicked
+      infoButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          const rank = this.getAttribute('data-rank');
+          const modal = document.getElementById(`${rank}-modal`);
+          
+          // Play breaking sound
+          const breakSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/stone1.mp3');
+          breakSound.volume = 0.4;
+          breakSound.play().catch(e => {});
+          
+          // Create block breaking animation
+          const blockBreaking = document.createElement('div');
+          blockBreaking.classList.add('block-breaking');
+          
+          // Add particles
+          for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('breaking-particle');
+            
+            // Random position around the button
+            const btnRect = button.getBoundingClientRect();
+            const centerX = btnRect.left + btnRect.width / 2;
+            const centerY = btnRect.top + btnRect.height / 2;
+            
+            particle.style.left = `${centerX}px`;
+            particle.style.top = `${centerY}px`;
+            
+            // Random color based on rank
+            let color;
+            switch(rank) {
+              case 'hero':
+                color = 'rgba(3, 169, 244, 0.8)';
+                break;
+              case 'hellborn':
+                color = 'rgba(255, 82, 82, 0.8)';
+                break;
+              case 'empire':
+                color = 'rgba(255, 182, 47, 0.8)';
+                break;
+              case 'champions':
+                color = 'rgba(74, 186, 39, 0.8)';
+                break;
+              default:
+                color = 'rgba(255, 255, 255, 0.8)';
+            }
+            
+            particle.style.backgroundColor = color;
+            
+            // Random direction
+            const tx = (Math.random() - 0.5) * 200;
+            const ty = (Math.random() - 0.5) * 200;
+            const r = Math.random() * 360;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            particle.style.setProperty('--r', `${r}deg`);
+            
+            blockBreaking.appendChild(particle);
+          }
+          
+          document.body.appendChild(blockBreaking);
+          
+          // Show modal with delay for animation
+          setTimeout(() => {
+            closeAllModals();
+            modal.classList.add('active');
+            
+            // Play open sound
+            const openSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+            openSound.volume = 0.3;
+            openSound.play().catch(e => {});
+          }, 400);
+        });
+      });
+      
+      // Close modal when close button is clicked
+      closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const modal = this.closest('.minecraft-modal-overlay');
+          
+          // Create closing animation
+          const modalElement = this.closest('.minecraft-modal');
+          modalElement.style.transform = 'scale(0.9) translateY(20px)';
+          modalElement.style.opacity = '0';
+          
+          // Play close sound
+          const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+          closeSound.volume = 0.2;
+          closeSound.play().catch(e => {});
+          
+          setTimeout(() => {
+            modal.classList.remove('active');
+            modalElement.style.transform = '';
+            modalElement.style.opacity = '';
+          }, 300);
+        });
+      });
+      
+      // Close modal when clicking outside
+      modalOverlays.forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+          if (e.target === this) {
+            const modalElement = this.querySelector('.minecraft-modal');
+            modalElement.style.transform = 'scale(0.9) translateY(20px)';
+            modalElement.style.opacity = '0';
+            
+            // Play close sound
+            const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+            closeSound.volume = 0.2;
+            closeSound.play().catch(e => {});
+            
+            setTimeout(() => {
+              this.classList.remove('active');
+              modalElement.style.transform = '';
+              modalElement.style.opacity = '';
+            }, 300);
+          }
+        });
+      });
+      
+      // Close modal with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const activeModal = document.querySelector('.minecraft-modal-overlay.active');
+          if (activeModal) {
+            const modalElement = activeModal.querySelector('.minecraft-modal');
+            modalElement.style.transform = 'scale(0.9) translateY(20px)';
+            modalElement.style.opacity = '0';
+            
+            // Play close sound
+            const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
+            closeSound.volume = 0.2;
+            closeSound.play().catch(e => {});
+            
+            setTimeout(() => {
+              activeModal.classList.remove('active');
+              modalElement.style.transform = '';
+              modalElement.style.opacity = '';
+            }, 300);
+          }
+        }
+      });
+    });
   </script>
 </body>
 </html>
