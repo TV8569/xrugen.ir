@@ -1075,10 +1075,8 @@
 </head>
 <body>
   <div class="page-container">
-    <!-- Minecraft clouds animation -->
     <div class="minecraft-clouds" id="minecraft-clouds"></div>
     
-    <!-- Minecraft block particles -->
     <div class="particles" id="particles"></div>
     
     <div class="content-wrap">
@@ -1233,7 +1231,6 @@
   </div>
 
   <script>
-    // Create Minecraft-style block particles
     document.addEventListener('DOMContentLoaded', function() {
       const particles = document.getElementById('particles');
       const particleCount = 30;
@@ -1243,18 +1240,15 @@
         const particle = document.createElement('div');
         particle.classList.add('particle');
         
-        // Random block type
         const blockType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
         particle.classList.add(blockType);
         
-        // Random positioning and size
         const size = Math.random() * 20 + 8;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
         particle.style.left = `${Math.random() * 100}vw`;
         particle.style.top = `${Math.random() * 100}vh`;
         
-        // Random animation duration and delay
         const duration = Math.random() * 25 + 15;
         const delay = Math.random() * 15;
         particle.style.animationDuration = `${duration}s`;
@@ -1263,7 +1257,6 @@
         particles.appendChild(particle);
       }
       
-      // Create Minecraft clouds
       const clouds = document.getElementById('minecraft-clouds');
       const cloudCount = 8;
       
@@ -1271,14 +1264,12 @@
         const cloud = document.createElement('div');
         cloud.classList.add('minecraft-cloud');
         
-        // Random cloud size and position
         const width = Math.random() * 300 + 200;
         const height = Math.random() * 80 + 40;
         cloud.style.width = `${width}px`;
         cloud.style.height = `${height}px`;
         cloud.style.top = `${Math.random() * 500}px`;
         
-        // Random animation duration
         const duration = Math.random() * 120 + 80;
         cloud.style.animationDuration = `${duration}s`;
         cloud.style.animationDelay = `-${Math.random() * 80}s`;
@@ -1315,7 +1306,6 @@
       while (cells.length < 10) cells.push("-");
       const tr = document.createElement("tr");
       
-      // Apply fade-in and slide-up animation with increasing delay
       tr.classList.add('fade-in');
       tr.style.animationDelay = `${0.1 + (index * 0.05)}s`;
       
@@ -1325,22 +1315,18 @@
         
         if (/Permanent Ban/i.test(content)) {
           td.className = "permaban";
-          // Add icon for permaban
           content = `<i class="fas fa-skull-crossbones"></i> ${content}`;
         }
         else if (/Ban/i.test(content)) {
           td.className = "ban";
-          // Add icon for temporary ban
           content = `<i class="fas fa-ban"></i> ${content}`;
         }
         else if (/Mute/i.test(content)) {
           td.className = "mute";
-          // Add icon for mute
           content = `<i class="fas fa-comment-slash"></i> ${content}`;
         }
         else if (/Warn/i.test(content)) {
           td.className = "warn";
-          // Add icon for warning
           content = `<i class="fas fa-exclamation-triangle"></i> ${content}`;
         }
         
@@ -1351,7 +1337,6 @@
       tbody.appendChild(tr);
     });
 
-    // Fixed Search functionality that properly handles HTML elements
     const input = document.getElementById("searchInput");
     input.addEventListener("keyup", function () {
       const filter = input.value.toLowerCase();
@@ -1367,25 +1352,21 @@
         if (match && filter.trim() !== '') {
           anyMatch = true;
           
-          // Highlight the matching text, respecting HTML structure
           const cells = row.querySelectorAll('td');
           cells.forEach(cell => {
-            // Create a temporary element to work with
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = cell.innerHTML;
             
-            // Function to process text nodes
             const walkTextNodes = function(node, action) {
-              if (node.nodeType === 3) { // Text node
+              if (node.nodeType === 3) {
                 action(node);
-              } else if (node.nodeType === 1) { // Element node
+              } else if (node.nodeType === 1) { 
                 for (let i = 0; i < node.childNodes.length; i++) {
                   walkTextNodes(node.childNodes[i], action);
                 }
               }
             };
             
-            // Remove existing highlights
             const removeHighlights = function(parentNode) {
               const highlights = parentNode.querySelectorAll('mark.highlight');
               highlights.forEach(h => {
@@ -1393,13 +1374,11 @@
                 h.parentNode.replaceChild(textNode, h);
               });
               
-              // Normalize to combine adjacent text nodes
               parentNode.normalize();
             };
             
             removeHighlights(tempDiv);
             
-            // Find and highlight text
             const nodesToProcess = [];
             walkTextNodes(tempDiv, node => {
               if (node.nodeValue.toLowerCase().includes(filter)) {
@@ -1407,7 +1386,6 @@
               }
             });
             
-            // Process nodes that contain the search text
             nodesToProcess.forEach(textNode => {
               const content = textNode.nodeValue;
               const regex = new RegExp(`(${filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
@@ -1417,12 +1395,10 @@
               let match;
               
               while ((match = regex.exec(content)) !== null) {
-                // Add text before match
                 if (match.index > lastIndex) {
                   documentFragment.appendChild(document.createTextNode(content.substring(lastIndex, match.index)));
                 }
                 
-                // Add highlighted match
                 const mark = document.createElement('mark');
                 mark.className = 'highlight';
                 mark.appendChild(document.createTextNode(match[0]));
@@ -1431,20 +1407,16 @@
                 lastIndex = match.index + match[0].length;
               }
               
-              // Add remaining text
               if (lastIndex < content.length) {
                 documentFragment.appendChild(document.createTextNode(content.substring(lastIndex)));
               }
               
-              // Replace original text node with new content
               textNode.parentNode.replaceChild(documentFragment, textNode);
             });
             
-            // Update the cell with highlighted content
             cell.innerHTML = tempDiv.innerHTML;
           });
         } else if (filter.trim() === '') {
-          // Remove all highlights if search is empty
           const highlights = row.querySelectorAll('mark.highlight');
           highlights.forEach(h => {
             const parent = h.parentNode;
@@ -1454,7 +1426,6 @@
         }
       });
       
-      // Show a message if no results
       let noResults = document.getElementById('no-results');
       if (!anyMatch && filter.trim() !== '') {
         if (!noResults) {
@@ -1474,27 +1445,22 @@
       }
     });
 
-    // Toggle FAQ items
     function toggleFAQ(element) {
       const isActive = element.classList.contains('active');
       
-      // Close all other FAQs
       document.querySelectorAll('.faq-item.active').forEach(item => {
         if (item !== element) {
           item.classList.remove('active');
         }
       });
       
-      // Toggle the clicked FAQ
       element.classList.toggle('active', !isActive);
       
-      // Add Minecraft click sound effect
       const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
       audio.volume = 0.3;
       audio.play().catch(e => {});
     }
     
-    // Check if table needs horizontal scroll indicators
     function checkTableOverflow() {
       const tableContainer = document.getElementById('tableContainer');
       const table = document.getElementById('punishmentTable');
@@ -1506,7 +1472,6 @@
       }
     }
     
-    // Run on load and resize
     window.addEventListener('load', checkTableOverflow);
     window.addEventListener('resize', checkTableOverflow);
   </script>
