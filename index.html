@@ -1164,7 +1164,6 @@
   </div>
 
   <script>
-    // Create Minecraft-style block particles
     document.addEventListener('DOMContentLoaded', function() {
       const particles = document.getElementById('particles');
       const particleCount = 30;
@@ -1174,18 +1173,15 @@
         const particle = document.createElement('div');
         particle.classList.add('particle');
         
-        // Random block type
         const blockType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
         particle.classList.add(blockType);
         
-        // Random positioning and size
         const size = Math.random() * 20 + 8;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
         particle.style.left = `${Math.random() * 100}vw`;
         particle.style.top = `${Math.random() * 100}vh`;
         
-        // Random animation duration and delay
         const duration = Math.random() * 25 + 15;
         const delay = Math.random() * 15;
         particle.style.animationDuration = `${duration}s`;
@@ -1194,7 +1190,6 @@
         particles.appendChild(particle);
       }
       
-      // Create Minecraft clouds
       const clouds = document.getElementById('minecraft-clouds');
       const cloudCount = 8;
       
@@ -1202,14 +1197,12 @@
         const cloud = document.createElement('div');
         cloud.classList.add('minecraft-cloud');
         
-        // Random cloud size and position
         const width = Math.random() * 300 + 200;
         const height = Math.random() * 80 + 40;
         cloud.style.width = `${width}px`;
         cloud.style.height = `${height}px`;
         cloud.style.top = `${Math.random() * 500}px`;
         
-        // Random animation duration
         const duration = Math.random() * 120 + 80;
         cloud.style.animationDuration = `${duration}s`;
         cloud.style.animationDelay = `-${Math.random() * 80}s`;
@@ -1245,12 +1238,10 @@
       const msg = document.getElementById("copy-success-msg");
       msg.style.display = "block";
       
-      // Sound effect for Minecraft feel (optional)
       const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
       audio.volume = 0.3;
       audio.play().catch(e => {});
       
-      // Fade out after 2 seconds
       setTimeout(() => {
         msg.style.opacity = "0";
         setTimeout(() => { 
