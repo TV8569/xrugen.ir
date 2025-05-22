@@ -1660,7 +1660,6 @@
 </div>
 
   <script>
-    // Create Minecraft-style block particles
     document.addEventListener('DOMContentLoaded', function() {
       const particles = document.getElementById('particles');
       const particleCount = 30;
@@ -1670,18 +1669,15 @@
         const particle = document.createElement('div');
         particle.classList.add('particle');
         
-        // Random block type
         const blockType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
         particle.classList.add(blockType);
         
-        // Random positioning and size
         const size = Math.random() * 20 + 8;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
         particle.style.left = `${Math.random() * 100}vw`;
         particle.style.top = `${Math.random() * 100}vh`;
         
-        // Random animation duration and delay
         const duration = Math.random() * 25 + 15;
         const delay = Math.random() * 15;
         particle.style.animationDuration = `${duration}s`;
@@ -1690,7 +1686,6 @@
         particles.appendChild(particle);
       }
       
-      // Create Minecraft clouds
       const clouds = document.getElementById('minecraft-clouds');
       const cloudCount = 8;
       
@@ -1698,14 +1693,12 @@
         const cloud = document.createElement('div');
         cloud.classList.add('minecraft-cloud');
         
-        // Random cloud size and position
         const width = Math.random() * 300 + 200;
         const height = Math.random() * 80 + 40;
         cloud.style.width = `${width}px`;
         cloud.style.height = `${height}px`;
         cloud.style.top = `${Math.random() * 500}px`;
         
-        // Random animation duration
         const duration = Math.random() * 120 + 80;
         cloud.style.animationDuration = `${duration}s`;
         cloud.style.animationDelay = `-${Math.random() * 80}s`;
@@ -1713,7 +1706,6 @@
         clouds.appendChild(cloud);
       }
       
-      // Add Minecraft-style button click sound effects
       const buttons = document.querySelectorAll('.minecraft-btn');
       buttons.forEach(button => {
         button.addEventListener('click', () => {
@@ -1723,46 +1715,38 @@
         });
       });
       
-      // NEW: Modal functionality
       const infoButtons = document.querySelectorAll('.btn-info');
       const modalOverlays = document.querySelectorAll('.minecraft-modal-overlay');
       const closeButtons = document.querySelectorAll('.minecraft-modal-close');
       
-      // Function to close all modals
       function closeAllModals() {
         modalOverlays.forEach(overlay => {
           overlay.classList.remove('active');
         });
         
-        // Remove existing breaking particles
         const existingParticles = document.querySelectorAll('.block-breaking');
         existingParticles.forEach(particle => {
           particle.remove();
         });
       }
       
-      // Open modal when info button is clicked
       infoButtons.forEach(button => {
         button.addEventListener('click', function(e) {
           e.preventDefault();
           const rank = this.getAttribute('data-rank');
           const modal = document.getElementById(`${rank}-modal`);
           
-          // Play breaking sound
           const breakSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/stone1.mp3');
           breakSound.volume = 0.4;
           breakSound.play().catch(e => {});
           
-          // Create block breaking animation
           const blockBreaking = document.createElement('div');
           blockBreaking.classList.add('block-breaking');
           
-          // Add particles
           for (let i = 0; i < 40; i++) {
             const particle = document.createElement('div');
             particle.classList.add('breaking-particle');
             
-            // Random position around the button
             const btnRect = button.getBoundingClientRect();
             const centerX = btnRect.left + btnRect.width / 2;
             const centerY = btnRect.top + btnRect.height / 2;
@@ -1770,7 +1754,6 @@
             particle.style.left = `${centerX}px`;
             particle.style.top = `${centerY}px`;
             
-            // Random color based on rank
             let color;
             switch(rank) {
               case 'hero':
@@ -1791,7 +1774,6 @@
             
             particle.style.backgroundColor = color;
             
-            // Random direction
             const tx = (Math.random() - 0.5) * 200;
             const ty = (Math.random() - 0.5) * 200;
             const r = Math.random() * 360;
@@ -1805,12 +1787,10 @@
           
           document.body.appendChild(blockBreaking);
           
-          // Show modal with delay for animation
           setTimeout(() => {
             closeAllModals();
             modal.classList.add('active');
             
-            // Play open sound
             const openSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
             openSound.volume = 0.3;
             openSound.play().catch(e => {});
@@ -1818,17 +1798,14 @@
         });
       });
       
-      // Close modal when close button is clicked
       closeButtons.forEach(button => {
         button.addEventListener('click', function() {
           const modal = this.closest('.minecraft-modal-overlay');
           
-          // Create closing animation
           const modalElement = this.closest('.minecraft-modal');
           modalElement.style.transform = 'scale(0.9) translateY(20px)';
           modalElement.style.opacity = '0';
           
-          // Play close sound
           const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
           closeSound.volume = 0.2;
           closeSound.play().catch(e => {});
@@ -1841,7 +1818,6 @@
         });
       });
       
-      // Close modal when clicking outside
       modalOverlays.forEach(overlay => {
         overlay.addEventListener('click', function(e) {
           if (e.target === this) {
@@ -1849,7 +1825,6 @@
             modalElement.style.transform = 'scale(0.9) translateY(20px)';
             modalElement.style.opacity = '0';
             
-            // Play close sound
             const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
             closeSound.volume = 0.2;
             closeSound.play().catch(e => {});
@@ -1863,7 +1838,6 @@
         });
       });
       
-      // Close modal with Escape key
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
           const activeModal = document.querySelector('.minecraft-modal-overlay.active');
@@ -1872,7 +1846,6 @@
             modalElement.style.transform = 'scale(0.9) translateY(20px)';
             modalElement.style.opacity = '0';
             
-            // Play close sound
             const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
             closeSound.volume = 0.2;
             closeSound.play().catch(e => {});
