@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="ltr"> <!-- تغییر اینجا: ltr برای اسکرول‌بار سمت راست -->
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>X-Rugen - لیست مجازات‌ها</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X-rugen - PunishmentS</title>
+  <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
@@ -30,13 +31,19 @@
       --permaban-color: #ff0000;
     }
 
-    html, body {
+    html {
+      direction: ltr !important; /* این باعث میشه اسکرول‌بار سمت راست بیاد */
+    }
+
+    body {
       height: 100%;
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
       background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
       color: var(--text-light);
       overflow-x: hidden;
+      direction: rtl; /* این باعث میشه محتوای فارسی راست‌چین بمونه */
+      text-align: right;
     }
 
     ::-webkit-scrollbar {
@@ -1205,11 +1212,10 @@
           <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
           <a href="#">لیست مجازات‌ها</a>
           <a href="#">قوانین</a>
-          <a href="#">درباره ما</a>
         </div>
         
         <div>
-          ساخته شده با <span>♥</span> توسط تیم <span>X-rugen</span>
+          تمامی حقوق این سایت متعلق به تیم<span> X-Rugen </span> می باشد
         </div>
         
         <div class="social-links">
@@ -1219,7 +1225,7 @@
           <a href="#" class="social-link" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="#" class="social-link" target="_blank">
+          <a href="#" class="https://t.me/X_Rugen" target="_blank">
             <i class="fab fa-telegram"></i>
           </a>
           <a href="#" class="social-link" target="_blank">
