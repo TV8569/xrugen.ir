@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="fa" dir="ltr"> <!-- تغییر اینجا: ltr برای اسکرول‌بار سمت راست -->
+<html lang="fa" dir="rtl"> <!-- تغییر به dir="rtl" برای کل صفحه -->
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>X-rugen - PunishmentS</title>
-  <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>X-Rugen - Punishments</title>
+  <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
+    /* Global Variables */
     :root {
       --primary: #1e88e5; 
       --primary-dark: #1565c0;
@@ -17,9 +18,9 @@
       --accent-dark: #e69a00;
       --secondary: #00a8de; 
       --secondary-dark: #0089b5;
-      --bg-dark: #222730;
-      --bg-darker: #1a1f26;
-      --bg-light: #2a2f38;
+      --bg-dark: #121820; /* Changed for consistency with home.html */
+      --bg-darker: #1a1f26; /* Changed for consistency with home.html */
+      --bg-light: #22252b; /* Changed for consistency with home.html */
       --text-light: #e8e8e8;
       --text-lighter: #ffffff;
       --dirt-brown: #866043;
@@ -31,21 +32,46 @@
       --permaban-color: #ff0000;
     }
 
+    /* Base Styles */
     html {
-      direction: ltr !important; /* این باعث میشه اسکرول‌بار سمت راست بیاد */
+      direction: rtl; /* Set base direction to RTL */
+      scroll-behavior: smooth;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
     }
 
     body {
-      height: 100%;
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
       background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
       color: var(--text-light);
       overflow-x: hidden;
-      direction: rtl; /* این باعث میشه محتوای فارسی راست‌چین بمونه */
+      direction: rtl; /* Ensure content is RTL */
       text-align: right;
+      line-height: 1.6;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    /* Scrollbar Styling */
     ::-webkit-scrollbar {
       width: 10px;
       background: var(--bg-darker);
@@ -76,9 +102,10 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background-image: 
+      /* Background image on container is redundant if body has it, remove or adjust */
+      /* background-image: 
         url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png'),
-        linear-gradient(to bottom, rgba(25, 30, 40, 0.92), rgba(20, 24, 32, 0.96));
+        linear-gradient(to bottom, rgba(25, 30, 40, 0.92), rgba(20, 24, 32, 0.96)); */
     }
 
     .particles {
@@ -90,6 +117,7 @@
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
+      opacity: 0.8; /* Adjusted for better visibility of content */
     }
     
     .particle {
@@ -101,68 +129,64 @@
       image-rendering: pixelated; 
     }
 
-    .particle.dirt {
-      background-color: var(--dirt-brown);
-      border: 1px solid rgba(0,0,0,0.2);
-    }
-    
-    .particle.stone {
-      background-color: var(--stone-gray);
-      border: 1px solid rgba(0,0,0,0.2);
-    }
-    
-    .particle.emerald {
-      background-color: var(--primary);
-      border: 1px solid rgba(0,0,0,0.2);
-      box-shadow: 0 0 8px var(--primary);
-    }
-    
-    .particle.gold {
-      background-color: var(--accent);
-      border: 1px solid rgba(0,0,0,0.2);
-      box-shadow: 0 0 8px var(--accent);
-    }
-    
-    .particle.redstone {
-      background-color: var(--ban-color);
-      border: 1px solid rgba(0,0,0,0.2);
-      box-shadow: 0 0 8px var(--ban-color);
-    }
+    .particle.dirt { background-color: var(--dirt-brown); border: 1px solid rgba(0,0,0,0.2); }
+    .particle.stone { background-color: var(--stone-gray); border: 1px solid rgba(0,0,0,0.2); }
+    .particle.emerald { background-color: var(--primary); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--primary); }
+    .particle.gold { background-color: var(--accent); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--accent); }
+    .particle.redstone { background-color: var(--ban-color); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--ban-color); }
 
     @keyframes float {
-      0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.7;
-      }
-      90% {
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(50px) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.7; }
+      100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
+    }
+
+    .minecraft-clouds {
+      position: fixed;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.08; /* Adjusted for better visibility of content */
+    }
+    
+    .minecraft-cloud {
+      position: absolute;
+      background: white;
+      border-radius: 10px; /* Changed from 0 to 10px for cloud shape */
+      opacity: 0.7;
+      animation: cloud-movement linear infinite;
+      image-rendering: pixelated;
+    }
+
+    @keyframes cloud-movement {
+      0% { transform: translateX(-5%); }
+      100% { transform: translateX(105%); }
     }
 
     .content-wrap {
       flex: 1;
       position: relative;
       z-index: 1;
+      padding-top: 88px; /* Space for fixed topbar */
     }
 
+    /* Topbar (Header) - Default (Desktop) Styles */
     .topbar {
       background: linear-gradient(90deg, rgba(20, 24, 32, 0.9), rgba(30, 36, 48, 0.9));
       padding: 15px 20px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-between; /* Logo on right, nav and toggle on left */
       align-items: center;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       flex-shrink: 0;
-      position: sticky;
+      position: fixed; /* Changed to fixed for consistency with home.html */
       top: 0;
-      z-index: 999;
+      width: 100%;
+      z-index: 100;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 2px solid var(--primary);
@@ -212,8 +236,7 @@
       text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
       transition: all 0.3s ease;
       letter-spacing: 1px;
-      text-decoration: none;
-      color: var(--primary);
+      color: var(--primary); /* Keep consistent with home.html */
     }
 
     .logo .part1 {
@@ -247,6 +270,9 @@
     .nav {
       display: flex;
       gap: 30px;
+      flex-direction: row-reverse; /* For RTL display from right to left */
+      flex-grow: 1; /* Allows nav to take available space */
+      justify-content: center; /* Centers its content within that space */
     }
 
     .nav a {
@@ -260,7 +286,8 @@
       padding: 8px 15px;
       background: rgba(0,0,0,0.2);
       border: 2px solid transparent;
-      border-radius: 4px;
+      border-radius: 20px; /* Increased border-radius for rounded corners */
+      white-space: nowrap;
     }
     
     .nav a::after {
@@ -277,8 +304,7 @@
       box-shadow: 0 0 8px var(--accent);
     }
     
-    .nav a:hover::after,
-    .nav a.active::after {
+    .nav a:hover::after {
       transform: scaleX(1);
       transform-origin: bottom left;
     }
@@ -291,11 +317,30 @@
       background: rgba(30, 136, 229, 0.1);
     }
     
+    /* Active link style */
     .nav a.active {
-      color: var(--text-lighter);
-      text-shadow: 0 0 10px var(--primary);
-      border-color: var(--primary);
-      background: rgba(30, 136, 229, 0.15);
+      color: var(--accent); /* Highlight with accent color */
+      border-color: var(--accent); /* Change border color */
+      text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+    }
+
+    .nav a.active::after {
+        transform: scaleX(1); /* Ensure the underline is visible */
+        transform-origin: bottom left;
+        background: var(--accent);
+    }
+
+    /* Hamburger menu for mobile */
+    .menu-toggle {
+        display: none; /* Hidden by default on larger screens */
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.8em;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 101; /* Above other content */
+        order: -1; /* Places toggle to the left of the logo for desktop (but it's hidden) */
     }
     
     .punishment-header {
@@ -310,6 +355,7 @@
       margin-bottom: 20px;
       overflow: hidden;
       background-color: rgba(0,0,0,0.4);
+      margin-top: 0; /* No extra margin since content-wrap has padding-top */
     }
     
     .punishment-header::before {
@@ -373,10 +419,11 @@
 
     .search-box {
       text-align: center;
-      margin: 0 auto 30px;
+      margin: 30px auto; /* Adjusted margin */
       max-width: 600px;
       position: relative;
       z-index: 2;
+      padding: 0 20px; /* Added padding for mobile */
     }
 
     .search-box input {
@@ -452,6 +499,7 @@
       border-radius: 8px;
     }
     
+    /* Scroll shadows for table */
     .table-container::before {
       content: '';
       position: absolute;
@@ -463,7 +511,7 @@
       z-index: 3;
       pointer-events: none;
       opacity: 0.8;
-      display: none;
+      display: none; /* Controlled by JS based on overflow */
     }
     
     .table-container::after {
@@ -477,7 +525,7 @@
       z-index: 3;
       pointer-events: none;
       opacity: 0.8;
-      display: none;
+      display: none; /* Controlled by JS based on overflow */
     }
     
     .table-container.has-overflow::before,
@@ -487,12 +535,13 @@
 
     table {
       width: 100%;
+      min-width: 800px; /* Ensure table is wide enough to trigger scroll on smaller screens */
       border-collapse: collapse;
       background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/planks_texture.png');
       background-size: 64px 64px;
       image-rendering: pixelated;
       border-radius: 8px;
-      overflow: hidden;
+      overflow: hidden; /* Important for table border-radius */
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 0 4px #3e2912;
     }
     
@@ -522,7 +571,7 @@
       font-size: 1.1em;
       text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
       position: sticky;
-      top: 0;
+      top: 88px; /* Stick below the fixed topbar */
       z-index: 2;
       font-family: 'Minecraft', sans-serif;
       letter-spacing: 1px;
@@ -577,29 +626,10 @@
       z-index: -1;
     }
 
-    .ban { 
-      color: var(--ban-color); 
-      font-weight: bold;
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
-    }
-    
-    .permaban { 
-      color: var(--permaban-color); 
-      font-weight: bold;
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
-    }
-    
-    .mute { 
-      color: var(--mute-color); 
-      font-weight: bold;
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
-    }
-    
-    .warn { 
-      color: var(--warn-color); 
-      font-weight: bold;
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
-    }
+    .ban { color: var(--ban-color); font-weight: bold; text-shadow: 1px 1px 0 rgba(0,0,0,0.8); }
+    .permaban { color: var(--permaban-color); font-weight: bold; text-shadow: 1px 1px 0 rgba(0,0,0,0.8); }
+    .mute { color: var(--mute-color); font-weight: bold; text-shadow: 1px 1px 0 rgba(0,0,0,0.8); }
+    .warn { color: var(--warn-color); font-weight: bold; text-shadow: 1px 1px 0 rgba(0,0,0,0.8); }
     
     .quick-guide {
       max-width: 800px;
@@ -612,6 +642,7 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 0 4px #3e2912;
       position: relative;
       border: 1px solid rgba(30, 136, 229, 0.2);
+      z-index: 1; /* Ensure it's above particles */
     }
     
     .quick-guide::before {
@@ -670,34 +701,16 @@
       font-size: 1.3em;
     }
     
-    .guide-warn {
-      background: rgba(255, 204, 0, 0.2);
-      color: var(--warn-color);
-      border: 2px solid rgba(255, 204, 0, 0.3);
-    }
-    
-    .guide-mute {
-      background: rgba(85, 170, 255, 0.2);
-      color: var(--mute-color);
-      border: 2px solid rgba(85, 170, 255, 0.3);
-    }
-    
-    .guide-ban {
-      background: rgba(255, 102, 102, 0.2);
-      color: var(--ban-color);
-      border: 2px solid rgba(255, 102, 102, 0.3);
-    }
-    
-    .guide-permaban {
-      background: rgba(255, 0, 0, 0.2);
-      color: var(--permaban-color);
-      border: 2px solid rgba(255, 0, 0, 0.3);
-    }
+    .guide-warn { background: rgba(255, 204, 0, 0.2); color: var(--warn-color); border: 2px solid rgba(255, 204, 0, 0.3); }
+    .guide-mute { background: rgba(85, 170, 255, 0.2); color: var(--mute-color); border: 2px solid rgba(85, 170, 255, 0.3); }
+    .guide-ban { background: rgba(255, 102, 102, 0.2); color: var(--ban-color); border: 2px solid rgba(255, 102, 102, 0.3); }
+    .guide-permaban { background: rgba(255, 0, 0, 0.2); color: var(--permaban-color); border: 2px solid rgba(255, 0, 0, 0.3); }
     
     .faq-section {
       max-width: 800px;
       margin: 60px auto;
       padding: 0 20px;
+      z-index: 1; /* Ensure it's above particles */
     }
     
     .faq-title {
@@ -795,14 +808,14 @@
     }
 
     .faq-item.active .faq-answer {
-      max-height: 300px;
+      max-height: 300px; /* Adjust as needed */
       opacity: 1;
       padding: 20px;
     }
 
     .arrow {
       margin-left: 10px;
-      margin-right: 10px;
+      margin-right: 10px; /* Adjusted for RTL */
       display: inline-block;
       transition: transform 0.4s ease;
       color: var(--primary);
@@ -814,20 +827,22 @@
       color: var(--accent);
     }
 
+    /* Footer Section */
     footer.site-footer {
       background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/obsidian_texture.png');
-      background-size: 64px 64px;
+      background-size: 80px 80px;
       image-rendering: pixelated;
       color: var(--text-light);
       text-align: center;
-      padding: 50px 12px 55px;
-      font-size: 1.1em;
+      padding: 50px 20px 55px; /* Adjusted padding */
+      font-size: 1em; /* Adjusted font-size */
       border-top: 4px solid var(--primary-dark);
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.8); /* Adjusted shadow */
       margin-top: 100px;
       position: relative;
       z-index: 2;
       user-select: none;
+      flex-shrink: 0; /* Prevent footer from shrinking */
     }
     
     footer.site-footer::before {
@@ -850,24 +865,29 @@
       align-items: center;
       position: relative;
       z-index: 1;
+      direction: rtl;
     }
     
     .footer-logo {
       display: flex;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px; /* Adjusted margin */
+      justify-content: flex-start;
+      flex-grow: 1;
+      min-width: 200px;
     }
     
     .footer-logo img {
       width: 50px;
       height: 50px;
       margin-left: 15px;
-      border-radius: 6px;
-      border: 2px solid var(--primary-dark);
+      border-radius: 8px; /* Adjusted border-radius */
+      border: 3px solid var(--primary-dark); /* Adjusted border */
+      box-shadow: 0 0 12px var(--primary); /* Adjusted shadow */
     }
     
     .footer-logo .name {
-      font-size: 1.5em;
+      font-size: 1.8em; /* Adjusted font-size */
       font-weight: bold;
       font-family: 'Minecraft', sans-serif;
       text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
@@ -875,8 +895,11 @@
     
     .footer-nav {
       display: flex;
-      gap: 25px;
-      margin-bottom: 30px;
+      gap: 20px; /* Adjusted gap */
+      margin-bottom: 20px; /* Adjusted margin */
+      justify-content: center;
+      flex-grow: 1;
+      min-width: 300px;
     }
     
     .footer-nav a {
@@ -884,41 +907,64 @@
       text-decoration: none;
       transition: all 0.3s;
       font-weight: bold;
+      font-family: 'Vazirmatn', sans-serif; /* Added font-family */
       text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+      position: relative;
+      padding: 6px 0;
+      font-size: 1.05em; /* Adjusted font-size */
     }
     
+    .footer-nav a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        bottom: 0;
+        right: 0;
+        transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .footer-nav a:hover::after {
+        width: 100%;
+        left: 0;
+    }
+
     .footer-nav a:hover {
       color: var(--accent);
-      text-shadow: 0 0 8px rgba(255, 182, 47, 0.5);
+      text-shadow: 0 0 10px var(--accent-dark); /* Adjusted shadow */
     }
     
     .social-links {
       display: flex;
-      gap: 18px;
-      justify-content: center;
-      margin-top: 30px;
+      gap: 15px; /* Adjusted gap */
+      justify-content: flex-end;
+      margin-bottom: 20px; /* Adjusted margin */
+      flex-grow: 1;
+      min-width: 200px;
     }
     
     .social-link {
-      width: 46px;
-      height: 46px;
+      width: 45px; /* Adjusted size */
+      height: 45px; /* Adjusted size */
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.5);
-      border: 2px solid var(--primary-dark);
-      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.7); /* Adjusted opacity */
+      border: 3px solid var(--primary-dark); /* Adjusted border */
+      border-radius: 10px; /* Adjusted border-radius */
       color: var(--text-light);
-      font-size: 1.3em;
+      font-size: 1.5em; /* Adjusted font-size */
       transition: all 0.3s;
       text-decoration: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6); /* Adjusted shadow */
     }
     
     .social-link:hover {
       background: var(--primary);
-      color: #ffffff;
-      transform: translateY(-5px) rotate(5deg);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      color: var(--text-lighter); /* Adjusted color */
+      transform: translateY(-6px) rotate(8deg); /* Adjusted transform */
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), 0 0 20px var(--primary-light); /* Adjusted shadow */
       border-color: var(--accent);
     }
 
@@ -939,75 +985,22 @@
       text-shadow: 0 0 10px var(--primary);
     }
     
-    .minecraft-clouds {
-      position: fixed;
-      top: 100px;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.03;
-    }
+    /* Animations */
+    .fade-in { animation: fadeIn 1s ease forwards; }
+    .slide-up { animation: slideUp 1s ease forwards; }
+    .pop-in { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     
-    .minecraft-cloud {
-      position: absolute;
-      background: white;
-      border-radius: 0;
-      opacity: 0.7;
-      animation: cloud-movement linear infinite;
-      image-rendering: pixelated;
-    }
-
-    @keyframes cloud-movement {
-      0% {
-        transform: translateX(-5%);
-      }
-      100% {
-        transform: translateX(105%);
-      }
-    }
-    
-    .fade-in {
-      animation: fadeIn 1s ease forwards;
-    }
-    
-    .slide-up {
-      animation: slideUp 1s ease forwards;
-    }
-    
-    .pop-in {
-      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     
     @keyframes slideUp {
-      from { 
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to { 
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      80% {
-        transform: scale(1.1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+      0% { opacity: 0; transform: scale(0.8); }
+      80% { transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
     mark.highlight {
@@ -1018,65 +1011,181 @@
       font-weight: bold;
       text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
     }
-    
-    @media (max-width: 768px) {
-      .punishment-header h2 {
-        font-size: 2.6em;
-      }
-      
-      .punishment-header p {
-        font-size: 1.1em;
-      }
-      
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .footer-logo {
-        justify-content: center;
-      }
-      
-      .guide-items {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .guide-item {
-        width: 100%;
-      }
-      
-      .logo .name {
+
+    /* Back to Top Button Styles */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        left: 30px; /* For RTL, bottom-left */
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: var(--text-lighter);
+        border-radius: 50%;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.6), 0 0 25px var(--primary-light);
         font-size: 1.8em;
-      }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, background 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 999;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        border: 3px solid var(--primary-light);
+        cursor: pointer;
     }
-    
-    @media (max-width: 600px) {
+
+    .back-to-top:hover {
+        transform: translateY(-8px) scale(1.1);
+        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 0 35px var(--primary-light);
+    }
+
+    .back-to-top.show {
+        opacity: 1;
+        pointer-events: auto;
+        animation: fadeInPop 0.5s ease-out forwards;
+    }
+
+    .back-to-top i {
+        margin: 0;
+        line-height: 1;
+    }
+
+    @keyframes fadeInPop {
+        from { opacity: 0; transform: scale(0.5); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+      html { font-size: 15px; }
+
       .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 15px;
+        flex-direction: row; /* Keep elements in a row */
+        justify-content: space-between; /* Logo on right, hamburger on left */
+        padding: 15px 20px;
+      }
+      .logo { order: 2; } /* Keep logo on the right (start) in RTL */
+      .logo img { width: 50px; height: 50px; } /* Slightly smaller logo on mobile */
+      .logo .name { font-size: 2em; } /* Adjust font size */
+      
+      .nav {
+          display: none; /* Hidden by default on mobile */
+          flex-direction: column;
+          width: 100%;
+          background: linear-gradient(90deg, rgba(20, 24, 32, 0.95), rgba(30, 36, 48, 0.95));
+          position: absolute;
+          top: 88px; /* Below the topbar */
+          left: 0;
+          padding: 20px 0;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          align-items: center; /* Center links in mobile menu */
+          flex-grow: 0; /* Reset flex-grow for mobile */
+          justify-content: flex-start; /* Reset justify-content for mobile */
+      }
+      .nav.open {
+          display: flex; /* Show nav when open */
+      }
+      .nav a {
+          width: 90%; /* Make links take more width in mobile menu */
+          text-align: center;
+          padding: 12px 15px;
+          font-size: 1.3em;
+          margin-bottom: 10px; /* Spacing between mobile links */
+          border-radius: 15px; /* Ensure rounded corners on mobile menu items */
       }
 
-      .topbar .nav {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        gap: 20px;
+      .menu-toggle {
+          display: block; /* Show hamburger on smaller screens */
+          order: 1; /* Place it to the left of the logo in RTL */
+          margin-inline-end: 20px; /* Space from right edge */
       }
-      
-      .punishment-header {
-        height: auto;
-        padding: 30px 20px;
+
+      .punishment-header h2 { font-size: 2.8em; }
+      .punishment-header p { font-size: 1.1em; }
+
+      .search-box { padding: 0 15px; }
+      .search-box input { font-size: 1.1em; padding: 12px 20px 12px 45px; }
+      .search-box::before { font-size: 1.1em; left: 15px; }
+
+      .table-container { padding: 0 15px; }
+      th, td { padding: 12px 15px; font-size: 0.95em; }
+      th:first-child, td:first-child { min-width: 100px; } /* Ensure sticky column has minimum width */
+      th { top: 78px; } /* Adjust sticky header position for smaller topbar */
+
+      .quick-guide { padding: 20px; margin: 30px auto; }
+      .guide-title { font-size: 1.4em; }
+      .guide-items { gap: 15px; }
+      .guide-item { min-width: 130px; padding: 8px 12px; font-size: 0.9em;}
+      .guide-icon { width: 35px; height: 35px; font-size: 1.1em; margin-left: 8px; }
+
+      .faq-title { font-size: 2.2em; margin-bottom: 30px; }
+      .faq-item { margin: 15px 0; }
+      .faq-question { padding: 15px; font-size: 1.1em; }
+      .faq-answer { padding: 15px; font-size: 1em; }
+
+      .footer-content { flex-direction: column; gap: 15px; }
+      .footer-logo, .footer-nav, .social-links { justify-content: center; width: 100%; margin-bottom: 0; }
+      .footer-logo img { margin-left: 0; margin-right: 10px; }
+
+      .back-to-top {
+          width: 50px;
+          height: 50px;
+          font-size: 1.5em;
+          bottom: 20px;
+          left: 20px;
       }
-      
-      .punishment-header h2 {
-        font-size: 2.2em;
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 14px; }
+
+      .topbar {
+          flex-direction: column; /* Stack logo and nav vertically */
+          gap: 10px;
+          padding: 10px 15px;
       }
-      
-      .faq-title {
-        font-size: 2em;
-      }
+      .logo { margin-bottom: 5px; } /* Add small margin below logo when stacked */
+      .logo img { width: 45px; height: 45px; } /* Even smaller logo */
+      .logo .name { font-size: 1.8em; }
+
+      th { top: 65px; } /* Adjust sticky header for even smaller topbar */
+
+      .punishment-header h2 { font-size: 2.4em; }
+      .punishment-header p { font-size: 1em; }
+      .search-box input { font-size: 1em; padding: 10px 15px 10px 40px; }
+      .search-box::before { font-size: 1em; left: 10px; }
+
+      th, td { padding: 10px; font-size: 0.9em; }
+
+      .quick-guide { padding: 15px; }
+      .guide-title { font-size: 1.2em; }
+      .guide-items { flex-direction: column; align-items: center; gap: 10px; }
+      .guide-item { width: 90%; min-width: unset; }
+
+      .faq-title { font-size: 2em; margin-bottom: 25px; }
+      .faq-question { padding: 12px; font-size: 1em; }
+      .faq-answer { padding: 12px; font-size: 0.9em; }
+
+      .footer-logo img { margin-right: 5px; } /* Adjust spacing for logo in footer */
+    }
+
+    @media (max-width: 480px) {
+        .topbar { padding: 8px 10px; }
+        .logo img { width: 40px; height: 40px; }
+        .logo .name { font-size: 1.6em; }
+        .punishment-header h2 { font-size: 2em; }
+        .punishment-header p { font-size: 0.9em; }
+        .search-box { padding: 0 10px; }
+        .search-box input { font-size: 0.9em; padding: 8px 12px 8px 35px; }
+        .search-box::before { font-size: 0.9em; left: 8px; }
+        th, td { padding: 8px; font-size: 0.8em; }
+        .guide-title { font-size: 1.1em; }
+        .faq-title { font-size: 1.8em; }
     }
   </style>
 </head>
@@ -1090,16 +1199,20 @@
       <div class="topbar">
         <a href="https://www.xrugen.ir/" style="text-decoration: none;">
           <div class="logo">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="" />
             <div class="name">
               <span class="part1">X</span><span class="part2">-Rugen</span>
             </div>
           </div>
         </a>
+        <!-- Hamburger menu button -->
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="nav">
-          <a href="https://www.xrugen.ir/rules/"><i class="fas fa-scroll"></i> قوانین</a>
+          <a href="#" class="active"><i class="fas fa-gavel"></i> پانیشمنت</a>
           <a href="https://www.xrugen.ir/shop/"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
-          <a href="#" class="active"><i class="fas fa-gavel"></i> لیست مجازات‌ها</a>
+          <a href="https://www.xrugen.ir/rules/"><i class="fas fa-scroll"></i> قوانین</a>
         </div>
       </div>
 
@@ -1163,7 +1276,7 @@
             <strong>اگر اشتباهاً مجازات شدم، چطور اعتراض کنم؟</strong>
           </div>
           <div class="faq-answer">
-            می‌توانید از طریق سرور دیسکورد رسمی X-rugen، درخواست بررسی ارسال کنید. در کانال #ticket-support یک تیکت باز کنید و توضیحات کامل را به همراه مدارک احتمالی ارائه دهید. تیم مدیریت سرور در اسرع وقت به درخواست شما رسیدگی خواهد کرد.
+            می‌توانید از طریق سرور دیسکورد رسمی X-Rugen، درخواست بررسی ارسال کنید. در کانال #ticket-support یک تیکت باز کنید و توضیحات کامل را به همراه مدارک احتمالی ارائه دهید. تیم مدیریت سرور در اسرع وقت به درخواست شما رسیدگی خواهد کرد.
           </div>
         </div>
         
@@ -1173,7 +1286,7 @@
             <strong>چگونه می‌توانم با تیم استف ارتباط بگیرم؟</strong>
           </div>
           <div class="faq-answer">
-            از طریق دیسکورد رسمی سرور X-rugen می‌توانید با تیم مدیریت ارتباط بگیرید. پس از پیوستن به دیسکورد، در کانال #staff-contact یا با ایجاد تیکت در کانال #ticket-support می‌توانید پیام خود را برای تیم مدیریت ارسال کنید. همچنین می‌توانید در سرور ماینکرفت از دستور !ticket استفاده کنید.
+            از طریق دیسکورد رسمی سرور X-Rugen می‌توانید با تیم مدیریت ارتباط بگیرید. پس از پیوستن به دیسکورد، در کانال #staff-contact یا با ایجاد تیکت در کانال #ticket-support می‌توانید پیام خود را برای تیم مدیریت ارسال کنید. همچنین می‌توانید در سرور ماینکرفت از دستور !ticket استفاده کنید.
           </div>
         </div>
         
@@ -1202,7 +1315,7 @@
     <footer class="site-footer">
       <div class="footer-content">
         <div class="footer-logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="" />
           <div class="name">
             <span class="part1">X</span><span class="part2">-Rugen</span>
           </div>
@@ -1210,7 +1323,7 @@
         
         <div class="footer-nav">
           <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
-          <a href="https://www.xrugen.ir/punish/">لیست مجازات‌ها</a>
+          <a href="https://www.xrugen.ir/punish/">پانیشمنت </a>
           <a href="https://www.xrugen.ir/rules/">قوانین</a>
         </div>
         
@@ -1236,8 +1349,14 @@
     </footer>
   </div>
 
+  <!-- دکمه بازگشت به بالا -->
+  <a href="#top" class="back-to-top" aria-label="بازگشت به بالا">
+      <i class="fas fa-arrow-up"></i>
+  </a>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Particle and Cloud Generation (same as before)
       const particles = document.getElementById('particles');
       const particleCount = 30;
       const blockTypes = ['dirt', 'stone', 'emerald', 'gold', 'redstone'];
@@ -1275,6 +1394,7 @@
         cloud.style.width = `${width}px`;
         cloud.style.height = `${height}px`;
         cloud.style.top = `${Math.random() * 500}px`;
+        cloud.style.left = `-${Math.random() * 80}vw`;
         
         const duration = Math.random() * 120 + 80;
         cloud.style.animationDuration = `${duration}s`;
@@ -1282,9 +1402,9 @@
         
         clouds.appendChild(cloud);
       }
-    });
 
-    const punishmentData = `چیت زدن	-	1D Ban	3D Ban	7D Ban	14D Ban	30D Ban	30D Ban	Permanent Ban	-
+      // Punishment Table Data and Filtering (same as before)
+      const punishmentData = `چیت زدن	-	1D Ban	3D Ban	7D Ban	14D Ban	30D Ban	30D Ban	Permanent Ban	-
 فحاشی	2 Warns	2h Mute	6h Mute	1D Mute + 6h Ban	7D Mute + 1D Ban	7D Ban	7D Ban	Permanent Ban	-
 آزار و اذیت	1 Warns	2h Mute	6h Mute	1D Ban	3D Ban	7D Ban	7D Ban	Permanent Ban	-
 گریف کردن	-	6h Ban	1D Ban	2D Ban	3D Ban	7D Ban	14D Ban	14D Ban + Account Delete	Permanent Ban
@@ -1451,7 +1571,8 @@
       }
     });
 
-    function toggleFAQ(element) {
+    // FAQ Toggle Function (same as before)
+    window.toggleFAQ = function(element) {
       const isActive = element.classList.contains('active');
       
       document.querySelectorAll('.faq-item.active').forEach(item => {
@@ -1467,6 +1588,7 @@
       audio.play().catch(e => {});
     }
     
+    // Check Table Overflow Function (same as before)
     function checkTableOverflow() {
       const tableContainer = document.getElementById('tableContainer');
       const table = document.getElementById('punishmentTable');
@@ -1480,6 +1602,51 @@
     
     window.addEventListener('load', checkTableOverflow);
     window.addEventListener('resize', checkTableOverflow);
+
+    // Back to Top Button Logic
+    const backToTopBtn = document.querySelector('.back-to-top');
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+    }
+
+    // Handle active navigation link
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav a');
+    navLinks.forEach(link => {
+        if (link.href === window.location.href) {
+            link.classList.add('active');
+        } else if (currentPath.includes(link.pathname) && link.pathname !== '/') {
+             link.classList.add('active');
+        }
+    });
+
+    // Hamburger menu toggle functionality
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+
+    if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('open');
+            // Toggle between fa-bars and fa-times icons
+            menuToggle.querySelector('i').classList.toggle('fa-bars');
+            menuToggle.querySelector('i').classList.toggle('fa-times');
+        });
+    }
+  });
   </script>
 </body>
 </html>
