@@ -2,13 +2,14 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>X-rugen - Rules</title>
-  <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>X-Rugen - Rules</title>
+  <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
+    /* Global Variables */
     :root {
       --primary: #1e88e5;
       --primary-dark: #1565c0;
@@ -17,24 +18,31 @@
       --accent-dark: #e69a00;
       --secondary: #00a8de;
       --secondary-dark: #0089b5;
-      --bg-dark: #222730;
-      --bg-darker: #1a1f26;
-      --bg-light: #2a2f38;
+      --bg-dark: #121820; /* Changed for consistency with home.html */
+      --bg-darker: #1a1f26; /* Changed for consistency with home.html */
+      --bg-light: #22252b; /* Changed for consistency with home.html */
       --text-light: #e8e8e8;
       --text-lighter: #ffffff;
       --dirt-brown: #866043;
       --stone-gray: #7b7b7b;
       --obsidian: #150d1a;
-      --rule-text-color: #d1d1d1; /* رنگ متن قوانین */
-      --rule-strong-color: var(--accent); /* رنگ متن بولد شده قوانین */
+      --rule-text-color: #d1d1d1;
+      --rule-strong-color: var(--accent);
     }
 
+    /* Base Styles */
     html {
       direction: rtl;
+      scroll-behavior: smooth;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
     }
 
     body {
-      height: 100%;
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
       background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
@@ -42,27 +50,26 @@
       overflow-x: hidden;
       direction: rtl;
       text-align: right;
-    }
-
-    .content {
+      line-height: 1.6;
       position: relative;
-      z-index: 2;
-      color: #fff;
-      text-align: center;
-      padding: 100px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    p {
-      font-size: 1.5em;
-      max-width: 800px;
-      margin: 0 auto;
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      image-rendering: pixelated;
     }
 
+    /* Scrollbar Styling */
     ::-webkit-scrollbar {
       width: 10px;
       background: var(--bg-darker);
@@ -80,13 +87,10 @@
     }
 
     .page-container {
-      min-height: 100vh;
+      min-height: 100%;
       display: flex;
       flex-direction: column;
       position: relative;
-      background-image:
-        url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png'),
-        linear-gradient(to bottom, rgba(25, 30, 40, 0.92), rgba(20, 24, 32, 0.96));
     }
 
     .particles {
@@ -98,6 +102,7 @@
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
+      opacity: 0.8;
     }
 
     .particle {
@@ -109,88 +114,66 @@
       image-rendering: pixelated;
     }
 
-    .particle.dirt {
-      background-color: var(--dirt-brown);
-      border: 1px solid rgba(0,0,0,0.2);
-    }
-
-    .particle.stone {
-      background-color: var(--stone-gray);
-      border: 1px solid rgba(0,0,0,0.2);
-    }
-
-    .particle.emerald {
-      background-color: var(--primary);
-      border: 1px solid rgba(0,0,0,0.2);
-      box-shadow: 0 0 8px var(--primary);
-    }
-
-    .particle.gold {
-      background-color: var(--accent);
-      border: 1px solid rgba(0,0,0,0.2);
-      box-shadow: 0 0 8px var(--accent);
-    }
+    .particle.dirt { background-color: var(--dirt-brown); border: 1px solid rgba(0,0,0,0.2); }
+    .particle.stone { background-color: var(--stone-gray); border: 1px solid rgba(0,0,0,0.2); }
+    .particle.emerald { background-color: var(--primary); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--primary); }
+    .particle.gold { background-color: var(--accent); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--accent); }
 
     @keyframes float {
-      0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.7;
-      }
-      90% {
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(50px) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.7; }
+      100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
+    }
+
+    .minecraft-clouds {
+      position: fixed;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.08;
+    }
+
+    .minecraft-cloud {
+      position: absolute;
+      background: white;
+      border-radius: 10px;
+      opacity: 0.7;
+      animation: cloud-movement linear infinite;
+      image-rendering: pixelated;
+    }
+
+    @keyframes cloud-movement {
+      0% { transform: translateX(-5%); }
+      100% { transform: translateX(105%); }
     }
 
     .content-wrap {
       flex: 1;
       position: relative;
       z-index: 1;
+      padding-top: 88px; /* Space for fixed topbar */
     }
 
-    .pixelated-border {
-      position: relative;
-    }
-
-    .pixelated-border::before {
-      content: '';
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      bottom: -4px;
-      left: -4px;
-      background: repeating-linear-gradient(
-        to right,
-        var(--primary-dark),
-        var(--primary-dark) 8px,
-        var(--primary) 8px,
-        var(--primary) 16px
-      );
-      z-index: -1;
-      border-radius: 4px;
-      opacity: 0.4;
-    }
-
+    /* Topbar (Header) - Default (Desktop) Styles */
     .topbar {
       background: linear-gradient(90deg, rgba(20, 24, 32, 0.9), rgba(30, 36, 48, 0.9));
       padding: 15px 20px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-between; /* Logo on right, nav and toggle on left */
       align-items: center;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       flex-shrink: 0;
-      position: relative;
-      z-index: 5;
+      position: fixed; /* Changed to fixed for consistency with home.html */
+      top: 0;
+      width: 100%;
+      z-index: 100;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 2px solid var(--primary);
-      direction: rtl;
     }
 
     .topbar::after {
@@ -207,9 +190,8 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 15px; /* فاصله بین لوگو و متن */
+      gap: 15px;
       transition: all 0.3s ease;
-      position: relative; /* برای افکت تابش */
     }
 
     .logo:hover {
@@ -224,7 +206,6 @@
       transition: all 0.3s ease;
       border: 2px solid rgba(30, 136, 229, 0.3);
       image-rendering: pixelated;
-      margin-left: 15px; /* فاصله از متن نام سرور */
     }
 
     .logo:hover img {
@@ -239,12 +220,12 @@
       text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
       transition: all 0.3s ease;
       letter-spacing: 1px;
+      color: var(--primary);
     }
 
     .logo .part1 {
       color: var(--primary);
       position: relative;
-      text-shadow: 0 0 10px var(--primary); /* افکت تابش */
     }
 
     .logo .part1::after {
@@ -273,7 +254,9 @@
     .nav {
       display: flex;
       gap: 30px;
-      flex-direction: row-reverse; /* برای اینکه منوها از راست به چپ بچینن */
+      flex-direction: row-reverse; /* For RTL display from right to left */
+      flex-grow: 1; /* Allows nav to take available space */
+      justify-content: center; /* Centers its content within that space */
     }
 
     .nav a {
@@ -287,8 +270,8 @@
       padding: 8px 15px;
       background: rgba(0,0,0,0.2);
       border: 2px solid transparent;
-      border-radius: 4px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.3); /* سایه پیش‌فرض برای برجستگی */
+      border-radius: 20px; /* Increased border-radius for rounded corners */
+      white-space: nowrap;
     }
 
     .nav a::after {
@@ -316,24 +299,33 @@
       transform: translateY(-3px);
       border-color: var(--primary-dark);
       background: rgba(30, 136, 229, 0.1);
-      box-shadow: 0 0 15px rgba(30, 136, 229, 0.5); /* سایه هنگام هاور */
     }
 
-    .nav a.active-nav {
-      background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-dark) 100%);
-      border-color: var(--accent);
-      color: var(--text-lighter);
-      text-shadow: 0 0 10px rgba(255, 182, 47, 0.5), 0 0 20px rgba(255, 182, 47, 0.3);
-      box-shadow: 0 0 15px var(--accent);
-      transform: translateY(-2px); /* کمی بالاتر برای تاکید بیشتر */
+    /* Active link style */
+    .nav a.active {
+      color: var(--accent); /* Highlight with accent color */
+      border-color: var(--accent); /* Change border color */
+      text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
     }
 
-    .nav a.active-nav::after {
-        transform: scaleX(1); /* همیشه فعال باشد */
-        background: var(--text-lighter); /* رنگ خط زیرین */
-        box-shadow: 0 0 8px var(--text-lighter);
+    .nav a.active::after {
+        transform: scaleX(1); /* Ensure the underline is visible */
+        transform-origin: bottom left;
+        background: var(--accent);
     }
 
+    /* Hamburger menu for mobile */
+    .menu-toggle {
+        display: none; /* Hidden by default on larger screens */
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.8em;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 101; /* Above other content */
+        order: -1; /* Places toggle to the left of the logo for desktop (but it's hidden) */
+    }
 
     .hero {
       position: relative;
@@ -346,6 +338,7 @@
       padding: 60px 20px;
       overflow: hidden;
       background-color: rgba(0,0,0,0.4);
+      margin-top: 0; /* Remove extra margin, padding-top on content-wrap handles this */
     }
 
     .hero::before {
@@ -520,13 +513,13 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       position: relative;
       overflow: hidden;
-      display: none; /* مخفی کردن اولیه */
-      backdrop-filter: blur(5px); /* اضافه کردن بلور */
+      display: none; /* Hide by default */
+      backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
     }
 
     .rule-category.active {
-        display: block; /* نمایش زمانی که فعال است */
+        display: block; /* Show when active */
     }
 
     .rule-category::before {
@@ -546,7 +539,7 @@
       color: var(--accent);
       margin-bottom: 25px;
       text-align: center;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.7), 0 0 15px var(--accent); /* برجسته‌تر شدن */
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.7), 0 0 15px var(--accent);
       position: relative;
       z-index: 1;
       padding-bottom: 10px;
@@ -569,19 +562,19 @@
     }
 
     .rule-list li {
-      background-color: rgba(0,0,0,0.3); /* پس‌زمینه با شفافیت */
+      background-color: rgba(0,0,0,0.3);
       border: 1px solid var(--bg-darker);
       padding: 18px 25px;
       margin-bottom: 15px;
       border-radius: 8px;
-      font-size: 1.15em; /* کمی کوچکتر برای خوانایی بیشتر */
-      line-height: 1.8; /* فاصله خطوط بیشتر */
+      font-size: 1.15em;
+      line-height: 1.8;
       display: flex;
       align-items: flex-start;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       transition: all 0.3s ease;
       text-align: right;
-      color: var(--rule-text-color); /* رنگ متن اصلی قانون */
+      color: var(--rule-text-color);
     }
 
     .rule-list li:hover {
@@ -590,7 +583,7 @@
       border-color: var(--primary);
     }
 
-    .rule-list li .rule-icon { /* آیکون داخل هر قانون */
+    .rule-list li .rule-icon {
         color: var(--primary);
         font-size: 1.3em;
         margin-left: 15px;
@@ -603,16 +596,15 @@
         color: var(--accent);
     }
 
-    .rule-list li strong { /* اضافه کردن استایل برای تگ strong */
-        color: var(--rule-strong-color); /* رنگ متن بولد شده */
+    .rule-list li strong {
+        color: var(--rule-strong-color);
         text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
     .rule-list li span {
-      display: block; /* برای اینکه متن زیر آیکون قرار بگیرد */
-      margin-top: 5px; /* فاصله از آیکون */
-      flex-grow: 1; /* اجازه رشد به متن برای پر کردن فضا */
+      display: block;
+      margin-top: 5px;
+      flex-grow: 1;
     }
-
 
     .attention-box {
       background-color: rgba(255, 0, 0, 0.15);
@@ -634,20 +626,22 @@
       color: #ffb62f;
     }
 
+    /* Footer Section */
     footer.site-footer {
       background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/obsidian_texture.png');
-      background-size: 64px 64px;
+      background-size: 80px 80px;
       image-rendering: pixelated;
       color: var(--text-light);
       text-align: center;
-      padding: 50px 12px 55px;
-      font-size: 1.1em;
+      padding: 50px 20px 55px; /* Adjusted padding for consistency */
+      font-size: 1em; /* Adjusted font-size for consistency */
       border-top: 4px solid var(--primary-dark);
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.8); /* Adjusted shadow for consistency */
       margin-top: 100px;
       position: relative;
       z-index: 2;
       user-select: none;
+      flex-shrink: 0; /* Prevent footer from shrinking */
     }
 
     footer.site-footer::before {
@@ -666,31 +660,33 @@
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between; /* پخش شدن عناصر */
+      justify-content: space-between;
       align-items: center;
       position: relative;
       z-index: 1;
-      direction: rtl; /* برای جهت کلی فوتر */
+      direction: rtl;
     }
 
     .footer-logo {
       display: flex;
       align-items: center;
-      margin-bottom: 30px;
-      justify-content: flex-start; /* لوگو سمت راست (در جهت rtl) */
+      margin-bottom: 20px; /* Adjusted margin for consistency */
+      justify-content: flex-start;
       flex-grow: 1;
+      min-width: 200px;
     }
 
     .footer-logo img {
       width: 50px;
       height: 50px;
-      margin-left: 15px; /* فاصله از نام */
-      border-radius: 6px;
-      border: 2px solid var(--primary-dark);
+      margin-left: 15px;
+      border-radius: 8px; /* Adjusted border-radius for consistency */
+      border: 3px solid var(--primary-dark); /* Adjusted border for consistency */
+      box-shadow: 0 0 12px var(--primary); /* Adjusted shadow for consistency */
     }
 
     .footer-logo .name {
-      font-size: 1.5em;
+      font-size: 1.8em;
       font-weight: bold;
       font-family: 'Minecraft', sans-serif;
       text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
@@ -698,10 +694,11 @@
 
     .footer-nav {
       display: flex;
-      gap: 25px;
-      margin-bottom: 30px;
-      justify-content: center; /* منوها وسط */
+      gap: 20px; /* Adjusted gap for consistency */
+      margin-bottom: 20px; /* Adjusted margin for consistency */
+      justify-content: center;
       flex-grow: 1;
+      min-width: 300px;
     }
 
     .footer-nav a {
@@ -709,50 +706,65 @@
       text-decoration: none;
       transition: all 0.3s;
       font-weight: bold;
+      font-family: 'Vazirmatn', sans-serif; /* Added font-family for consistency */
       text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
+      position: relative;
+      padding: 6px 0;
+      font-size: 1.05em; /* Adjusted font-size for consistency */
+    }
+
+    .footer-nav a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        bottom: 0;
+        right: 0;
+        transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .footer-nav a:hover::after {
+        width: 100%;
+        left: 0;
     }
 
     .footer-nav a:hover {
       color: var(--accent);
-      text-shadow: 0 0 8px rgba(255, 182, 47, 0.5);
+      text-shadow: 0 0 10px var(--accent-dark);
     }
 
     .social-links {
       display: flex;
-      gap: 18px;
-      justify-content: flex-end; /* آیکون‌ها سمت چپ (در جهت rtl) */
-      margin-bottom: 30px; /* اضافه کردن margin-bottom */
+      gap: 15px; /* Adjusted gap for consistency */
+      justify-content: flex-end;
+      margin-bottom: 20px; /* Adjusted margin for consistency */
       flex-grow: 1;
+      min-width: 200px;
     }
 
     .social-link {
-      width: 46px;
-      height: 46px;
+      width: 45px;
+      height: 45px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.5);
-      border: 2px solid var(--primary-dark);
-      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 3px solid var(--primary-dark);
+      border-radius: 10px;
       color: var(--text-light);
-      font-size: 1.3em;
+      font-size: 1.5em; /* Adjusted font-size for consistency */
       transition: all 0.3s;
       text-decoration: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
     }
 
     .social-link:hover {
       background: var(--primary);
-      color: #ffffff;
-      transform: translateY(-5px) rotate(5deg);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      color: var(--text-lighter);
+      transform: translateY(-6px) rotate(8deg);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), 0 0 20px var(--primary-light);
       border-color: var(--accent);
-    }
-
-    /* Copyright text - full width */
-    .footer-copyright {
-        width: 100%;
-        text-align: center;
-        margin-top: 20px; /* فاصله از بالا */
     }
 
     footer.site-footer span {
@@ -772,34 +784,6 @@
       text-shadow: 0 0 10px var(--primary);
     }
 
-    .minecraft-clouds {
-      position: fixed;
-      top: 100px;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.05;
-    }
-
-    .minecraft-cloud {
-      position: absolute;
-      background: white;
-      border-radius: 10px;
-      opacity: 0.7;
-      animation: cloud-movement linear infinite;
-    }
-
-    @keyframes cloud-movement {
-      0% {
-        transform: translateX(-5%);
-      }
-      100% {
-        transform: translateX(105%);
-      }
-    }
-
     .rules-selector {
         display: flex;
         justify-content: center;
@@ -817,13 +801,12 @@
         font-weight: bold;
         font-family: 'Vazirmatn', sans-serif;
         cursor: pointer;
-        transition: all 0.2s ease, box-shadow 0.3s ease; /* اضافه کردن box-shadow به transition */
+        transition: all 0.2s ease, box-shadow 0.3s ease;
         position: relative;
         text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
         box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #0d47a1, 0 10px 10px rgba(0,0,0,0.5);
         border-radius: 4px;
         outline: none;
-        animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* اضافه کردن انیمیشن */
     }
 
     .rules-button i {
@@ -832,7 +815,7 @@
 
     .rules-button:hover {
         transform: translateY(-2px);
-        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #0d47a1, 0 12px 12px rgba(0,0,0,0.5), 0 0 20px var(--primary-light); /* افکت تابش هنگام هاور */
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #0d47a1, 0 12px 12px rgba(0,0,0,0.5), 0 0 20px var(--primary-light);
         background: linear-gradient(to bottom, var(--primary-light) 0%, var(--primary) 100%);
     }
 
@@ -844,155 +827,16 @@
     .rules-button.active-button {
         background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-dark) 100%);
         border-color: #e69a00;
-        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #e69a00, 0 10px 10px rgba(0,0,0,0.5), 0 0 20px var(--accent); /* افکت تابش برای دکمه فعال */
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #e69a00, 0 10px 10px rgba(0,0,0,0.5), 0 0 20px var(--accent);
         transform: translateY(0);
     }
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.3em;
-      }
-
-      .hero p {
-        font-size: 1.1em;
-      }
-
-      .section-title h2 {
-        font-size: 2.2em;
-      }
-
-      .nav {
-        gap: 15px;
-      }
-
-      .nav a {
-        font-size: 1.1em;
-        padding: 6px 10px;
-      }
-
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .footer-logo {
-        justify-content: center;
-        margin-left: 0;
-      }
-
-      .footer-nav {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .social-links {
-        justify-content: center;
-        margin-right: 0;
-        flex-direction: row; /* برای موبایل راست به چپ بودن زیاد مهم نیست */
-      }
-
-      .logo .name {
-        font-size: 1.8em;
-      }
-
-      .category-title {
-        font-size: 1.8em;
-      }
-
-      .rule-list li {
-        font-size: 1em;
-        padding: 15px 20px;
-      }
-
-      .rule-list li .rule-icon {
-        font-size: 1.2em;
-        margin-left: 10px;
-      }
-
-      .rules-selector {
-          flex-direction: column;
-          gap: 15px;
-      }
-
-      .rules-button {
-          width: 90%;
-          font-size: 1.1em;
-          padding: 12px 20px;
-      }
-    }
-
-    .fade-in {
-      animation: fadeIn 1s ease forwards; /* forwards برای حفظ حالت نهایی انیمیشن */
-      opacity: 0; /* برای اینکه قبل از شروع انیمیشن دیده نشود */
-    }
-
-    .slide-up {
-      animation: slideUp 1s ease forwards;
-      opacity: 0;
-    }
-
-    .pop-in {
-      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-      opacity: 0;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      80% {
-        transform: scale(1.1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    /* New animation for navigation links */
-    .nav-link-hover {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nav-link-hover::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateX(-100%);
-      transition: transform 0.5s ease;
-      z-index: -1;
-    }
-
-    .nav-link-hover:hover::before {
-      transform: translateX(0);
-    }
-
-    /* FAQ Section Styles */
+    /* FAQ Section Styles (Consolidated & Refined) */
     .faq-section {
-        margin-top: 60px;
-        text-align: center;
+        max-width: 800px; /* Added max-width */
+        margin: 60px auto; /* Centered with margin auto */
+        padding: 0 20px; /* Added padding for mobile */
+        text-align: right; /* Ensure content aligns right */
     }
 
     .faq-title {
@@ -1003,7 +847,8 @@
         margin-bottom: 40px;
         text-shadow: 2px 2px 0 #000, 0 0 15px var(--primary-light);
         position: relative;
-        display: inline-block;
+        display: inline-block; /* For centering with margin auto */
+        width: 100%; /* Take full width for centering */
     }
 
     .faq-title::after {
@@ -1027,7 +872,7 @@
         box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         overflow: hidden;
         transition: all 0.3s ease;
-        text-align: right; /* برای راست‌چین شدن محتوا */
+        text-align: right;
     }
 
     .faq-item:hover {
@@ -1055,14 +900,14 @@
     }
 
     .faq-question i {
-        margin-right: 15px; /* فاصله آیکون از متن سوال */
+        margin-right: 15px;
         transition: transform 0.3s ease;
         color: var(--primary-light);
         font-size: 1.1em;
     }
 
     .faq-question.active i {
-        transform: rotate(90deg); /* چرخش آیکون هنگام فعال شدن */
+        transform: rotate(90deg);
     }
 
     .faq-answer {
@@ -1070,23 +915,199 @@
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.4s ease-out, padding 0.4s ease-out, opacity 0.4s ease-out;
-        opacity: 0; /* برای انیمیشن fadeIn */
-        background: rgba(0,0,0,0.15); /* پس‌زمینه پاسخ */
+        opacity: 0;
+        background: rgba(0,0,0,0.15);
         color: var(--text-light);
         font-size: 1.1em;
         line-height: 1.7;
     }
 
     .faq-answer.active {
-        max-height: 200px; /* Adjust as needed */
+        max-height: 200px; /* A sufficiently large value to allow content to expand */
         padding: 20px 25px 30px;
         opacity: 1;
     }
     .faq-answer p {
         margin: 0;
         padding: 0;
-        max-width: 100%; /* برای اینکه p داخل answer فضای خودش را بگیرد */
+        max-width: 100%;
         text-align: right;
+    }
+
+    /* Back to Top Button Styles */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        left: 30px; /* For RTL, bottom-left */
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: var(--text-lighter);
+        border-radius: 50%;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.6), 0 0 25px var(--primary-light);
+        font-size: 1.8em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, background 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 999;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        border: 3px solid var(--primary-light);
+        cursor: pointer;
+    }
+
+    .back-to-top:hover {
+        transform: translateY(-8px) scale(1.1);
+        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 0 35px var(--primary-light);
+    }
+
+    .back-to-top.show {
+        opacity: 1;
+        pointer-events: auto;
+        animation: fadeInPop 0.5s ease-out forwards;
+    }
+
+    .back-to-top i {
+        margin: 0;
+        line-height: 1;
+    }
+
+    @keyframes fadeInPop {
+        from { opacity: 0; transform: scale(0.5); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+      html { font-size: 15px; }
+
+      .topbar {
+        flex-direction: row; /* Keep elements in a row */
+        justify-content: space-between; /* Logo on right, hamburger on left */
+        padding: 15px 20px;
+      }
+      .logo { order: 2; } /* Keep logo on the right (start) in RTL */
+      .logo img { width: 50px; height: 50px; } /* Slightly smaller logo on mobile */
+      .logo .name { font-size: 2em; } /* Adjust font size */
+
+      .nav {
+          display: none; /* Hidden by default on mobile */
+          flex-direction: column;
+          width: 100%;
+          background: linear-gradient(90deg, rgba(20, 24, 32, 0.95), rgba(30, 36, 48, 0.95));
+          position: absolute;
+          top: 88px; /* Below the topbar */
+          left: 0;
+          padding: 20px 0;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          align-items: center; /* Center links in mobile menu */
+          flex-grow: 0; /* Reset flex-grow for mobile */
+          justify-content: flex-start; /* Reset justify-content for mobile */
+      }
+      .nav.open {
+          display: flex; /* Show nav when open */
+      }
+      .nav a {
+          width: 90%; /* Make links take more width in mobile menu */
+          text-align: center;
+          padding: 12px 15px;
+          font-size: 1.3em;
+          margin-bottom: 10px; /* Spacing between mobile links */
+          border-radius: 15px; /* Ensure rounded corners on mobile menu items */
+      }
+
+      .menu-toggle {
+          display: block; /* Show hamburger on smaller screens */
+          order: 1; /* Place it to the left of the logo in RTL */
+          margin-inline-end: 20px; /* Space from right edge */
+      }
+
+      .hero h1 { font-size: 2.8em; }
+      .hero p { font-size: 1.2em; }
+
+      .section-title h2 { font-size: 2.2em; }
+      .section p { font-size: 1.1em; }
+
+      .rules-selector { gap: 15px; }
+      .rules-button { font-size: 1.1em; padding: 12px 20px; }
+
+      .rule-category { padding: 20px; }
+      .category-title { font-size: 2em; }
+      .rule-list li { font-size: 1em; padding: 15px 20px; }
+      .rule-list li .rule-icon { font-size: 1.2em; margin-left: 10px; }
+
+      .attention-box { font-size: 1em; padding: 15px; }
+
+      .faq-title { font-size: 2.2em; }
+      .faq-question { font-size: 1.1em; padding: 15px 20px; }
+      .faq-answer { font-size: 1em; padding: 15px 20px; }
+
+      .footer-content { flex-direction: column; gap: 15px; }
+      .footer-logo, .footer-nav, .social-links { justify-content: center; width: 100%; margin-bottom: 0; }
+      .footer-logo img { margin-left: 0; margin-right: 10px; }
+
+      .back-to-top {
+          width: 50px;
+          height: 50px;
+          font-size: 1.5em;
+          bottom: 20px;
+          left: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 14px; }
+
+      .topbar {
+          flex-direction: column; /* Stack logo and nav vertically */
+          gap: 10px;
+          padding: 10px 15px;
+      }
+      .logo { margin-bottom: 5px; } /* Add small margin below logo when stacked */
+      .logo img { width: 45px; height: 45px; } /* Even smaller logo */
+      .logo .name { font-size: 1.8em; }
+
+      .hero h1 { font-size: 2.2em; }
+      .hero p { font-size: 1em; }
+
+      .section-title h2 { font-size: 2em; }
+      .section p { font-size: 0.9em; }
+
+      .rules-selector { flex-direction: column; gap: 10px; }
+      .rules-button { width: 90%; font-size: 1em; padding: 10px 15px; }
+
+      .rule-category { padding: 15px; }
+      .category-title { font-size: 1.8em; }
+      .rule-list li { font-size: 0.9em; padding: 12px 15px; }
+
+      .attention-box { font-size: 0.9em; padding: 12px; }
+
+      .faq-title { font-size: 2em; }
+      .faq-question { font-size: 1em; padding: 12px 15px; }
+      .faq-answer { font-size: 0.9em; padding: 12px 15px; }
+
+      .footer-logo img { margin-right: 5px; }
+    }
+
+    @media (max-width: 480px) {
+        .topbar { padding: 8px 10px; }
+        .logo img { width: 40px; height: 40px; }
+        .logo .name { font-size: 1.6em; }
+        .hero h1 { font-size: 1.8em; }
+        .hero p { font-size: 0.8em; }
+        .section-title h2 { font-size: 1.8em; }
+        .rules-button { width: 95%; font-size: 0.9em; padding: 8px 10px; }
+        .category-title { font-size: 1.5em; }
+        .rule-list li { font-size: 0.8em; padding: 10px 12px; }
+        .faq-title { font-size: 1.6em; }
+        .faq-question { font-size: 0.9em; padding: 10px 12px; }
+        .faq-answer { font-size: 0.8em; padding: 10px 12px; }
     }
   </style>
 </head>
@@ -1096,208 +1117,212 @@
 
     <div class="particles" id="particles"></div>
 
-    <div class="topbar">
-      <a href="https://www.xrugen.ir/" style="text-decoration: none;">
-        <div class="logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
-          <div class="name">
-            <span class="part1">X</span><span class="part2">-Rugen</span>
+    <div class="content-wrap">
+      <div class="topbar">
+        <a href="https://www.xrugen.ir/" style="text-decoration: none;">
+          <div class="logo">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="[Image of X-Rugen Logo]" />
+            <div class="name">
+              <span class="part1">X</span><span class="part2">-Rugen</span>
+            </div>
           </div>
+        </a>
+        <!-- Hamburger menu button -->
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav">
+          <a href="https://www.xrugen.ir/punish/"><i class="fas fa-gavel"></i> پانیشمنت</a>
+          <a href="https://www.xrugen.ir/shop/"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
+          <a href="#" class="active"><i class="fas fa-scroll"></i> قوانین</a>
         </div>
-      </a>
-      <div class="nav">
-        <a href="https://www.xrugen.ir/punish/" class="nav-link-hover"><i class="fas fa-gavel"></i> لیست مجازات‌ها</a>
-        <a href="https://www.xrugen.ir/shop/" class="nav-link-hover"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
-        <a href="#" class="nav-link-hover active-nav"><i class="fas fa-scroll"></i> قوانین</a>
       </div>
-    </div>
 
-    <div class="hero">
-      <div class="hero-content">
-        <h1 class="fade-in">قوانین سرور X-Rugen</h1>
-        <p class="slide-up">لطفاً قبل از شروع بازی و فعالیت در دیسکورد، قوانین را مطالعه فرمایید.</p>
+      <div class="hero">
+        <div class="hero-content">
+          <h1 class="fade-in">قوانین سرور X-Rugen</h1>
+          <p class="slide-up">لطفاً قبل از شروع بازی و فعالیت در دیسکورد، قوانین را مطالعه فرمایید.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-title slide-up">
-        <h2>قوانین جامعه</h2>
-      </div>
-      <p class="fade-in">با رعایت قوانین، به ایجاد یک محیط سالم و لذت‌بخش برای همه کمک کنید.</p>
-
-      <div class="rules-container">
-        <div class="rules-selector">
-            <button class="rules-button active-button" data-target="minecraft-rules">
-                <i class="fas fa-cube"></i> قوانین ماینکرافت
-            </button>
-            <button class="rules-button" data-target="discord-rules">
-                <i class="fab fa-discord"></i> قوانین دیسکورد
-            </button>
-            <button class="rules-button" data-target="shop-rules">
-                <i class="fas fa-shopping-bag"></i> قوانین خرید از سایت
-            </button>
+      <div class="section">
+        <div class="section-title slide-up">
+          <h2>قوانین جامعه</h2>
         </div>
+        <p class="fade-in">با رعایت قوانین، به ایجاد یک محیط سالم و لذت‌بخش برای همه کمک کنید.</p>
 
-          <div class="attention-box fade-in">
-            <i class="fas fa-exclamation-triangle"></i> تیم مدیریت سرور این حق را برای خود محفوظ می‌داند که در هر زمان و بدون نیاز به اطلاع قبلی، قوانین را با توجه به شرایط، نیازها و صلاحدید خود تغییر، حذف یا اضافه نماید. ادامه فعالیت کاربران در سرور به منزله پذیرش کامل و بدون قید و شرط این قوانین و هرگونه تغییرات آتی آن تلقی می‌گردد.
-          </div>
-        </div>
-        
-        <div id="minecraft-rules" class="rule-category active slide-up">
-          <h3 class="category-title"><i class="fas fa-cube"></i> قوانین جامع سرور Minecraft</h3>
-          <ul class="rule-list">
-            <li class="slide-up" style="animation-delay: 0.1s;"><span><i class="fas fa-ban rule-icon"></i> <strong>1. استفاده از برنامه‌های غیرمجاز (چیت/مودهای تقلب):</strong>
-                <br>  <i class="fas fa-gavel rule-icon"></i> <strong>ممنوعیت:</strong> بهره‌گیری از هرگونه ابزار، کلاینت یا افزونه‌ای که منجر به کسب مزیت ناعادلانه نسبت به سایر بازیکنان شود، اعم از چیت، مودهای مخرب (مانند X-Ray، Fly، KillAura) یا هرگونه دستکاری در بازی، اکیداً ممنوع است و با شدیدترین مجازات‌ها همراه خواهد بود.
-            <li class="slide-up" style="animation-delay: 0.2s;"><span><i class="fas fa-user-friends rule-icon"></i> <strong>2. رفتار و تعاملات اجتماعی:</strong>
-                <br>  <i class="fas fa-heart rule-icon"></i> <strong>احترام متقابل:</strong> توهین، تمسخر، تهدید، افترا، نژادپرستی، تبعیض جنسیتی، یا هرگونه آزار کلامی و رفتاری نسبت به سایر بازیکنان یا اعضای تیم مدیریت ممنوع است.
-                <br>  <i class="fas fa-times-circle rule-icon"></i> <strong>عدم مزاحمت (Griefing/Trolling):</strong> تخریب عمدی سازه‌های دیگران، سرقت آیتم‌ها، یا هرگونه فعالیت که باعث آزار و اذیت دیگران شود، ممنوع است.  [ این قانون در گیم مود smp مقداری فرق داره ]  
-                <br>  <i class="fas fa-comment-slash rule-icon"></i> <strong>اسپم و تبلیغات:</strong> ارسال پیام‌های تکراری، استفاده افراطی از حروف بزرگ، ایموجی‌ها، یا کاراکترهای خاص در چت (اسپم)، و همچنین هرگونه تبلیغ برای سرورها، وب‌سایت‌ها، یا محصولات دیگر بدون اجازه مدیریت، ممنوع است.
-                <br>  <i class="fas fa-exclamation-triangle rule-icon"></i> <strong>محتوای نامناسب:</strong> ارسال، به اشتراک گذاشتن، یا نمایش هرگونه محتوای جنسی، خشونت‌آمیز، نژادپرستانه، سیاسی، یا مذهبی توهین‌آمیز در چت، نام بازیکن، یا سازه‌ها، ممنوع است.</span></li>
-            <li class="slide-up" style="animation-delay: 0.3s;"><span><i class="fas fa-server rule-icon"></i> <strong>3. تخریب سرور و سوءاستفاده‌های فنی:</strong>
-                <br>  <i class="fas fa-hourglass-half rule-icon"></i> <strong>تخریب منابع سرور:</strong> ساخت یا استفاده از سازه‌ها و سیستم‌هایی که باعث افزایش بار پردازشی، کاهش کارایی یا ایجاد لگ و کرش در سرور شوند (مانند فارم‌های بیش از حد بزرگ، دستگاه‌های Redstone پرتکرار، ساعت‌های سریع)، ممنوع است. در صورت نیاز به ساخت سازه‌های خاص، هماهنگی قبلی با مدیریت الزامی‌ست.
-                <br>  <i class="fas fa-bug rule-icon"></i> <strong>استفاده از باگ‌ها و گلیچ‌ها:</strong> هرگونه سوءاستفاده از اشکالات (Bug) یا گلیچ‌های (Glitch) بازی برای کسب مزیت ناعادلانه (مانند تکرار آیتم، ورود به مناطق غیرقابل دسترسی) ممنوع است. گزارش باگ‌ها به تیم مدیریت، قابل تقدیر است.</span></li>
-            <li class="slide-up" style="animation-delay: 0.4s;"><span><i class="fas fa-shield-alt rule-icon"></i> <strong>4. امنیت حساب کاربری و صداقت:</strong>
-                <br>  <i class="fas fa-hand-holding-usd rule-icon"></i> <strong>فریب و کلاهبرداری:</strong> هرگونه تلاش برای فریب دادن بازیکنان دیگر، جعل هویت، یا کلاهبرداری در معاملات و مبادلات آیتم‌ها، ممنوع است.  [ این قانون در گیم مود smp مقداری فرق داره ] 
-                <br>  <i class="fas fa-user-alt-slash rule-icon"></i> <strong>حساب‌های جایگزین (Alt Accounts):</strong> استفاده از حساب‌های کاربری متعدد برای دور زدن مجازات (مانند بن، میوت) ممنوع است. در صورت شناسایی، تمامی حساب‌های مرتبط بن دائمی خواهند شد.
-                <br>  <i class="fas fa-lock rule-icon"></i> <strong>اطلاعات شخصی:</strong> به اشتراک گذاشتن اطلاعات شخصی (شماره تلفن، آدرس منزل، تصاویر خصوصی) دیگران در چت عمومی ممنوع است.</span></li>
-            <li class="slide-up" style="animation-delay: 0.5s;"><span><i class="fas fa-headset rule-icon"></i> <strong>5. همکاری با تیم مدیریت:</strong>
-                <br>  <i class="fas fa-check-circle rule-icon"></i> <strong>پیروی از دستورات:</strong> بازیکنان موظفند به دستورات و راهنمایی‌های اعضای تیم مدیریت  گوش فرا دهند و همکاری کنند. بی‌توجهی به اخطارها یا دستورات ممکن است منجر به مجازات شود.
-                <br>  <i class="fas fa-comment-alt rule-icon"></i> <strong>حفظ آرامش:</strong> در صورت بروز مشکل یا شکایت، به صورت محترمانه با تیم مدیریت ارتباط برقرار کنید. بحث و جدل یا توهین به اعضای تیم ممنوع است.</span></li>
-            <li class="slide-up" style="animation-delay: 0.6s;"><span><i class="fas fa-flag rule-icon"></i> <strong>6. گزارش تخلفات و امنیت جامعه:</strong>
-                <br>  <i class="fas fa-bullhorn rule-icon"></i> <strong>گزارش تخلفات:</strong> بازیکنان تشویق می‌شوند در صورت مشاهده تخلف یا رفتار مشکوک، آن را به تیم مدیریت گزارش دهند. سوءاستفاده از سیستم گزارش‌دهی (برای شوخی یا تخریب دیگران) موجب مجازات خواهد شد.
-            </span></li>
-
-            <li class="slide-up" style="animation-delay: 0.7s;"><span><i class="fas fa-user-secret rule-icon"></i> <strong>7. نام، اسکین و کپ‌های نامناسب:</strong>
-                <br>  <i class="fas fa-user-alt rule-icon"></i> <strong>ظاهر و شناسه:</strong> استفاده از نام کاربری، اسکین یا کپ‌هایی با محتوای توهین‌آمیز، جنسی، سیاسی، نژادپرستانه یا مذهبی تحریک‌آمیز ممنوع است. در صورت مشاهده، بدون اخطار قبلی برخورد خواهد شد.
-            </span></li>
-
-            <li class="slide-up" style="animation-delay: 0.8s;"><span><i class="fas fa-robot rule-icon"></i> <strong>9. استفاده از ربات‌ها و ابزارهای خودکار:</strong>
-                <br>  <i class="fas fa-mouse-pointer rule-icon"></i> <strong>ماکرو و اتوکلیکر:</strong> استفاده از ماکرو، کلیک خودکار، یا ابزارهایی که فعالیت‌های بازی را به صورت خودکار انجام دهند (مثل فارم‌های AFK یا ربات فارمینگ)، بدون اجازه صریح مدیریت، ممنوع است.
-            </span></li>
-
-            <li class="slide-up" style="animation-delay: 0.9s;"><span><i class="fas fa-user-check rule-icon"></i> <strong>10. مسئولیت‌پذیری کاربران:</strong>
-                <br>  <i class="fas fa-user-clock rule-icon"></i> <strong>پاسخ‌گویی:</strong> هر بازیکن مسئول رفتار و عملکرد حساب کاربری خودش است. دلایلی مانند «دوستم بازی می‌کرد» یا «برادرم بود» پذیرفته نیست و مسئولیت کامل متوجه صاحب اکانت است.
-            </span></li>
-
-            <li class="slide-up" style="animation-delay: 1.0s;"><span><i class="fas fa-th-list rule-icon"></i> <strong>11. قوانین گیم‌مودهای خاص:</strong>
-                <br>  <i class="fas fa-gamepad rule-icon"></i> <strong>مطالعه قبل از ورود:</strong> هر گیم‌مود (مثل SMP، SkyMine، BedWars و ...) ممکن است قوانین خاص خود را داشته باشد. بازیکنان موظف‌اند پیش از ورود به آن، قوانین مربوطه را مطالعه کرده و رعایت کنند. بی‌توجهی به این قوانین، تخلف محسوب می‌شود.
-            </span></li>
-
-          </ul>
-          <div class="attention-box fade-in">
-            <i class="fas fa-exclamation-triangle"></i> عدم رعایت قوانین ممکن است منجر به مجازات‌هایی از جمله هشدار، میوت، کیک یا بن دائمی شود. مسئولیت اقدامات شما با خودتان است؛ لطفاً با دقت و مسئولیت‌پذیری رفتار کنید
-          </div>
+        <div class="rules-container">
+          <div class="rules-selector">
+              <button class="rules-button active-button" data-target="minecraft-rules">
+                  <i class="fas fa-cube"></i> قوانین ماینکرافت
+              </button>
+              <button class="rules-button" data-target="discord-rules">
+                  <i class="fab fa-discord"></i> قوانین دیسکورد
+              </button>
+              <button class="rules-button" data-target="shop-rules">
+                  <i class="fas fa-shopping-bag"></i> قوانین خرید از سایت
+              </button>
           </div>
 
-
-        <div id="discord-rules" class="rule-category slide-up">
-          <h3 class="category-title"><i class="fab fa-discord"></i> قوانین سرور Discord</h3>
-          <ul class="rule-list">
-            <li class="slide-up" style="animation-delay: 0.1s;"><span><i class="fas fa-comment-dots rule-icon"></i> <strong>1. اسپم و ارسال پیام‌های تکراری:</strong>
-                <br>  <i class="fas fa-ban rule-icon"></i> <strong>ممنوعیت:</strong> ارسال پیام‌های تکراری، Flood کردن چت، استفاده بیش از حد از ایموجی‌ها، یا استفاده از بات‌ها برای ارسال پیام‌های خودکار بدون اجازه ممنوع است.
-                <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> میوت موقت یا دائم.</span></li>
-            <li class="slide-up" style="animation-delay: 0.2s;"><span><i class="fas fa-user-secret rule-icon"></i> <strong>2. حفظ حریم خصوصی:</strong>
-                <br>  <i class="fas fa-lock rule-icon"></i> <strong>ممنوعیت:</strong> به اشتراک گذاشتن اطلاعات شخصی دیگران (ماناره شماره تلفن، آدرس ایمیل، عکس‌های خصوصی) بدون رضایت صریح آن‌ها، اکیداً ممنوع است.
-                <br>  <i class="fas fa-user-times rule-icon"></i> <strong>مجازات:</strong> مسدود شدن دائمی (Ban) از سرور.</span></li>
-            <li class="slide-up" style="animation-delay: 0.3s;"><span><i class="fas fa-bullhorn rule-icon"></i> <strong>3. تبلیغات:</strong>
-                <br>  <i class="fas fa-ad rule-icon"></i> <strong>ممنوعیت:</strong> هرگونه تبلیغ برای سرورهای دیسکورد، وب‌سایت‌ها، کانال‌های یوتیوب، یا محصولات شخصی در چت‌های عمومی یا پیام‌های خصوصی (DM) به اعضا، بدون اجازه مدیریت، ممنوع است.
-                <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار، کیک، یا بن.</span></li>
-            <li class="slide-up" style="animation-delay: 0.4s;"><span><i class="fas fa-frown rule-icon"></i> <strong>4. توهین و بی‌احترامی:</strong>
-                <br>  <i class="fas fa-angry rule-icon"></i> <strong>ممنوعیت:</strong> توهین، فحاشی، استفاده از الفاظ رکیک، تهدید، یا هرگونه بی‌احترامی به سایر اعضا، اعضای استاف، یا گروه‌های مختلف (مانند نژاد، مذهب، جنسیت) ممنوع است.
-                <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار، میوت، کیک، یا بن.</span></li>
-            <li class="slide-up" style="animation-delay: 0.5s;"><span><i class="fas fa-chart-line rule-icon"></i> <strong>5. فعالیت و رنک:</strong>
-                <br>  <i class="fas fa-star rule-icon"></i> <strong>تشویق به فعالیت:</strong> با فعالیت سازنده در چت‌های متنی و صوتی، می‌توانید رنک خود را در سرور ارتقا دهید و به مزایای بیشتری دسترسی پیدا کنید.</span></li>
-            <li class="slide-up" style="animation-delay: 0.6s;"><span><i class="fas fa-user-shield rule-icon"></i> <strong>6. عدم دخالت در امور استاف:</strong>
-                <br>  <i class="fas fa-user-lock rule-icon"></i> <strong>ممنوعیت:</strong> دخالت در تصمیم‌گیری‌های استاف، بحث و جدل با آن‌ها در خصوص مجازات‌ها یا قوانین در چت عمومی، یا تلاش برای دور زدن قوانین ممنوع است.
-                <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار، میوت، یا کیک.</span></li>
-            <li class="slide-up" style="animation-delay: 0.7s;"><span><i class="fas fa-at rule-icon"></i> <strong>7. منشن بی دلیل:</strong>
-                <br>  <i class="fas fa-bell-slash rule-icon"></i> <strong>ممنوعیت:</strong> منشن کردن (Mention) اعضای سرور یا نقش‌ها (@everyone, @here, @role) بدون دلیل موجه یا به صورت مکرر و آزاردهنده، ممنوع است.
-                <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار یا میوت.</span></li>
-            <li class="slide-up" style="animation-delay: 0.8s;"><span><i class="fas fa-user-circle rule-icon"></i> <strong>8. اسم و عکس پروفایل:</strong>
-                <br>  <i class="fas fa-image rule-icon"></i> <strong>الزام:</strong> استفاده از نام کاربری و عکس پروفایل مناسب که حاوی محتوای نامناسب (جنسی، خشونت‌آمیز، نژادپرستانه) نباشد، الزامی است.
-                <br>  <i class="fas fa-times-circle rule-icon"></i> <strong>مجازات:</strong> اخطار و درخواست تغییر، در غیر این صورت کیک.</span></li>
-          </ul>
-        </div>
-
-        <div id="shop-rules" class="rule-category slide-up">
-          <h3 class="category-title"><i class="fas fa-shopping-bag"></i> قوانین خرید از سایت</h3>
-          <ul class="rule-list">
-            <li class="slide-up" style="animation-delay: 0.1s;"><span><i class="fas fa-money-bill-wave rule-icon"></i> <strong>1. سیاست عدم بازگشت وجه:</strong>
-                <br>  <i class="fas fa-hand-holding-usd rule-icon"></i> <strong>اهمیت:</strong> تمامی خریدها از فروشگاه سایت نهایی تلقی می‌شوند و به هیچ عنوان امکان بازگشت وجه (Refund) وجود ندارد.
-                <br>  <i class="fas fa-check-circle rule-icon"></i> <strong>مسئولیت خریدار:</strong> لطفاً پیش از نهایی کردن خرید، از انتخاب خود (محصول، مقدار، جزئیات) کاملاً اطمینان حاصل کنید.</span></li>
-            <li class="slide-up" style="animation-delay: 0.2s;"><span><i class="fas fa-address-card rule-icon"></i> <strong>2. صحت اطلاعات کاربری:</strong>
-                <br>  <i class="fas fa-user-check rule-icon"></i> <strong>مسئولیت:</strong> مسئولیت صحت و دقت اطلاعات وارد شده در هنگام خرید (مانند نام کاربری ماینکرافت، ایمیل، آدرس) کاملاً بر عهده خریدار است.
-                <br>  <i class="fas fa-exclamation-circle rule-icon"></i> <strong>عدم مسئولیت سرور:</strong> در صورت وارد کردن اطلاعات نادرست و بروز هرگونه مشکل در تحویل محصول یا فعال‌سازی آن به دلیل خطای خریدار، سایت/سرور هیچ‌گونه مسئولیتی نخواهد داشت و وجهی بازگردانده نخواهد شد.</span></li>
-            <li class="slide-up" style="animation-delay: 0.3s;"><span><i class="fas fa-user-secret rule-icon"></i> <strong>3. ممنوعیت کلاهبرداری و سوءاستفاده:</strong>
-                <br>  <i class="fas fa-ban rule-icon"></i> <strong>ممنوعیت:</strong> هرگونه تلاش برای کلاهبرداری، پرداخت‌های تقلبی, استفاده از کارت‌های سرقتی، یا سوءاستفاده از سیستم فروشگاه (مانند باگ‌های قیمتی) ممنوع است.
-                <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> تشخیص اینگونه فعالیت‌ها منجر به مسدود شدن دائمی و بدون بازگشت وجه حساب کاربری در سرور و سایت، و پیگیری قانونی خواهد شد.</span></li>
-            <li class="slide-up" style="animation-delay: 0.4s;"><span><i class="fas fa-headset rule-icon"></i> <strong>4. پشتیبانی خرید:</strong>
-                <br>  <i class="fas fa-ticket-alt rule-icon"></i> <strong>راه ارتباطی:</strong> در صورت بروز هرگونه مشکل فنی در فرآیند خرید، عدم دریافت محصول پس از تکمیل پرداخت، یا هرگونه سوال مرتبط با محصولات خریداری شده، لطفاً بلافاصله از طریق سیستم تیکتینگ دیسکورد سرور یا راه‌های ارتباطی مشخص شده، با تیم پشتیبانی تماس بگیرید.
-                <br>  <i class="fas fa-clock rule-icon"></i> <strong>اولویت:</strong> تیم پشتیبانی در اسرع وقت به مشکلات مربوط به خرید رسیدگی خواهد کرد.</span></li>
-            <li class="slide-up" style="animation-delay: 0.5s;"><span><i class="fas fa-tags rule-icon"></i> <strong>5. تغییرات قیمت:</strong>
-                <br>  <i class="fas fa-money-check-alt rule-icon"></i> <strong>امکان تغییر:</strong> قیمت محصولات موجود در فروشگاه ممکن است بدون اطلاع قبلی تغییر کند.
-                <br>  <i class="fas fa-dollar-sign rule-icon"></i> <strong>قیمت نهایی:</strong> قیمت نهایی و معتبر برای هر محصول، همان قیمتی است که در زمان تکمیل و نهایی کردن فرآیند پرداخت به شما نمایش داده می‌شود.</span></li>
-            <li class="slide-up" style="animation-delay: 0.6s;"><span><i class="fas fa-cogs rule-icon"></i> <strong>6. فعال‌سازی خودکار یا دستی محصولات:</strong>
-                <br>  <i class="fas fa-clock rule-icon"></i> <strong>فرآیند تحویل:</strong> برخی محصولات پس از خرید به‌صورت خودکار فعال می‌شوند، اما در موارد خاص، ممکن است فعال‌سازی به‌صورت دستی و با کمی تأخیر انجام شود. لطفاً شکیبا باشید و از ارسال چندباره درخواست خودداری کنید.</span></li>
-
-            <li class="slide-up" style="animation-delay: 0.7s;"><span><i class="fas fa-user-lock rule-icon"></i> <strong>7. مالکیت شخصی و غیرقابل انتقال بودن محصولات:</strong>
-                <br>  <i class="fas fa-exchange-alt rule-icon"></i> <strong>غیرقابل انتقال:</strong> کلیه محصولات خریداری‌شده فقط برای حسابی که هنگام خرید وارد شده‌اند معتبر بوده و امکان انتقال یا واگذاری به دیگر حساب‌ها وجود ندارد.</span></li>
-
-            <li class="slide-up" style="animation-delay: 0.8s;"><span><i class="fas fa-user-shield rule-icon"></i> <strong>8. مسئولیت مالی والدین (در صورت خریدار خردسال):</strong>
-                <br>  <i class="fas fa-users rule-icon"></i> <strong>پرداخت توسط اشخاص زیر سن قانونی:</strong> در صورت انجام خرید توسط بازیکنان زیر ۱۸ سال، فرض بر این است که والدین یا سرپرست قانونی ایشان از پرداخت مطلع بوده‌اند. مسئولیت حقوقی خریدهای انجام‌شده، متوجه مالک حساب پرداخت‌کننده خواهد بود.</span></li>
-
-            <li class="slide-up" style="animation-delay: 0.9s;"><span><i class="fas fa-exclamation-circle rule-icon"></i> <strong>9. شرایط قطع همکاری و بن سراسری پس از تخلف:</strong>
-                 <br>  <i class="fas fa-ban rule-icon"></i> <strong>سوءاستفاده پس از خرید:</strong> خرید از سایت به معنای مصونیت از قوانین نیست. در صورت تخلف شدید یا تهدید علیه سرور، امکان مسدودسازی حساب حتی با وجود خرید فعال وجود دارد و مبلغی بازگردانده نمی‌شود.</span></li>
-          </ul>
-        </div>
-
-        <div class="faq-section slide-up">
-            <h2 class="faq-title">سوالات متداول</h2>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span><i class="fas fa-question-circle"></i> آیا می‌توانم پس از بن شدن، حساب جدیدی بسازم؟</span>
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>خیر، استفاده از حساب‌های جایگزین برای دور زدن مجازات‌ها ممنوع است و در صورت شناسایی، تمامی حساب‌های مرتبط به صورت دائمی مسدود خواهند شد.</p>
-                </div>
+            <div class="attention-box fade-in">
+              <i class="fas fa-exclamation-triangle"></i> تیم مدیریت سرور این حق را برای خود محفوظ می‌داند که در هر زمان و بدون نیاز به اطلاع قبلی، قوانین را با توجه به شرایط، نیازها و صلاحدید خود تغییر، حذف یا اضافه نماید. ادامه فعالیت کاربران در سرور به منزله پذیرش کامل و بدون قید و شرط این قوانین و هرگونه تغییرات آتی آن تلقی می‌گردد.
             </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span><i class="fas fa-question-circle"></i> چگونه می‌توانم یک تخلف را گزارش دهم؟</span>
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>برای گزارش تخلف، لطفاً از طریق سیستم تیکتینگ در سرور دیسکورد ما با تیم مدیریت ارتباط برقرار کنید و اطلاعات کافی را ارائه دهید.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span><i class="fas fa-question-circle"></i> آیا امکان بازگشت وجه (Refund) برای خریدها وجود دارد؟</span>
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>خیر، تمامی خریدها از فروشگاه سایت نهایی تلقی می‌شوند و امکان بازگشت وجه به هیچ عنوان وجود ندارد. لطفاً قبل از خرید، از انتخاب خود مطمئن شوید.</p>
-                </div>
-            </div>
-             <div class="faq-item">
-                <div class="faq-question">
-                    <span><i class="fas fa-question-circle"></i> اگر اطلاعات خریدم اشتباه وارد شود، چه اتفاقی می‌افتد؟</span>
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>مسئولیت صحت اطلاعات کاربری در هنگام خرید بر عهده خریدار است. در صورت وارد کردن اطلاعات نادرست و بروز مشکل در تحویل محصول، سایت/سرور مسئولیتی نخواهد داشت و وجهی بازگردانده نخواهد شد.</p>
-                </div>
-            </div>
-        </div>
+          </div>
+          
+          <div id="minecraft-rules" class="rule-category active slide-up">
+            <h3 class="category-title"><i class="fas fa-cube"></i> قوانین جامع سرور Minecraft</h3>
+            <ul class="rule-list">
+              <li class="slide-up" style="animation-delay: 0.1s;"><span><i class="fas fa-ban rule-icon"></i> <strong>1. استفاده از برنامه‌های غیرمجاز (چیت/مودهای تقلب):</strong>
+                  <br>  <i class="fas fa-gavel rule-icon"></i> <strong>ممنوعیت:</strong> بهره‌گیری از هرگونه ابزار، کلاینت یا افزونه‌ای که منجر به کسب مزیت ناعادلانه نسبت به سایر بازیکنان شود، اعم از چیت، مودهای مخرب (مانند X-Ray، Fly، KillAura) یا هرگونه دستکاری در بازی، اکیداً ممنوع است و با شدیدترین مجازات‌ها همراه خواهد بود.
+              <li class="slide-up" style="animation-delay: 0.2s;"><span><i class="fas fa-user-friends rule-icon"></i> <strong>2. رفتار و تعاملات اجتماعی:</strong>
+                  <br>  <i class="fas fa-heart rule-icon"></i> <strong>احترام متقابل:</strong> توهین، تمسخر، تهدید، افترا، نژادپرستی، تبعیض جنسیتی، یا هرگونه آزار کلامی و رفتاری نسبت به سایر بازیکنان یا اعضای تیم مدیریت ممنوع است.
+                  <br>  <i class="fas fa-times-circle rule-icon"></i> <strong>عدم مزاحمت (Griefing/Trolling):</strong> تخریب عمدی سازه‌های دیگران، سرقت آیتم‌ها، یا هرگونه فعالیت که باعث آزار و اذیت دیگران شود، ممنوع است.  [ این قانون در گیم مود smp مقداری فرق داره ]  
+                  <br>  <i class="fas fa-comment-slash rule-icon"></i> <strong>اسپم و تبلیغات:</strong> ارسال پیام‌های تکراری، استفاده افراطی از حروف بزرگ، ایموجی‌ها، یا کاراکترهای خاص در چت (اسپم)، و همچنین هرگونه تبلیغ برای سرورها، وب‌سایت‌ها، یا محصولات دیگر بدون اجازه مدیریت، ممنوع است.
+                  <br>  <i class="fas fa-exclamation-triangle rule-icon"></i> <strong>محتوای نامناسب:</strong> ارسال، به اشتراک گذاشتن، یا نمایش هرگونه محتوای جنسی، خشونت‌آمیز، نژادپرستانه، سیاسی، یا مذهبی توهین‌آمیز در چت، نام بازیکن، یا سازه‌ها، ممنوع است.</span></li>
+              <li class="slide-up" style="animation-delay: 0.3s;"><span><i class="fas fa-server rule-icon"></i> <strong>3. تخریب سرور و سوءاستفاده‌های فنی:</strong>
+                  <br>  <i class="fas fa-hourglass-half rule-icon"></i> <strong>تخریب منابع سرور:</strong> ساخت یا استفاده از سازه‌ها و سیستم‌هایی که باعث افزایش بار پردازشی، کاهش کارایی یا ایجاد لگ و کرش در سرور شوند (مانند فارم‌های بیش از حد بزرگ، دستگاه‌های Redstone پرتکرار، ساعت‌های سریع)، ممنوع است. در صورت نیاز به ساخت سازه‌های خاص، هماهنگی قبلی با مدیریت الزامی‌ست.
+                  <br>  <i class="fas fa-bug rule-icon"></i> <strong>استفاده از باگ‌ها و گلیچ‌ها:</strong> هرگونه سوءاستفاده از اشکالات (Bug) یا گلیچ‌های (Glitch) بازی برای کسب مزیت ناعادلانه (مانند تکرار آیتم، ورود به مناطق غیرقابل دسترسی) ممنوع است. گزارش باگ‌ها به تیم مدیریت، قابل تقدیر است.</span></li>
+              <li class="slide-up" style="animation-delay: 0.4s;"><span><i class="fas fa-shield-alt rule-icon"></i> <strong>4. امنیت حساب کاربری و صداقت:</strong>
+                  <br>  <i class="fas fa-hand-holding-usd rule-icon"></i> <strong>فریب و کلاهبرداری:</strong> هرگونه تلاش برای فریب دادن بازیکنان دیگر، جعل هویت، یا کلاهبرداری در معاملات و مبادلات آیتم‌ها، ممنوع است.  [ این قانون در گیم مود smp مقداری فرق داره ]
+                  <br>  <i class="fas fa-user-alt-slash rule-icon"></i> <strong>حساب‌های جایگزین (Alt Accounts):</strong> استفاده از حساب‌های کاربری متعدد برای دور زدن مجازات (مانند بن، میوت) ممنوع است. در صورت شناسایی، تمامی حساب‌های مرتبط بن دائمی خواهند شد.
+                  <br>  <i class="fas fa-lock rule-icon"></i> <strong>اطلاعات شخصی:</strong> به اشتراک گذاشتن اطلاعات شخصی (شماره تلفن، آدرس منزل، تصاویر خصوصی) دیگران در چت عمومی ممنوع است.</span></li>
+              <li class="slide-up" style="animation-delay: 0.5s;"><span><i class="fas fa-headset rule-icon"></i> <strong>5. همکاری با تیم مدیریت:</strong>
+                  <br>  <i class="fas fa-check-circle rule-icon"></i> <strong>پیروی از دستورات:</strong> بازیکنان موظفند به دستورات و راهنمایی‌های اعضای تیم مدیریت  گوش فرا دهند و همکاری کنند. بی‌توجهی به اخطارها یا دستورات ممکن است منجر به مجازات شود.
+                  <br>  <i class="fas fa-comment-alt rule-icon"></i> <strong>حفظ آرامش:</strong> در صورت بروز مشکل یا شکایت، به صورت محترمانه با تیم مدیریت ارتباط برقرار کنید. بحث و جدل یا توهین به اعضای تیم ممنوع است.</span></li>
+              <li class="slide-up" style="animation-delay: 0.6s;"><span><i class="fas fa-flag rule-icon"></i> <strong>6. گزارش تخلفات و امنیت جامعه:</strong>
+                  <br>  <i class="fas fa-bullhorn rule-icon"></i> <strong>گزارش تخلفات:</strong> بازیکنان تشویق می‌شوند در صورت مشاهده تخلف یا رفتار مشکوک، آن را به تیم مدیریت گزارش دهند. سوءاستفاده از سیستم گزارش‌دهی (برای شوخی یا تخریب دیگران) موجب مجازات خواهد شد.
+              </span></li>
 
+              <li class="slide-up" style="animation-delay: 0.7s;"><span><i class="fas fa-user-secret rule-icon"></i> <strong>7. نام، اسکین و کپ‌های نامناسب:</strong>
+                  <br>  <i class="fas fa-user-alt rule-icon"></i> <strong>ظاهر و شناسه:</strong> استفاده از نام کاربری، اسکین یا کپ‌هایی با محتوای توهین‌آمیز، جنسی، سیاسی، نژادپرستانه یا مذهبی تحریک‌آمیز ممنوع است. در صورت مشاهده، بدون اخطار قبلی برخورد خواهد شد.
+              </span></li>
+
+              <li class="slide-up" style="animation-delay: 0.8s;"><span><i class="fas fa-robot rule-icon"></i> <strong>9. استفاده از ربات‌ها و ابزارهای خودکار:</strong>
+                  <br>  <i class="fas fa-mouse-pointer rule-icon"></i> <strong>ماکرو و اتوکلیکر:</strong> استفاده از ماکرو، کلیک خودکار، یا ابزارهایی که فعالیت‌های بازی را به صورت خودکار انجام دهند (مثل فارم‌های AFK یا ربات فارمینگ)، بدون اجازه صریح مدیریت، ممنوع است.
+              </span></li>
+
+              <li class="slide-up" style="animation-delay: 0.9s;"><span><i class="fas fa-user-check rule-icon"></i> <strong>10. مسئولیت‌پذیری کاربران:</strong>
+                  <br>  <i class="fas fa-user-clock rule-icon"></i> <strong>پاسخ‌گویی:</strong> هر بازیکن مسئول رفتار و عملکرد حساب کاربری خودش است. دلایلی مانند «دوستم بازی می‌کرد» یا «برادرم بود» پذیرفته نیست و مسئولیت کامل متوجه صاحب اکانت است.
+              </span></li>
+
+              <li class="slide-up" style="animation-delay: 1.0s;"><span><i class="fas fa-th-list rule-icon"></i> <strong>11. قوانین گیم‌مودهای خاص:</strong>
+                  <br>  <i class="fas fa-gamepad rule-icon"></i> <strong>مطالعه قبل از ورود:</strong> هر گیم‌مود (مثل SMP، SkyMine، BedWars و ...) ممکن است قوانین خاص خود را داشته باشد. بازیکنان موظف‌اند پیش از ورود به آن، قوانین مربوطه را مطالعه کرده و رعایت کنند. بی‌توجهی به این قوانین، تخلف محسوب می‌شود.
+              </span></li>
+
+            </ul>
+            <div class="attention-box fade-in">
+              <i class="fas fa-exclamation-triangle"></i> عدم رعایت قوانین ممکن است منجر به مجازات‌هایی از جمله هشدار، میوت، کیک یا بن دائمی شود. مسئولیت اقدامات شما با خودتان است؛ لطفاً با دقت و مسئولیت‌پذیری رفتار کنید
+            </div>
+            </div>
+
+
+          <div id="discord-rules" class="rule-category slide-up">
+            <h3 class="category-title"><i class="fab fa-discord"></i> قوانین سرور Discord</h3>
+            <ul class="rule-list">
+              <li class="slide-up" style="animation-delay: 0.1s;"><span><i class="fas fa-comment-dots rule-icon"></i> <strong>1. اسپم و ارسال پیام‌های تکراری:</strong>
+                  <br>  <i class="fas fa-ban rule-icon"></i> <strong>ممنوعیت:</strong> ارسال پیام‌های تکراری، Flood کردن چت، استفاده بیش از حد از ایموجی‌ها، یا استفاده از بات‌ها برای ارسال پیام‌های خودکار بدون اجازه ممنوع است.
+                  <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> میوت موقت یا دائم.</span></li>
+              <li class="slide-up" style="animation-delay: 0.2s;"><span><i class="fas fa-user-secret rule-icon"></i> <strong>2. حفظ حریم خصوصی:</strong>
+                  <br>  <i class="fas fa-lock rule-icon"></i> <strong>ممنوعیت:</strong> به اشتراک گذاشتن اطلاعات شخصی دیگران (ماناره شماره تلفن، آدرس ایمیل، عکس‌های خصوصی) بدون رضایت صریح آن‌ها، اکیداً ممنوع است.
+                  <br>  <i class="fas fa-user-times rule-icon"></i> <strong>مجازات:</strong> مسدود شدن دائمی (Ban) از سرور.</span></li>
+              <li class="slide-up" style="animation-delay: 0.3s;"><span><i class="fas fa-bullhorn rule-icon"></i> <strong>3. تبلیغات:</strong>
+                  <br>  <i class="fas fa-ad rule-icon"></i> <strong>ممنوعیت:</strong> هرگونه تبلیغ برای سرورهای دیسکورد، وب‌سایت‌ها، کانال‌های یوتیوب، یا محصولات شخصی در چت‌های عمومی یا پیام‌های خصوصی (DM) به اعضا، بدون اجازه مدیریت، ممنوع است.
+                  <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار، کیک، یا بن.</span></li>
+              <li class="slide-up" style="animation-delay: 0.4s;"><span><i class="fas fa-frown rule-icon"></i> <strong>4. توهین و بی‌احترامی:</strong>
+                  <br>  <i class="fas fa-angry rule-icon"></i> <strong>ممنوعیت:</strong> توهین، فحاشی، استفاده از الفاظ رکیک، تهدید، یا هرگونه بی‌احترامی به سایر اعضا، اعضای استاف، یا گروه‌های مختلف (مانند نژاد، مذهب، جنسیت) ممنوع است.
+                  <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار، میوت، کیک، یا بن.</span></li>
+              <li class="slide-up" style="animation-delay: 0.5s;"><span><i class="fas fa-chart-line rule-icon"></i> <strong>5. فعالیت و رنک:</strong>
+                  <br>  <i class="fas fa-star rule-icon"></i> <strong>تشویق به فعالیت:</strong> با فعالیت سازنده در چت‌های متنی و صوتی، می‌توانید رنک خود را در سرور ارتقا دهید و به مزایای بیشتری دسترسی پیدا کنید.</span></li>
+              <li class="slide-up" style="animation-delay: 0.6s;"><span><i class="fas fa-user-shield rule-icon"></i> <strong>6. عدم دخالت در امور استاف:</strong>
+                  <br>  <i class="fas fa-user-lock rule-icon"></i> <strong>ممنوعیت:</strong> دخالت در تصمیم‌گیری‌های استاف، بحث و جدل با آن‌ها در خصوص مجازات‌ها یا قوانین در چت عمومی، یا تلاش برای دور زدن قوانین ممنوع است.
+                  <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار، میوت، یا کیک.</span></li>
+              <li class="slide-up" style="animation-delay: 0.7s;"><span><i class="fas fa-at rule-icon"></i> <strong>7. منشن بی دلیل:</strong>
+                  <br>  <i class="fas fa-bell-slash rule-icon"></i> <strong>ممنوعیت:</strong> منشن کردن (Mention) اعضای سرور یا نقش‌ها (@everyone, @here, @role) بدون دلیل موجه یا به صورت مکرر و آزاردهنده، ممنوع است.
+                  <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> اخطار یا میوت.</span></li>
+              <li class="slide-up" style="animation-delay: 0.8s;"><span><i class="fas fa-user-circle rule-icon"></i> <strong>8. اسم و عکس پروفایل:</strong>
+                  <br>  <i class="fas fa-image rule-icon"></i> <strong>الزام:</strong> استفاده از نام کاربری و عکس پروفایل مناسب که حاوی محتوای نامناسب (جنسی، خشونت‌آمیز، نژادپرستانه) نباشد، الزامی است.
+                  <br>  <i class="fas fa-times-circle rule-icon"></i> <strong>مجازات:</strong> اخطار و درخواست تغییر، در غیر این صورت کیک.</span></li>
+            </ul>
+          </div>
+
+          <div id="shop-rules" class="rule-category slide-up">
+            <h3 class="category-title"><i class="fas fa-shopping-bag"></i> قوانین خرید از سایت</h3>
+            <ul class="rule-list">
+              <li class="slide-up" style="animation-delay: 0.1s;"><span><i class="fas fa-money-bill-wave rule-icon"></i> <strong>1. سیاست عدم بازگشت وجه:</strong>
+                  <br>  <i class="fas fa-hand-holding-usd rule-icon"></i> <strong>اهمیت:</strong> تمامی خریدها از فروشگاه سایت نهایی تلقی می‌شوند و به هیچ عنوان امکان بازگشت وجه (Refund) وجود ندارد.
+                  <br>  <i class="fas fa-check-circle rule-icon"></i> <strong>مسئولیت خریدار:</strong> لطفاً پیش از نهایی کردن خرید، از انتخاب خود (محصول، مقدار، جزئیات) کاملاً اطمینان حاصل کنید.</span></li>
+              <li class="slide-up" style="animation-delay: 0.2s;"><span><i class="fas fa-address-card rule-icon"></i> <strong>2. صحت اطلاعات کاربری:</strong>
+                  <br>  <i class="fas fa-user-check rule-icon"></i> <strong>مسئولیت:</strong> مسئولیت صحت و دقت اطلاعات وارد شده در هنگام خرید (مانند نام کاربری ماینکرافت، ایمیل، آدرس) کاملاً بر عهده خریدار است.
+                  <br>  <i class="fas fa-exclamation-circle rule-icon"></i> <strong>عدم مسئولیت سرور:</strong> در صورت وارد کردن اطلاعات نادرست و بروز هرگونه مشکل در تحویل محصول یا فعال‌سازی آن به دلیل خطای خریدار، سایت/سرور هیچ‌گونه مسئولیتی نخواهد داشت و وجهی بازگردانده نخواهد شد.</span></li>
+              <li class="slide-up" style="animation-delay: 0.3s;"><span><i class="fas fa-user-secret rule-icon"></i> <strong>3. ممنوعیت کلاهبرداری و سوءاستفاده:</strong>
+                  <br>  <i class="fas fa-ban rule-icon"></i> <strong>ممنوعیت:</strong> هرگونه تلاش برای کلاهبرداری، پرداخت‌های تقلبی, استفاده از کارت‌های سرقتی، یا سوءاستفاده از سیستم فروشگاه (مانند باگ‌های قیمتی) ممنوع است.
+                  <br>  <i class="fas fa-gavel rule-icon"></i> <strong>مجازات:</strong> تشخیص اینگونه فعالیت‌ها منجر به مسدود شدن دائمی و بدون بازگشت وجه حساب کاربری در سرور و سایت، و پیگیری قانونی خواهد شد.</span></li>
+              <li class="slide-up" style="animation-delay: 0.4s;"><span><i class="fas fa-headset rule-icon"></i> <strong>4. پشتیبانی خرید:</strong>
+                  <br>  <i class="fas fa-ticket-alt rule-icon"></i> <strong>راه ارتباطی:</strong> در صورت بروز هرگونه مشکل فنی در فرآیند خرید، عدم دریافت محصول پس از تکمیل پرداخت، یا هرگونه سوال مرتبط با محصولات خریداری شده، لطفاً بلافاصله از طریق سیستم تیکتینگ دیسکورد سرور یا راه‌های ارتباطی مشخص شده، با تیم پشتیبانی تماس بگیرید.
+                  <br>  <i class="fas fa-clock rule-icon"></i> <strong>اولویت:</strong> تیم پشتیبانی در اسرع وقت به مشکلات مربوط به خرید رسیدگی خواهد کرد.</span></li>
+              <li class="slide-up" style="animation-delay: 0.5s;"><span><i class="fas fa-tags rule-icon"></i> <strong>5. تغییرات قیمت:</strong>
+                  <br>  <i class="fas fa-money-check-alt rule-icon"></i> <strong>امکان تغییر:</strong> قیمت محصولات موجود در فروشگاه ممکن است بدون اطلاع قبلی تغییر کند.
+                  <br>  <i class="fas fa-dollar-sign rule-icon"></i> <strong>قیمت نهایی:</strong> قیمت نهایی و معتبر برای هر محصول، همان قیمتی است که در زمان تکمیل و نهایی کردن فرآیند پرداخت به شما نمایش داده می‌شود.</span></li>
+              <li class="slide-up" style="animation-delay: 0.6s;"><span><i class="fas fa-cogs rule-icon"></i> <strong>6. فعال‌سازی خودکار یا دستی محصولات:</strong>
+                  <br>  <i class="fas fa-clock rule-icon"></i> <strong>فرآیند تحویل:</strong> برخی محصولات پس از خرید به‌صورت خودکار فعال می‌شوند، اما در موارد خاص، ممکن است فعال‌سازی به‌صورت دستی و با کمی تأخیر انجام شود. لطفاً شکیبا باشید و از ارسال چندباره درخواست خودداری کنید.</span></li>
+
+              <li class="slide-up" style="animation-delay: 0.7s;"><span><i class="fas fa-user-lock rule-icon"></i> <strong>7. مالکیت شخصی و غیرقابل انتقال بودن محصولات:</strong>
+                  <br>  <i class="fas fa-exchange-alt rule-icon"></i> <strong>غیرقابل انتقال:</strong> کلیه محصولات خریداری‌شده فقط برای حسابی که هنگام خرید وارد شده‌اند معتبر بوده و امکان انتقال یا واگذاری به دیگر حساب‌ها وجود ندارد.</span></li>
+
+              <li class="slide-up" style="animation-delay: 0.8s;"><span><i class="fas fa-user-shield rule-icon"></i> <strong>8. مسئولیت مالی والدین (در صورت خریدار خردسال):</strong>
+                  <br>  <i class="fas fa-users rule-icon"></i> <strong>پرداخت توسط اشخاص زیر سن قانونی:</strong> در صورت انجام خرید توسط بازیکنان زیر ۱۸ سال، فرض بر این است که والدین یا سرپرست قانونی ایشان از پرداخت مطلع بوده‌اند. مسئولیت حقوقی خریدهای انجام‌شده، متوجه مالک حساب پرداخت‌کننده خواهد بود.</span></li>
+
+              <li class="slide-up" style="animation-delay: 0.9s;"><span><i class="fas fa-exclamation-circle rule-icon"></i> <strong>9. شرایط قطع همکاری و بن سراسری پس از تخلف:</strong>
+                   <br>  <i class="fas fa-ban rule-icon"></i> <strong>سوءاستفاده پس از خرید:</strong> خرید از سایت به معنای مصونیت از قوانین نیست. در صورت تخلف شدید یا تهدید علیه سرور، امکان مسدودسازی حساب حتی با وجود خرید فعال وجود دارد و مبلغی بازگردانده نمی‌شود.</span></li>
+            </ul>
+          </div>
+
+          <div class="faq-section slide-up">
+              <h2 class="faq-title">سوالات متداول</h2>
+              <div class="faq-item">
+                  <div class="faq-question">
+                      <span><i class="fas fa-question-circle"></i> آیا می‌توانم پس از بن شدن، حساب جدیدی بسازم؟</span>
+                      <i class="fas fa-chevron-left"></i>
+                  </div>
+                  <div class="faq-answer">
+                      <p>خیر، استفاده از حساب‌های جایگزین برای دور زدن مجازات‌ها ممنوع است و در صورت شناسایی، تمامی حساب‌های مرتبط به صورت دائمی مسدود خواهند شد.</p>
+                  </div>
+              </div>
+              <div class="faq-item">
+                  <div class="faq-question">
+                      <span><i class="fas fa-question-circle"></i> چگونه می‌توانم یک تخلف را گزارش دهم؟</span>
+                      <i class="fas fa-chevron-left"></i>
+                  </div>
+                  <div class="faq-answer">
+                      <p>برای گزارش تخلف، لطفاً از طریق سیستم تیکتینگ در سرور دیسکورد ما با تیم مدیریت ارتباط برقرار کنید و اطلاعات کافی را ارائه دهید.</p>
+                  </div>
+              </div>
+              <div class="faq-item">
+                  <div class="faq-question">
+                      <span><i class="fas fa-question-circle"></i> آیا امکان بازگشت وجه (Refund) برای خریدها وجود دارد؟</span>
+                      <i class="fas fa-chevron-left"></i>
+                  </div>
+                  <div class="faq-answer">
+                      <p>خیر، تمامی خریدها از فروشگاه سایت نهایی تلقی می‌شوند و امکان بازگشت وجه به هیچ عنوان وجود ندارد. لطفاً قبل از خرید، از انتخاب خود مطمئن شوید.</p>
+                  </div>
+              </div>
+               <div class="faq-item">
+                  <div class="faq-question">
+                      <span><i class="fas fa-question-circle"></i> اگر اطلاعات خریدم اشتباه وارد شود، چه اتفاقی می‌افتد؟</span>
+                      <i class="fas fa-chevron-left"></i>
+                  </div>
+                  <div class="faq-answer">
+                      <p>مسئولیت صحت اطلاعات کاربری در هنگام خرید بر عهده خریدار است. در صورت وارد کردن اطلاعات نادرست و بروز مشکل در تحویل محصول، سایت/سرور مسئولیتی نخواهد داشت و وجهی بازگردانده نخواهد شد.</p>
+                  </div>
+              </div>
+          </div>
       </div>
     </div>
 
     <footer class="site-footer">
       <div class="footer-content">
         <div class="footer-logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo2.png" alt="Logo" />
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="[Image of Logo]" />
           <div class="name">
             <span class="part1">X</span><span class="part2">-Rugen</span>
           </div>
@@ -1305,8 +1330,8 @@
         
         <div class="footer-nav">
           <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
-          <a href="https://www.xrugen.ir/punish/">لیست مجازات‌ها</a>
-          <a href="#">قوانین</a>
+          <a href="https://www.xrugen.ir/punish/">پانیشمنت</a>
+          <a href="#" class="active">قوانین</a>
         </div>
         
         <div>
@@ -1331,8 +1356,14 @@
     </footer>
   </div>
 
+  <!-- دکمه بازگشت به بالا -->
+  <a href="#top" class="back-to-top" aria-label="بازگشت به بالا">
+      <i class="fas fa-arrow-up"></i>
+  </a>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Particle and Cloud Generation
       const particles = document.getElementById('particles');
       const particleCount = 30;
       const blockTypes = ['dirt', 'stone', 'emerald', 'gold'];
@@ -1370,6 +1401,7 @@
         cloud.style.width = `${width}px`;
         cloud.style.height = `${height}px`;
         cloud.style.top = `${Math.random() * 500}px`;
+        cloud.style.left = `-${Math.random() * 80}vw`;
 
         const duration = Math.random() * 120 + 80;
         cloud.style.animationDuration = `${duration}s`;
@@ -1420,7 +1452,7 @@
       // Apply hero section animations on load
       const heroElements = document.querySelectorAll('.hero h1, .hero p');
       heroElements.forEach((el, index) => {
-          el.style.opacity = '0';
+          // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
           void el.offsetWidth; // Trigger reflow
           el.style.animation = `fadeIn 1s ease forwards ${index * 0.3}s`;
       });
@@ -1428,29 +1460,22 @@
       // Apply section title animations on load
       const sectionTitle = document.querySelector('.section-title');
       if (sectionTitle) {
-          sectionTitle.style.opacity = '0';
+          // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
           void sectionTitle.offsetWidth;
           sectionTitle.style.animation = `slideUp 1s ease forwards 0.5s`;
       }
 
       const sectionParagraph = document.querySelector('.section > p');
       if (sectionParagraph) {
-          sectionParagraph.style.opacity = '0';
+          // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
           void sectionParagraph.offsetWidth;
           sectionParagraph.style.animation = `fadeIn 1s ease forwards 0.8s`;
       }
 
-      // Apply initial pop-in to rules buttons
-      const initialRulesButtons = document.querySelectorAll('.rules-button');
-      initialRulesButtons.forEach((button, index) => {
-          button.style.animation = `popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards ${index * 0.15 + 1.2}s`;
-      });
-
-      // Apply slide-up animation to FAQ section title
+      // Apply slide-up animation to FAQ section title (The div containing FAQ title and items)
       const faqSection = document.querySelector('.faq-section');
       if (faqSection) {
-        faqSection.style.opacity = '0';
-        faqSection.style.transform = 'translateY(30px)';
+        // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
         void faqSection.offsetWidth;
         faqSection.style.animation = 'slideUp 1s ease forwards 1.5s';
       }
@@ -1469,55 +1494,61 @@
                   if (otherQuestion !== question && otherQuestion.classList.contains('active')) {
                       otherQuestion.classList.remove('active');
                       otherQuestion.nextElementSibling.classList.remove('active');
+                      otherQuestion.querySelector('i.fa-chevron-left').classList.remove('active'); // Also remove icon active
                   }
               });
 
-              // Toggle current answer
+              // Toggle current answer and icon
               question.classList.toggle('active');
               answer.classList.toggle('active');
+              icon.classList.toggle('active');
           });
       });
-    });
 
-    function copyText(text) {
-      if (!navigator.clipboard) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-          document.execCommand('copy');
-          showCopySuccess();
-        } catch (err) {
-          alert('کپی نشد! لطفا دستی کپی کنید.');
-        }
-        document.body.removeChild(textArea);
-        return;
+      // Back to Top Button Logic
+      const backToTopBtn = document.querySelector('.back-to-top');
+      if (backToTopBtn) {
+          backToTopBtn.addEventListener('click', function(e) {
+              e.preventDefault();
+              window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+              });
+          });
+
+          window.addEventListener('scroll', () => {
+              if (window.scrollY > 300) { // Show button after scrolling 300px
+                  backToTopBtn.classList.add('show');
+              } else {
+                  backToTopBtn.classList.remove('show');
+              }
+          });
       }
 
-      navigator.clipboard.writeText(text).then(() => {
-        showCopySuccess();
-      }).catch(() => {
-        alert('کپی نشد! لطفا دستی کپی کنید.');
+      // Handle active navigation link
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll('.nav a');
+      navLinks.forEach(link => {
+          if (link.href === window.location.href) {
+              link.classList.add('active');
+          } else if (currentPath.includes(link.pathname) && link.pathname !== '/') {
+               link.classList.add('active');
+          }
       });
-    }
 
-    function showCopySuccess() {
-      const msg = document.getElementById("copy-success-msg");
-      msg.style.display = "block";
+      // Hamburger menu toggle functionality
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.nav');
 
-      const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
-      audio.volume = 0.3;
-      audio.play().catch(e => {});
-
-      setTimeout(() => {
-        msg.style.opacity = "0";
-        setTimeout(() => {
-          msg.style.display = "none";
-          msg.style.opacity = "1";
-        }, 500);
-      }, 2000);
-    }
+      if (menuToggle && nav) {
+          menuToggle.addEventListener('click', () => {
+              nav.classList.toggle('open');
+              // Toggle between fa-bars and fa-times icons
+              menuToggle.querySelector('i').classList.toggle('fa-bars');
+              menuToggle.querySelector('i').classList.toggle('fa-times');
+          });
+      }
+    });
   </script>
 </body>
 </html>
