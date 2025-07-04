@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>X-Rugen - Rules</title>
+  <title>X-Rugen - قوانین</title>
   <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    /* Global Variables */
+    /* Global Variables - Consistent with home.html, punish.html, shop.html */
     :root {
       --primary: #1e88e5;
       --primary-dark: #1565c0;
@@ -18,21 +18,25 @@
       --accent-dark: #e69a00;
       --secondary: #00a8de;
       --secondary-dark: #0089b5;
-      --bg-dark: #121820; /* Changed for consistency with home.html */
-      --bg-darker: #1a1f26; /* Changed for consistency with home.html */
-      --bg-light: #22252b; /* Changed for consistency with home.html */
+      --bg-dark: #121820;
+      --bg-darker: #1a1f26;
+      --bg-light: #22252b;
       --text-light: #e8e8e8;
       --text-lighter: #ffffff;
       --dirt-brown: #866043;
       --stone-gray: #7b7b7b;
       --obsidian: #150d1a;
+      --ore-purple: #5f03f4;
+      --emerald-green: #4aba27;
+      --gold-yellow: #ffb62f;
+      --redstone-red: #ff5252;
       --rule-text-color: #d1d1d1;
       --rule-strong-color: var(--accent);
     }
 
     /* Base Styles */
     html {
-      direction: rtl;
+      direction: rtl; /* Set base direction to RTL */
       scroll-behavior: smooth;
       box-sizing: border-box;
       font-size: 16px;
@@ -48,7 +52,7 @@
       background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
       color: var(--text-light);
       overflow-x: hidden;
-      direction: rtl;
+      direction: rtl; /* Ensure content is RTL */
       text-align: right;
       line-height: 1.6;
       position: relative;
@@ -74,13 +78,13 @@
       width: 10px;
       background: var(--bg-darker);
     }
-
+    
     ::-webkit-scrollbar-thumb {
       background: var(--primary);
       border-radius: 4px;
       box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
     }
-
+    
     ::-webkit-scrollbar-thumb:hover {
       background: var(--primary-light);
       box-shadow: 0 0 4px var(--primary-light);
@@ -104,14 +108,14 @@
       overflow: hidden;
       opacity: 0.8;
     }
-
+    
     .particle {
       position: absolute;
       background-size: cover;
-      border-radius: 0;
+      border-radius: 0; 
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
       animation: float 20s infinite linear;
-      image-rendering: pixelated;
+      image-rendering: pixelated; 
     }
 
     .particle.dirt { background-color: var(--dirt-brown); border: 1px solid rgba(0,0,0,0.2); }
@@ -125,7 +129,7 @@
       90% { opacity: 0.7; }
       100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
     }
-
+    
     .minecraft-clouds {
       position: fixed;
       top: 100px;
@@ -136,7 +140,7 @@
       pointer-events: none;
       opacity: 0.08;
     }
-
+    
     .minecraft-cloud {
       position: absolute;
       background: white;
@@ -193,7 +197,7 @@
       gap: 15px;
       transition: all 0.3s ease;
     }
-
+    
     .logo:hover {
       transform: scale(1.05);
     }
@@ -207,7 +211,7 @@
       border: 2px solid rgba(30, 136, 229, 0.3);
       image-rendering: pixelated;
     }
-
+    
     .logo:hover img {
       box-shadow: 0 0 20px rgba(30, 136, 229, 0.8);
       transform: rotate(5deg);
@@ -227,7 +231,7 @@
       color: var(--primary);
       position: relative;
     }
-
+    
     .logo .part1::after {
       content: '';
       position: absolute;
@@ -241,7 +245,7 @@
       transition: transform 0.3s ease-out;
       box-shadow: 0 0 8px var(--primary);
     }
-
+    
     .logo:hover .part1::after {
       transform: scaleX(1);
       transform-origin: bottom left;
@@ -273,7 +277,7 @@
       border-radius: 20px; /* Increased border-radius for rounded corners */
       white-space: nowrap;
     }
-
+    
     .nav a::after {
       content: '';
       position: absolute;
@@ -287,7 +291,7 @@
       transition: transform 0.3s ease-out;
       box-shadow: 0 0 8px var(--accent);
     }
-
+    
     .nav a:hover::after {
       transform: scaleX(1);
       transform-origin: bottom left;
@@ -300,7 +304,7 @@
       border-color: var(--primary-dark);
       background: rgba(30, 136, 229, 0.1);
     }
-
+    
     /* Active link style */
     .nav a.active {
       color: var(--accent); /* Highlight with accent color */
@@ -340,7 +344,7 @@
       background-color: rgba(0,0,0,0.4);
       margin-top: 0; /* Remove extra margin, padding-top on content-wrap handles this */
     }
-
+    
     .hero::before {
       content: '';
       position: absolute;
@@ -348,7 +352,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/panorama.png') center center / cover no-repeat;
+      background: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/rules_bg.png') center center / cover no-repeat;
       opacity: 0.3;
       filter: blur(2px);
       z-index: -1;
@@ -513,13 +517,16 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       position: relative;
       overflow: hidden;
-      display: none; /* Hide by default */
+      max-height: 0; /* Changed for smooth transition */
+      opacity: 0;    /* Changed for smooth transition */
+      transition: max-height 0.7s ease-in-out, opacity 0.7s ease-in-out; /* Smooth transition */
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
     }
 
     .rule-category.active {
-        display: block; /* Show when active */
+        max-height: 5000px; /* Sufficiently large value for content */
+        opacity: 1;
     }
 
     .rule-category::before {
@@ -1121,7 +1128,7 @@
       <div class="topbar">
         <a href="https://www.xrugen.ir/" style="text-decoration: none;">
           <div class="logo">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="[Image of X-Rugen Logo]" />
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="" />
             <div class="name">
               <span class="part1">X</span><span class="part2">-Rugen</span>
             </div>
@@ -1322,7 +1329,7 @@
     <footer class="site-footer">
       <div class="footer-content">
         <div class="footer-logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="[Image of Logo]" />
+          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="" />
           <div class="name">
             <span class="part1">X</span><span class="part2">-Rugen</span>
           </div>
@@ -1402,7 +1409,7 @@
         cloud.style.height = `${height}px`;
         cloud.style.top = `${Math.random() * 500}px`;
         cloud.style.left = `-${Math.random() * 80}vw`;
-
+        
         const duration = Math.random() * 120 + 80;
         cloud.style.animationDuration = `${duration}s`;
         cloud.style.animationDelay = `-${Math.random() * 80}s`;
@@ -1430,10 +1437,9 @@
               // Re-apply slide-up animation to the active category's list items
               const listItems = activeCategory.querySelectorAll('.rule-list li');
               listItems.forEach((item, index) => {
-                  item.style.opacity = '0'; // Reset opacity
-                  item.style.transform = 'translateY(30px)'; // Reset transform
-                  // Trigger reflow to ensure animation restarts
-                  void item.offsetWidth;
+                  // Reset animation by removing and re-adding the property
+                  item.style.animation = 'none';
+                  void item.offsetWidth; // Trigger reflow
                   item.style.animation = `slideUp 0.8s ease forwards ${index * 0.1}s`;
               });
           });
@@ -1452,7 +1458,6 @@
       // Apply hero section animations on load
       const heroElements = document.querySelectorAll('.hero h1, .hero p');
       heroElements.forEach((el, index) => {
-          // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
           void el.offsetWidth; // Trigger reflow
           el.style.animation = `fadeIn 1s ease forwards ${index * 0.3}s`;
       });
@@ -1460,14 +1465,12 @@
       // Apply section title animations on load
       const sectionTitle = document.querySelector('.section-title');
       if (sectionTitle) {
-          // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
           void sectionTitle.offsetWidth;
           sectionTitle.style.animation = `slideUp 1s ease forwards 0.5s`;
       }
 
       const sectionParagraph = document.querySelector('.section > p');
       if (sectionParagraph) {
-          // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
           void sectionParagraph.offsetWidth;
           sectionParagraph.style.animation = `fadeIn 1s ease forwards 0.8s`;
       }
@@ -1475,7 +1478,6 @@
       // Apply slide-up animation to FAQ section title (The div containing FAQ title and items)
       const faqSection = document.querySelector('.faq-section');
       if (faqSection) {
-        // Changed: Removed manual opacity/transform setting. Rely on keyframes 'from'
         void faqSection.offsetWidth;
         faqSection.style.animation = 'slideUp 1s ease forwards 1.5s';
       }
