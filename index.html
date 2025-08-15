@@ -1,1695 +1,619 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>X-Rugen - Main</title>
-<link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" type="image/png" />
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<style>
-    /* Global Variables - From index.html */
-:root {
-  --primary: #1e88e5; 
-  --primary-dark: #1565c0;
-  --primary-light: #42a5f5;
-  --accent: #ffb62f; 
-  --accent-dark: #e69a00;
-  --secondary: #00a8de; 
-  --secondary-dark: #0089b5;
-  --bg-dark: #121820;
-  --bg-darker: #1a1f26;
-  --bg-light: #22252b;
-  --text-light: #e8e8e8;
-  --text-lighter: #ffffff;
-  --dirt-brown: #866043;
-  --stone-gray: #7b7b7b;
-  --obsidian: #150d1a;
-}
-
-    /* Base Styles */
-    html {
-    direction: rtl;
-    scroll-behavior: smooth;
-    box-sizing: border-box;
-    font-size: 16px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X‑Rugen — سرور اصلی</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.fontcdn.ir/Font/Persian/YekanBakh:400:800:900" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" type="image/png" />
+  <style>
+    /* ===== متغیرهای اصلی و استایل پایه ===== */
+    :root{
+      /* پالت رنگی جدید با گرادیانت‌های آبی نفتی و روشن */
+      --primary: #1e88e5;
+      --primary-2: #42a5f5;
+      --primary-3: #0d47a1;
+      --accent: #ffb62f;
+      --accent-2: #ffc857;
+      --accent-3: #e69a00;
+      --bg: #0d1e35; /* آبی نفتی تیره */
+      --bg-2: #142742; /* آبی نفتی متوسط */
+      --bg-3: #223c68; /* آبی نفتی روشن */
+      --glass: rgba(13, 30, 53, .65); /* نسخه شفاف پس‌زمینه */
+      --text: #e9eef3;
+      --muted: #bcd0e0;
+      --danger: #ef5350;
+      --success: #26c281;
+      --border: rgba(255, 255, 255, .1);
+      
+      /* گرادیانت‌های اصلی */
+      --grad-bg: radial-gradient(circle at 50% 120%, rgba(3, 21, 58, 1) 0%, rgba(3, 21, 58, 0) 100%), linear-gradient(to bottom, #0d1e35, #0a1727);
+      --grad-topbar: linear-gradient(90deg, #0e1d30, #16243b);
+      --grad-footer: linear-gradient(180deg, #0e1d30, #16243b);
     }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--grad-bg);color:var(--text);font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;line-height:1.7;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
 
-    *, *::before, *::after {
-    box-sizing: inherit;
+    /* ===== Preloader (صفحه لودینگ) ===== */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease;
     }
-
-    body {
-    margin: 0;
-    font-family: 'Vazirmatn', sans-serif; /* Primary Persian font */
-    /* Background from index.html (color + noise) */
-    background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
-    color: var(--text-light);
-    overflow-x: hidden;
-    direction: rtl; /* Ensure content is RTL */
-    text-align: right;
-    line-height: 1.6;
-    position: relative;
+    #preloader.loaded {
+      opacity: 0;
+      pointer-events: none;
     }
-
-    a {
-    text-decoration: none;
-    color: inherit;
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--primary);
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
-
-    img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    image-rendering: pixelated;
+    .loading-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      animation: fade-in-up 0.8s ease-out;
     }
-
-    section {
-        position: relative;
-        overflow: hidden;
-        padding: 80px 0;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Scrollbar Styling (from index.html) */
-    ::-webkit-scrollbar {
-    width: 10px;
-    background: var(--bg-darker);
-    }
-
-    ::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 4px;
-    box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-light);
-    box-shadow: 0 0 4px var(--primary-light);
-    }
-
-    /* Animated Block Particles (from index.html) */
-    .particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-    opacity: 0.8;
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
-    .particle {
-    position: absolute;
-    background-size: cover;
-    border-radius: 0; 
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    animation: float 20s infinite linear;
-    image-rendering: pixelated; 
-    }
-
-    .particle.dirt { background-color: var(--dirt-brown); border: 1px solid rgba(0,0,0,0.2); }
-    .particle.stone { background-color: var(--stone-gray); border: 1px solid rgba(0,0,0,0.2); }
-    .particle.emerald { background-color: var(--primary); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--primary); }
-    .particle.gold { background-color: var(--accent); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--accent); }
-
-    @keyframes float {
-    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.7; }
-    90% { opacity: 0.7; }
-    100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
-    }
-
-    /* Minecraft Clouds Effect (from index.html) */
-    .minecraft-clouds {
-    position: fixed;
-    top: 100px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.08;
-    }
-    
-    .minecraft-cloud {
-    position: absolute;
-    background: white;
-    border-radius: 10px;
-    opacity: 0.7;
-    animation: cloud-movement linear infinite;
-    }
-
-    @keyframes cloud-movement {
-    0% { transform: translateX(-5%); }
-    100% { transform: translateX(105%); }
-    }
-
-    /* Topbar (Header) - Default (Desktop) Styles */
-    .topbar {
-    background: linear-gradient(90deg, rgba(20, 24, 32, 0.9), rgba(30, 36, 48, 0.9));
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between; /* Logo on right, nav and toggle on left */
-    align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--primary);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    transform: translateY(-100%); /* Initial state for animation */
-    animation: slideInDown 0.8s ease-out forwards 0.2s;
-    will-change: transform;
-    }
-
-    @keyframes slideInDown {
-        to { transform: translateY(0); }
-    }
-
-    .topbar::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0.6;
-    }
-
-    .logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: all 0.3s ease;
-    }
-    
-    .logo:hover {
-    transform: scale(1.05);
-    }
-
-    .logo img {
-    width: 58px;
-    height: 58px;
-    border-radius: 6px;
-    box-shadow: 0 0 15px rgba(30, 136, 229, 0.5);
-    transition: all 0.3s ease;
-    border: 2px solid rgba(30, 136, 229, 0.3);
-    image-rendering: pixelated;
-    }
-    
-    .logo:hover img {
-    box-shadow: 0 0 20px rgba(30, 136, 229, 0.8);
-    transform: rotate(5deg);
-    }
-
-    .logo .name {
-    font-size: 2.2em;
-    font-weight: 900;
-    font-family: 'Minecraft', sans-serif;
-    text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
-    transition: all 0.3s ease;
-    letter-spacing: 1px;
-    }
-
-    .logo .part1 {
-    color: var(--primary);
-    position: relative;
-    }
-    
-    .logo .part1::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    bottom: -4px;
-    left: 0;
-    background: var(--primary);
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-    box-shadow: 0 0 8px var(--primary);
-    }
-    
-    .logo:hover .part1::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-    }
-
-    .logo .part2 {
-    color: var(--text-light);
-    }
-
-    .nav {
-    display: flex;
-    gap: 30px;
-    flex-direction: row-reverse; /* For RTL display from right to left */
-    flex-grow: 1; /* Allows nav to take available space */
-    justify-content: center; /* Centers its content within that space */
-    }
-
-    .nav a {
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 1.4em;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
-    position: relative;
-    padding: 8px 15px;
-    background: rgba(0,0,0,0.2);
-    border: 2px solid transparent;
-    border-radius: 20px; /* Increased border-radius for rounded corners */
-    white-space: nowrap;
-    }
-    
-    .nav a::after {
-    content: '';
-    position: absolute;
-    width: 90%;
-    height: 3px;
-    bottom: -3px;
-    left: 5%;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-    box-shadow: 0 0 8px var(--accent);
-    }
-    
-    .nav a:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-    }
-
-    .nav a:hover {
-    color: var(--text-lighter);
-    text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
-    transform: translateY(-3px);
-    border-color: var(--primary-dark);
-    background: rgba(30, 136, 229, 0.1);
-    box-shadow: 0 0 15px rgba(30, 136, 229, 0.4); /* Add a glow on hover */
-    }
-
-    /* Active link style */
-    .nav a.active {
-        color: var(--accent); /* Highlight with accent color */
-        border-color: var(--accent); /* Change border color */
-        text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
-    }
-
-    .nav a.active::after {
-        transform: scaleX(1); /* Ensure the underline is visible */
-        transform-origin: bottom left;
-        background: var(--accent);
-    }
-
-    /* Hamburger menu for mobile */
-    .menu-toggle {
-        display: none; /* Hidden by default on larger screens */
-        background: none;
-        border: none;
-        color: var(--text-light);
-        font-size: 1.8em;
-        cursor: pointer;
-        padding: 10px;
-        z-index: 101; /* Above other content */
-        order: -1; /* Places toggle to the left of the logo for desktop (but it's hidden) */
-    }
-
-    /* Hero Section (from index.html structure, with added buttons) */
-    .hero {
-    position: relative;
-    min-height: 480px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 60px 20px;
-    overflow: hidden;
-    background-color: rgba(0,0,0,0.4);
-    margin-top: 88px; /* Space for fixed topbar */
-    }
-    
-    .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* Background image of [Image of Item] */
-    background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/panorama.png') center center / cover no-repeat;
-    opacity: 0.3;
-    filter: blur(2px);
-    z-index: -1;
-    animation: pan 60s infinite alternate ease-in-out;
-    }
-    
-    @keyframes pan {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-    }
-    
-    .hero-content {
-    position: relative;
-    z-index: 1;
-    background: rgba(0,0,0,0.7);
-    padding: 40px;
-    border-radius: 12px;
-    border: 4px solid var(--primary-dark);
-    box-shadow: 0 0 30px rgba(0,0,0,0.7);
-    max-width: 800px;
-    width: 90%;
-    animation: fadeInScale 1s ease forwards;
-    opacity: 0;
-    transform: scale(0.9);
-    }
-    @keyframes fadeInScale {
-        to { opacity: 1; transform: scale(1); }
-    }
-    
-    .hero-content::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
-    background: repeating-linear-gradient(
-        45deg,
-        var(--primary-dark),
-        var(--primary-dark) 10px,
-        transparent 10px,
-        transparent 20px
-    );
-    z-index: -1;
-    border-radius: 16px;
-    opacity: 0.2;
-    }
-    
-    .hero h1 {
-    font-size: 3.2em;
-    margin-bottom: 20px;
-    color: var(--text-lighter);
-    font-weight: 900;
-    letter-spacing: 1px;
-    font-family: 'Minecraft', sans-serif;
-    text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
-    animation: slideUp 1s ease forwards 0.2s;
-    opacity: 0;
-    }
-    
-    .hero p {
-    font-size: 1.4em;
-    margin-bottom: 30px;
-    max-width: 700px;
-    color: var(--text-light);
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
-    animation: slideUp 1s ease forwards 0.4s;
-    opacity: 0;
-    }
-    
-    /* IP Copy and Discord Buttons in Hero Section */
-    .hero-buttons-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 30px;
-        animation: slideUp 1s ease forwards 0.6s;
-        opacity: 0;
-    }
-
-    .hero-btn {
-        background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-dark) 100%);
-        color: #ffffff;
-        border: 3px solid var(--accent-dark);
-        padding: 14px 32px;
-        font-size: 1.3em;
-        font-weight: bold;
-        font-family: 'Vazirmatn', sans-serif;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        position: relative;
-        text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
-        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #5a3600, 0 10px 10px rgba(0,0,0,0.5);
-        border-radius: 4px;
-        outline: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        min-width: 200px;
-    }
-
-    .hero-btn.discord-btn {
-        background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-dark) 100%);
-        border: 3px solid var(--primary-dark);
-        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #0d47a1, 0 10px 10px rgba(0,0,0,0.5);
-    }
-    
-    .hero-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #5a3600, 0 12px 12px rgba(0,0,0,0.5);
-    }
-    .hero-btn.discord-btn:hover {
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #0d47a1, 0 12px 12px rgba(0,0,0,0.5);
-    }
-    
-    .hero-btn:active {
-    transform: translateY(4px);
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #5a3600, 0 6px 6px rgba(0,0,0,0.5);
-    }
-    .hero-btn.discord-btn:active {
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #0d47a1, 0 6px 6px rgba(0,0,0,0.5);
-    }
-    
-    .hero-btn i {
-    margin-left: 10px;
-    font-size: 1.1em;
-    }
-
-    /* Section Wrapper for common styling */
-    .section-wrapper { 
-    padding: 60px 20px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    margin-top: 60px;
-    }
-
-    /* Section Title and Paragraph */
-    .section-title-container {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 50px;
-    }
-    
-    .section-title-container h2 {
-    font-family: 'Minecraft', sans-serif;
-    font-size: 4em;
-    text-align: center;
-    color: var(--text-lighter);
-    text-shadow: 5px 5px 0 #000, 0 0 30px var(--accent);
-    margin: 0 auto 20px;
-    position: relative;
-    z-index: 1;
-    padding-bottom: 15px;
-    animation: slideInFromTop 1s ease forwards;
-    opacity: 0;
-    }
-    .section-title-container h2 span {
-        color: var(--accent);
-    }
-
-    .section-title-container h2::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 150px;
-        height: 8px;
-        background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        border-radius: 4px;
-        box-shadow: 0 0 15px var(--accent);
-    }
-
-    .section-title-container p {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 1.4em;
-    color: var(--text-light);
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-    max-width: 900px;
-    margin: 0 auto 40px;
-    animation: slideUp 1s ease forwards 0.2s;
-    opacity: 0;
-    }
-
-    /* Features Section - Animated Cards (from home.html) */
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 40px;
-        margin-top: 40px;
-    }
-
-    .feature-card {
-        background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-darker) 100%);
-        border: 4px solid var(--primary-dark);
-        border-radius: 15px;
-        padding: 35px;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 0 2px rgba(255,255,255,0.15);
-        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        position: relative;
-        overflow: hidden;
-        transform: translateY(70px);
-        opacity: 0;
-        will-change: transform, opacity, box-shadow;
-    }
-
-    .feature-card::before {
-        content: '';
-        position: absolute;
-        top: -30%;
-        left: -30%;
-        width: 160%;
-        height: 160%;
-        background: radial-gradient(circle at center, var(--primary-light) 0%, transparent 65%);
-        opacity: 0.08;
-        filter: blur(60px);
-        transition: all 0.8s ease;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-15px) scale(1.03);
-        box-shadow: 0 20px 45px rgba(0,0,0,0.9), inset 0 0 0 3px var(--accent), 0 0 35px var(--primary-light);
-        border-color: var(--accent);
-    }
-
-    .feature-card:hover::before {
-        transform: scale(1.15);
-        opacity: 0.15;
-    }
-
-    .feature-card i {
-        font-size: 4em;
-        color: var(--accent);
-        margin-bottom: 25px;
-        text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent-dark);
-        transition: transform 0.4s ease;
-    }
-
-    .feature-card:hover i {
-        transform: scale(1.1) rotate(5deg);
-    }
-
-    .feature-card h3 {
-        font-family: 'Minecraft', sans-serif;
-        font-size: 2em;
-        color: var(--text-lighter);
-        margin-bottom: 15px;
-        text-shadow: 3px 3px 0 rgba(0,0,0,0.6);
-    }
-
-    .feature-card p {
-        font-family: 'Vazirmatn', sans-serif;
-        font-size: 1.1em;
-        color: var(--text-light);
-    }
-
-    /* Gamemode Section (from index.html, glow refined) */
-    .gamemode-section {
-    padding: 60px 20px 70px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    margin-top: 60px;
-    }
-
-    .gamemode-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 50px;
-    margin-top: 50px;
-    padding: 0 20px;
-    max-width: 1600px;
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    .gamemode {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
-    height: 380px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 25px;
-    overflow: hidden;
-    transition: all 0.4s ease; /* Adjusted transition speed */
-    border: 3px solid var(--primary-dark);
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    will-change: transform, box-shadow;
-    }
-    
-    .gamemode:hover {
-    transform: translateY(-15px) rotateX(5deg);
-    /* Refined glow: Softer shadow, reduced opacity for ::after */
-    box-shadow: 0 18px 36px rgba(30, 136, 229, 0.25), 0 0 25px var(--primary-light); /* Softer blue glow */
-    border: 3px solid var(--primary);
-    }
-
-    .gamemode::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.4), rgba(0,0,0,0.1));
-    border-radius: 9px;
-    z-index: 0;
-    transition: all 0.4s ease;
-    }
-    
-    .gamemode:hover::before {
-    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.35), rgba(0,0,0,0.05));
-    }
-    
-    .gamemode::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 40%;
-    bottom: -5px;
-    left: 0;
-    background: linear-gradient(to top, var(--primary), transparent);
-    opacity: 0; /* Starts hidden */
-    transition: opacity 0.4s ease; /* Only transition opacity */
-    z-index: 0;
-    filter: blur(15px); /* Reduced blur for softer effect */
-    }
-    
-    .gamemode:hover::after {
-    opacity: 0.1; /* Significantly reduced opacity for subtle glow */
-    }
-
-    .gamemode-content {
-    position: relative;
-    z-index: 1;
-    color: #f0f0f0;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    transform: translateY(0);
-    transition: all 0.4s ease;
-    will-change: transform;
-    }
-    
-    .gamemode:hover .gamemode-content {
-    transform: translateY(-15px);
-    }
-
-    .gamemode-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 15px;
-    opacity: 0.9;
-    transition: all 0.4s ease;
-    transform: translateY(20px);
-    image-rendering: pixelated;
-    filter: drop-shadow(0 0 8px rgba(0,0,0,0.7));
-    border: 3px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 5px;
-    background-color: rgba(0,0,0,0.3);
-    }
-    
-    .gamemode:hover .gamemode-icon {
-    transform: translateY(0) scale(1.1);
-    opacity: 1;
-    background-color: rgba(0,0,0,0.5);
-    border-color: var(--primary);
-    box-shadow: 0 0 15px var(--primary-light);
-    }
-
-    .gamemode-title {
-    font-family: 'Minecraft', sans-serif;
-    font-size: 2.2em;
-    font-weight: 900;
-    margin-bottom: 10px;
-    color: #ffffff;
-    text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
-    letter-spacing: 1px;
-    }
-
-    .gamemode-date {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 1.1em;
-    color: var(--accent);
-    margin-bottom: 15px;
-    font-weight: 700;
-    }
-
-    .tooltip {
-    font-family: 'Vazirmatn', sans-serif;
-    font-size: 1em;
-    color: var(--text-light);
-    border: 2px solid var(--primary);
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    user-select: none;
-    display: inline-block;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-    transform: translateY(10px);
-    opacity: 0.9;
-    font-weight: bold;
-    }
-    
-    .gamemode:hover .tooltip {
-    background-color: rgba(30, 136, 229, 0.2);
-    color: #ffffff;
-    box-shadow: 0 0 15px rgba(30, 136, 229, 0.5);
-    transform: translateY(0);
-    opacity: 1;
-    }
-    
-    .gamemode-desc {
-    font-family: 'Vazirmatn', sans-serif;
-    max-width: 280px;
-    margin: 0 auto;
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: all 0.4s ease;
-    color: #e8e8e8;
-    font-size: 1.1em;
-    letter-spacing: 0.5px;
-    line-height: 1.6;
-    }
-    
-    .gamemode:hover .gamemode-desc {
-    height: auto;
-    margin-top: 15px;
-    margin-bottom: 20px;
-    opacity: 1;
-    }
-
-    /* About Us Section - Large Image and Text (from home.html) */
-    .about-us-content {
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        gap: 50px;
-        margin-top: 60px;
-    }
-
-    .about-us-image {
-        flex: 1;
-        min-width: 380px;
-        height: 480px;
-        overflow: hidden;
-        border-radius: 15px;
-        border: 5px solid var(--primary-dark);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 0 3px rgba(255,255,255,0.15);
-        position: relative;
-        transform: scale(0.9);
-        opacity: 0;
-        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-        will-change: transform, opacity, box-shadow;
-    }
-    .about-us-image.animated {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    .about-us-image img {
+    /* ===== پس‌زمینه ذرات ===== */
+    .particle-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        filter: brightness(0.85) saturate(1.15); /* Revert to original brightness/saturation */
-        transition: transform 0.6s ease-in-out;
+        z-index: -1;
+        opacity: 0.9;
+        background: var(--grad-bg);
     }
-
-    .about-us-image:hover img {
-        transform: scale(1.05);
-        filter: brightness(1) saturate(1.25); /* Revert to original brightness/saturation */
-    }
-
-    .about-us-text {
-        flex: 2;
-        padding-right: 30px;
-        border-right: 5px solid var(--accent-dark);
-        transform: translateX(-70px);
-        opacity: 0;
-        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-        will-change: transform, opacity;
-    }
-    .about-us-text.animated {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    .about-us-text h3 {
-        font-family: 'Minecraft', sans-serif;
-        font-size: 2.8em;
-        color: var(--text-lighter);
-        margin-bottom: 20px;
-        text-shadow: 3px 3px 0 rgba(0,0,0,0.6);
-        line-height: 1.2;
-    }
-
-    .about-us-text p {
-        font-family: 'Vazirmatn', sans-serif;
-        font-size: 1.2em;
-        color: var(--text-light);
-        margin-bottom: 20px;
-    }
-
-    /* Footer Section (from home.html) */
-    footer {
-    background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/obsidian_texture.png');
-    background-size: 80px 80px;
-    image-rendering: pixelated;
-    color: var(--text-light);
-    text-align: center;
-    padding: 50px 20px 55px;
-    font-size: 1em;
-    border-top: 4px solid var(--primary-dark);
-    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.8);
-    position: relative;
-    z-index: 2;
-    user-select: none;
-    margin-top: 100px; /* Ensure sufficient margin from previous section */
-    }
-
-    footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.7); /* Revert to original overlay opacity */
-    z-index: -1;
-    }
-
-    .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    direction: rtl;
-    }
-
-    .footer-logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    justify-content: flex-start;
-    flex-grow: 1;
-    min-width: 200px;
-    }
-
-    .footer-logo img {
-    width: 50px;
-    height: 50px;
-    margin-left: 15px;
-    border-radius: 8px;
-    border: 3px solid var(--primary-dark);
-    box-shadow: 0 0 12px var(--primary);
-    }
-
-    .footer-logo .name {
-    font-size: 1.8em;
-    font-weight: bold;
-    font-family: 'Minecraft', sans-serif;
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
-    }
-
-    .footer-nav {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-    justify-content: center;
-    flex-grow: 1;
-    min-width: 300px;
-    }
-
-    .footer-nav a {
-    color: var(--text-light);
-    text-decoration: none;
-    transition: all 0.3s;
-    font-weight: bold;
-    font-family: 'Vazirmatn', sans-serif;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
-    position: relative;
-    padding: 6px 0;
-    font-size: 1.05em;
-    }
-
-    .footer-nav a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        background: var(--accent);
-        bottom: 0;
-        right: 0;
-        transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .footer-nav a:hover::after {
+    canvas {
+        display: block;
         width: 100%;
-        left: 0;
+        height: 100%;
     }
 
-    .footer-nav a:hover {
-    color: var(--accent);
-    text-shadow: 0 0 10px var(--accent-dark);
+    /* ===== سربرگ ===== */
+    .topbar{
+        position:fixed;inset-inline:0;top:0;z-index:1000;
+        backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+        background:var(--grad-topbar);
+        border-bottom:1px solid var(--border);
     }
+    .topbar-inner{max-width:1200px;margin:auto;display:flex;align-items:center;gap:16px;padding:14px 18px}
+    .brand{display:flex;align-items:center;gap:12px; transition: transform 0.2s ease;}
+    .brand:hover { transform: scale(1.05); }
+    .brand img{width:52px;height:52px;border-radius:10px;border:2px solid rgba(66,165,245,.4);box-shadow:0 0 18px rgba(66,165,245,.25);image-rendering:pixelated}
+    .brand .name{font-family:'Minecraft', sans-serif; font-weight:400;font-size:1.4rem;letter-spacing:1px}
+    .brand .name .x{color:var(--primary)}
+    nav{flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; gap: 18px;}
+    .nav-link{padding:10px 14px;border:1px solid transparent;border-radius:12px;transition:.25s;background:transparent;font-weight:700}
+    .nav-link:hover{border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,136,229,.1)}
+    .nav-link.active{color:var(--accent);border-color:var(--accent)}
+    .menu-btn{display:none;background:none;border:0;color:var(--text);font-size:1.5rem}
 
-    .social-links {
-    display: flex;
-    gap: 15px;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-    flex-grow: 1;
-    min-width: 200px;
-    }
-
-    .social-link {
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
-    border: 3px solid var(--primary-dark);
-    border-radius: 10px;
-    color: var(--text-light);
-    font-size: 1.5em;
-    transition: all 0.3s;
-    text-decoration: none;
-    box-shadow: 0 0 10px rgba(0,0,0,0.6);
-    }
-
-    .social-link:hover {
-    background: var(--primary);
-    color: var(--text-lighter);
-    transform: translateY(-6px) rotate(8deg);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), 0 0 20px var(--primary-light);
-    border-color: var(--accent);
-    }
-
-    .footer-copyright {
-        width: 100%;
+    /* ===== بخش اصلی (Hero) ===== */
+    .hero{
+        position:relative;padding:130px 18px 70px;margin-top:68px;
+        overflow:hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        margin-top: 20px;
-        font-size: 0.9em;
-        border-top: 1px solid rgba(255,255,255,0.15);
-        padding-top: 15px;
-        color: rgba(255,255,255,0.8);
-        font-family: 'Vazirmatn', sans-serif;
+        flex-direction: column;
     }
-
-    footer span {
-    color: var(--accent);
-    font-weight: bold;
+    .hero-card{
+        position:relative;max-width:1050px;
+        margin:0 auto;
+        background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.35));
+        border:1px solid var(--border);border-radius:18px;padding:38px;
+        box-shadow:0 25px 60px rgba(0,0,0,.45);
+        display:grid;grid-template-columns:140px 1fr;gap:22px;
+        backdrop-filter: blur(10px);
+        transform-style: preserve-3d;
+        transform: perspective(1000px);
+        transition: transform .2s ease;
     }
-
-    footer a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 900;
-    transition: 0.3s;
+    .hero-card:hover {
+        transform: perspective(1000px) rotateX(1deg) rotateY(1deg);
+        box-shadow:0 30px 80px rgba(0,0,0,.55);
     }
-
-    footer a:hover {
-    color: var(--text-lighter);
-    text-shadow: 0 0 10px var(--primary);
+    .hero-logo{
+        width:120px;height:120px;border-radius:16px;
+        background:linear-gradient(135deg, var(--primary), var(--primary-2));
+        display:grid;place-items:center;
+        box-shadow:0 0 0 6px rgba(30,136,229,.18);border:1px solid rgba(255,255,255,.1);
     }
-
-    /* Animation Classes */
-    .animated-section {
-        opacity: 0;
-        transform: translateY(80px);
-        transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-        will-change: opacity, transform;
+    .hero-logo img{width:82px;height:82px;image-rendering:pixelated}
+    .hero h1{margin:0 0 10px;font-size:2.8rem;line-height:1.2; text-shadow: 0 0 10px rgba(255,255,255,0.2); font-family: 'Yekan Bakh', sans-serif; font-weight: 800;}
+    .hero p{margin:0 0 18px;color:var(--muted);max-width: 600px;}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:18px; justify-content: center;}
+    
+    /* ===== استایل و انیمیشن دکمه‌های جدید ===== */
+    .btn {
+      --bg-color: var(--primary);
+      --hover-color: var(--primary-2);
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: var(--bg-color);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+      cursor: pointer;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
     }
-    .animated-section.is-visible {
-        opacity: 1;
-        transform: translateY(0);
+    .btn.btn-primary {
+      background-color: var(--primary);
+      box-shadow: 0 4px 15px rgba(30, 136, 229, 0.4);
     }
-
-    .animated-card {
-        opacity: 0;
-        transform: scale(0.85);
-        transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1), transform 1s cubic-bezier(0.23, 1, 0.32, 1);
-        will-change: opacity, transform;
+    .btn.btn-discord {
+      background-color: #5865F2; /* Discord's official color */
+      box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
     }
-    .animated-card.is-visible {
-        opacity: 1;
-        transform: scale(1);
+    .btn.btn-ghost {
+      background-color: var(--accent);
+      color: #332d1d;
+      box-shadow: 0 4px 15px rgba(255, 182, 47, 0.4);
     }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(100px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes text-pop-in {
-    0% { opacity: 0; transform: scale(0.6) translateY(60px); }
-    50% { transform: scale(1.15); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
     }
-    @keyframes slideInFromTop {
-        from { opacity: 0; transform: translateY(-70px); }
-        to { opacity: 1; transform: translateY(0); }
+    .btn.btn-primary:hover {
+      background-color: var(--primary-2);
+      box-shadow: 0 12px 35px rgba(30, 136, 229, 0.6);
+    }
+    .btn.btn-discord:hover {
+      background-color: #7289DA;
+      box-shadow: 0 12px 35px rgba(88, 101, 242, 0.6);
+    }
+    .btn.btn-ghost:hover {
+      background-color: var(--accent-2);
+      box-shadow: 0 12px 35px rgba(255, 182, 47, 0.6);
+    }
+    .ip {
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 800;
+      background: rgba(255,255,255,.06);
+      border: 1px dashed var(--border);
+      padding: 6px 10px;
+      border-radius: 8px;
     }
     
-    /* Message Display */
-    .message-display {
-    display: none;
-    position: fixed;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 18px 35px;
-    border-radius: 10px;
-    font-size: 1.3em;
-    font-weight: bold;
-    z-index: 1000;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-    opacity: 0;
-    transition: opacity 0.6s ease-out;
-    text-align: center;
-    color: var(--text-lighter);
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.6);
-    font-family: 'Vazirmatn', sans-serif;
+    /* ===== بخش ویژگی‌ها و مودهای بازی ===== */
+    .section{position:relative;padding:70px 18px}
+    .container{max-width:1200px;margin:auto}
+    .section-title{font-size:2.4rem;margin:0 0 10px; text-shadow: 0 0 8px rgba(0,0,0,0.5); font-family: 'Yekan Bakh', sans-serif; font-weight: 800;}
+    .section-sub{color:var(--muted);margin:0 0 30px}
+    .grid{display:grid;gap:22px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+    .card{
+        background:linear-gradient(180deg, var(--glass), rgba(20,28,36,.6));
+        border:1px solid var(--border);
+        border-radius:16px;
+        padding:24px;
+        box-shadow:inset 0 0 0 1px rgba(255,255,255,.03), 0 20px 40px rgba(0,0,0,.25);
+        transition:transform .2s ease, box-shadow .2s ease, background .3s ease;
+        backdrop-filter: blur(8px);
+        transform-style: preserve-3d;
     }
-    .message-display.success {
-        background-color: var(--primary-dark);
-        border: 4px solid var(--primary-light);
-        box-shadow: 0 0 20px var(--primary-light);
+    .card:hover{
+        transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+        box-shadow:inset 0 0 0 1px rgba(255,255,255,.06), 0 30px 60px rgba(0,0,0,.35);
+        background:linear-gradient(180deg, var(--glass), rgba(20,28,36,.8));
     }
-    .message-display.error {
-        background-color: #c0392b;
-        border: 4px solid #e74c3c;
-        box-shadow: 0 0 20px #e74c3c;
+    .card i{font-size:2rem;color:var(--accent); transition: transform .3s ease;}
+    .card:hover i { transform: scale(1.15) rotate(5deg); }
+    .card h3{margin:12px 0 8px; font-family: 'Yekan Bakh', sans-serif; font-weight: 800;}
+
+    /* ===== مودهای بازی ===== */
+    .modes{display:grid;gap:26px;grid-template-columns:repeat(3,minmax(0,1fr))}
+    .mode{
+        position:relative;min-height:360px;border-radius:16px;
+        overflow:hidden;border:1px solid var(--border);background:#000;
+        transition:transform .3s ease, box-shadow .3s ease;
     }
-
-
-    /* Responsive Adjustments */
-    /* Mobile First - Smaller screens first, then override for larger */
-    @media (max-width: 1024px) {
-        html { font-size: 15px; } /* Slightly smaller base font */
-        
-        .topbar {
-            /* Mobile specific: Logo on right, hamburger on left */
-            justify-content: space-between; 
-            gap: 0; /* No gap between logo and nav on mobile */
-        }
-
-        .logo { 
-            order: 2; /* Keep logo on the right (start) in RTL */
-            margin-inline-start: 0; /* Remove auto margins from logo on mobile */
-        }
-        
-        .nav {
-            display: none; /* Hidden by default on mobile */
-            flex-direction: column;
-            width: 100%;
-            background: linear-gradient(90deg, rgba(20, 24, 32, 0.95), rgba(30, 36, 48, 0.95));
-            position: absolute;
-            top: 88px; /* Below the topbar */
-            left: 0;
-            padding: 20px 0;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            align-items: center; /* Center links in mobile menu */
-            flex-grow: 0; /* Reset flex-grow for mobile */
-            justify-content: flex-start; /* Reset justify-content for mobile */
-        }
-        .nav.open {
-            display: flex; /* Show nav when open */
-        }
-        .nav a {
-            width: 90%; /* Make links take more width in mobile menu */
-            text-align: center;
-            padding: 12px 15px;
-            font-size: 1.3em;
-            margin-bottom: 10px; /* Spacing between mobile links */
-            border-radius: 15px; /* Ensure rounded corners on mobile menu items */
-        }
-        .logo img { width: 50px; height: 50px; } /* Slightly smaller logo on mobile */
-        .logo .name { font-size: 2em; } /* Adjust font size */
-
-        .menu-toggle {
-            display: block; /* Show hamburger on smaller screens */
-            order: 1; /* Place it to the left of the logo in RTL */
-            margin-inline-end: 20px; /* Space from right edge */
-        }
-
-        .hero h1 { font-size: 3em; }
-        .hero p { font-size: 1.2em; }
-        .hero-content { padding: 30px; width: 95%; }
-        .hero-btn { font-size: 1.1em; padding: 10px 20px; min-width: 160px; }
-
-        .features-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .feature-card { padding: 30px; }
-        .feature-card i { font-size: 3.5em; }
-        .feature-card h3 { font-size: 1.8em; }
-
-        .gamemode-container { grid-template-columns: 1fr; gap: 40px; } /* Single column for mobile gamemodes */
-        .gamemode { height: auto; min-height: 320px; } /* Adjust height */
-        .gamemode-icon { width: 70px; height: 70px; }
-        .gamemode-title { font-size: 2em; }
-        .gamemode-desc { height: auto; opacity: 1; margin-top: 15px; margin-bottom: 15px; } /* Always show desc on mobile */
-
-        .about-us-content { flex-direction: column; text-align: center; gap: 30px; }
-        .about-us-image { width: 90%; height: 350px; }
-        .about-us-text { padding-right: 0; border-right: none; }
-        .about-us-text h3 { font-size: 2.2em; }
-        .about-us-text p { font-size: 1.1em; }
-
-        /* Footer adjustments for mobile */
-        .footer-content { flex-direction: column; gap: 15px; }
-        .footer-logo, .footer-nav, .social-links { justify-content: center; width: 100%; margin-bottom: 0; }
-        .footer-logo img { margin-left: 0; margin-right: 10px; }
-
-        /* Back-to-top button on mobile */
-        .back-to-top {
-            width: 50px; /* Slightly smaller on mobile */
-            height: 50px;
-            font-size: 1.5em; /* Smaller icon */
-            bottom: 20px;
-            left: 20px;
-        }
+    .mode:hover{transform:scale(1.03);box-shadow: 0 15px 40px rgba(0,0,0,.5); cursor: pointer;}
+    .mode > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;filter:saturate(1.2); transition: transform .3s ease;}
+    .mode:hover > img{transform: scale(1.1);}
+    .mode::after{
+        content:"";position:absolute;inset:0;
+        background:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,.35) 55%,transparent);
+        transition: opacity .3s ease;
+        z-index: 1;
     }
-
-    @media (max-width: 768px) {
-        html { font-size: 14px; }
-
-        .hero h1 { font-size: 2.5em; }
-        .hero p { font-size: 1.1em; }
-        .hero-btn { font-size: 1em; padding: 8px 15px; min-width: 140px; }
-
-        .section-title-container h2 { font-size: 2.8em; }
-        .section-title-container p { font-size: 1.1em; }
-
-        .features-grid { grid-template-columns: 1fr; gap: 20px; } /* Single column for very small screens */
-        .feature-card { padding: 20px; }
-        .feature-card i { font-size: 3em; }
-        .feature-card h3 { font-size: 1.6em; }
-        .feature-card p { font-size: 1em; }
-
-        .about-us-image { height: 280px; }
-        .about-us-text h3 { font-size: 2em; }
-        .about-us-text p { font-size: 1em; }
+    .mode-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:20px; z-index: 2;}
+    .badge{display:inline-flex;align-items:center;gap:8px;font-weight:900;padding:8px 12px;border-radius:999px;border:1px solid var(--border);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .badge.success{background:rgba(38,194,129,.18);color:#d6ffea;border-color:rgba(38,194,129,.4)}
+    .badge.soon{background:rgba(255,182,47,.14);color:#fff3d6;border-color:rgba(255,182,47,.35)}
+    .mode h3{margin:0;font-size:1.8rem; font-family: 'Yekan Bakh', sans-serif; font-weight: 800;}
+    .mode p{margin:0 0 6px;color:#d9e7f2}
+    
+    /* ===== بخش درباره ما ===== */
+    .about-card {
+        background: linear-gradient(135deg, rgba(30,136,229,.1), rgba(10,15,22,.6)), url(https://s5.uupload.ir/files/amirabbas8585/Xrugen/about-bg.jpg);
+        background-size: cover;
+        background-position: center;
+        border-radius: 20px;
+        padding: 50px;
+        text-align: center;
+        border: 1px solid var(--border);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        backdrop-filter: blur(5px);
     }
-
-    /* New Back to Top Button Styles */
-    .back-to-top {
-        position: fixed;
-        bottom: 30px; /* Slightly higher */
-        left: 30px; /* Slightly more inset from corner */
-        width: 60px; /* Fixed size for a perfect circle */
-        height: 60px;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); /* Gradient background */
-        color: var(--text-lighter);
-        border-radius: 50%; /* Make it round */
-        box-shadow: 0 5px 20px rgba(0,0,0,0.6), 0 0 25px var(--primary-light); /* Stronger shadow/glow */
-        font-size: 1.8em; /* Larger icon */
+    .about-card h2 {
+        font-family: 'Yekan Bakh', sans-serif;
+        font-weight: 900;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: var(--accent-2);
+        text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    }
+    .about-card p {
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto 30px;
+        color: #e0e9f1;
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+    .about-reasons {
         display: flex;
-        align-items: center;
         justify-content: center;
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, background 0.3s ease;
-        opacity: 0; /* Hidden by default */
-        pointer-events: none; /* Do not block clicks when hidden */
-        z-index: 999; /* Ensure it's above other content */
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Stronger text shadow */
-        border: 3px solid var(--primary-light); /* More prominent border */
-        cursor: pointer; /* Explicitly show cursor */
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .about-reason-item {
+        background: rgba(255,255,255,.05);
+        padding: 15px 25px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,.1);
+        font-weight: 700;
+        transition: transform 0.2s ease;
+    }
+    .about-reason-item:hover {
+        transform: translateY(-5px) scale(1.05);
+        background: rgba(255,255,255,.1);
+    }
+    .about-reasons h3 {
+        margin: 0 0 8px;
+        font-family: 'Yekan Bakh', sans-serif;
+        font-weight: 800;
+        color: var(--primary-2);
+    }
+    .about-reasons p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: var(--muted);
     }
 
-    .back-to-top:hover {
-        transform: translateY(-8px) scale(1.1); /* More pronounced lift and scale */
-        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%); /* Reverse gradient or lighter */
-        box-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 0 35px var(--primary-light); /* Even stronger hover glow */
-    }
+    /* ===== پانویس (Footer) ===== */
+    footer{margin-top:70px;background:var(--grad-footer);border-top:1px solid var(--border)}
+    .footer-inner{max-width:1200px;margin:auto;padding:28px 18px;display:grid;gap:16px;grid-template-columns:1fr auto 1fr;align-items:center}
+    .f-brand{display:flex;align-items:center;gap:10px}
+    .f-brand img{width:44px;height:44px;border-radius:9px;border:1px solid rgba(66,165,245,.35)}
+    .f-nav{display:flex;gap:16px;justify-content:center}
+    .f-nav a{padding:6px 10px;border-radius:10px}
+    .social{display:flex;gap:10px;justify-content:flex-end}
+    .social a{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--border);transition:.2s}
+    .social a:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.35);background:rgba(66,165,245,.18)}
+    .copy{grid-column:1/-1;text-align:center;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;margin-top:6px}
 
-    .back-to-top.show {
-        opacity: 1;
-        pointer-events: auto;
-        animation: fadeInPop 0.5s ease-out forwards; /* Add an animation when it appears */
-    }
+    /* ===== ابزارک‌ها ===== */
+    .toast{position:fixed;inset-inline-start:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:rgba(12,18,24,.92);color:var(--text);border:1px solid var(--border);padding:12px 18px;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.4);z-index:1200;opacity:0;transition:.25s;font-weight:800}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .visible { opacity: 1; transform: translateY(0); }
 
-    /* Ensure icon is centered vertically and horizontally */
-    .back-to-top i {
-        margin: 0; /* Remove any default margins */
-        line-height: 1; /* Helps vertical alignment */
+    /* ===== واکنش‌گرا (Responsive) ===== */
+    @media (max-width:1024px){
+      .grid-3,.modes{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .about-grid{grid-template-columns:1fr}
+      .hero-card{grid-template-columns:1fr}
+      .hero-logo{display:none}
+      .hero h1 { font-size: 2.2rem; }
+      nav { justify-content: space-around; }
     }
-
-    @keyframes fadeInPop {
-        from {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
+    @media (max-width:768px){
+      nav { justify-content: flex-start; margin-inline-start: 0; }
+      nav.open{display:flex;flex-direction:column;gap:6px; align-items: stretch; justify-content: flex-start;}
+      .menu-btn{display:block;margin-inline-start:auto}
+      .grid-3,.modes{grid-template-columns:1fr}
+      .topbar-inner .nav-link:hover{border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,136,229,.1)}
+      .topbar-inner .nav-link.active{color:var(--accent);border-color:var(--accent)}
+      .hero h1 { font-size: 1.8rem; }
+      .hero-actions { justify-content: center; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
+      .social { justify-content: center; }
+      .f-nav { justify-content: center; }
     }
-</style>
+  </style>
 </head>
 <body>
-<!-- ذرات متحرک -->
-<div class="particles" id="particles"></div>
-
-<!-- انیمیشن ابرهای ماینکرافت -->
-<div class="minecraft-clouds" id="minecraft-clouds"></div>
-
-<!-- نوار بالایی (هدر) -->
-<div class="topbar">
-    <a href="https://www.xrugen.ir/" style="text-decoration: none;">
-    <div class="logo">
-        <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="[Image of X-Rugen Logo]" />
-        <div class="name">
-        <span class="part1">X</span><span class="part2">-Rugen</span>
-        </div>
-    </div>
-    </a>
-    <!-- Hamburger menu button -->
-    <button class="menu-toggle" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-    </button>
-      <div class="nav">
-            <a href="https://www.xrugen.ir/punish/"><i class="fas fa-gavel"></i> پانیشمنت</a>
-            <a href="https://www.xrugen.ir/shop/"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
-            <a href="https://www.xrugen.ir/rules/"><i class="fas fa-scroll"></i> قوانین</a>
-      </div>
-    </div>
-
-<!-- بخش قهرمان (Hero Section) -->
-<section id="hero" class="hero">
-    <div class="hero-content">
-    <h1 class="fade-in">X-Rugen</h1>
-    <p class="slide-up">به زودی با تجربه‌ای جدید از بازی ماینکرفت به شما ملحق خواهیم شد!</p>
-    <div class="hero-buttons-container">
-        <button class="hero-btn" onclick="copyText('MC.XRugen.IR')">
-        <i class="fas fa-clipboard"></i> کپی IP
-        </button>
-        <button class="hero-btn discord-btn" onclick="window.open('https://discord.gg/AJBF5CPmYx', '_blank')">
-        <i class="fab fa-discord"></i> دیسکورد ما
-        </button>
-    </div>
-    </div>
-</section>
-
-<!-- بخش "چرا X-Rugen؟" (ویژگی‌ها) -->
-<section id="features" class="animated-section section-wrapper">
-    <div class="container">
-    <div class="section-title-container">
-        <h2>چرا <span>X-Rugen</span>؟</h2>
-        <p>در اینجا به برخی از ویژگی‌های برجسته سرور X-Rugen اشاره شده است که آن را از سایرین متمایز می‌کند.</p>
-    </div>
-    <div class="features-grid">
-        <div class="feature-card animated-card">
-        <i class="fas fa-shield-alt"></i>
-        <h3>امنیت بالا</h3>
-        <p>تیم امنیتی مجرب ما، تضمین می‌کند که سرور شما از هرگونه نفوذ و آسیب در امان باشد.</p>
-        </div>
-        <div class="feature-card animated-card" style="animation-delay: 0.1s;">
-        <i class="fas fa-users-cog"></i>
-        <h3>جامعه فعال</h3>
-        <p>جامعه‌ای بزرگ و دوستانه از بازیکنان، همیشه آماده برای همکاری و رقابت.</p>
-        </div>
-        <div class="feature-card animated-card" style="animation-delay: 0.2s;">
-        <i class="fas fa-server"></i>
-        <h3>سرور قدرتمند</h3>
-        <p>بهترین سرورهای با سخت‌افزار قوی برای تجربه‌ای بدون لگ و روان.</p>
-        </div>
-        <div class="feature-card animated-card" style="animation-delay: 0.3s;">
-        <i class="fas fa-magic"></i>
-        <h3>سیستم‌های خاص</h3>
-        <p>سیستم‌های منحصر به فرد و جذاب برای ارتقاء تجربه بازی شما.</p>
-        </div>
-        <div class="feature-card animated-card" style="animation-delay: 0.4s;">
-        <i class="fas fa-cloud-sun"></i>
-        <h3>به‌روزرسانی مداوم</h3>
-        <p>ما همیشه در حال بهبود و اضافه کردن محتوای جدید به سرور هستیم.</p>
-        </div>
-        <div class="feature-card animated-card" style="animation-delay: 0.5s;">
-        <i class="fas fa-handshake"></i>
-        <h3>پشتیبانی قوی</h3>
-        <p>تیم پشتیبانی ما همیشه آماده پاسخگویی به سوالات و حل مشکلات شماست.</p>
-        </div>
-    </div>
-    </div>
-</section>
-
-<!-- بخش مودهای بازی (Gamemodes Section) -->
-<section id="gamemodes" class="animated-section gamemode-section">
-    <div class="container">
-    <div class="section-title-container">
-        <h2>مودهای <span>بازی</span></h2>
-        <p>ما در حال آماده‌سازی مجموعه‌ای از گیم‌مودهای هیجان‌انگیز برای شما هستیم.</p>
-    </div>
-
-    <div class="gamemode-container">
-        <div class="gamemode animated-card" style="background-image: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/bedwarslogo.png')">
-        <div class="gamemode-content">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/bedwarslogo.png" alt="[Image of BedWars Logo]" class="gamemode-icon" />
-            <div class="gamemode-title">BedWars</div>
-            <div class="gamemode-date">Release: 1404/04/05</div>
-            <div class="gamemode-desc">مبارزه کنید، از تخت خود محافظت کنید و تخت‌های تیم‌های دیگر را نابود کنید!</div>
-            <div class="tooltip"><i class="fas fa-clock"></i> به‌زودی</div>
-        </div>
-        </div>
-        <div class="gamemode animated-card" style="animation-delay: 0.1s; background-image: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/skyminelogo.png')">
-        <div class="gamemode-content">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/skyminelogo.png" alt="[Image of SkyMine Logo]" class="gamemode-icon" />
-            <div class="gamemode-title">SkyMine</div>
-            <div class="gamemode-date">Release: 1404/04/10</div>
-            <div class="gamemode-desc">در آسمان جزیره خود را بسازید، منابع جمع‌آوری کنید و امپراتوری خود را گسترش دهید!</div>
-            <div class="tooltip"><i class="fas fa-clock"></i> به‌زودی</div>
-        </div>
-        </div>
-        <div class="gamemode animated-card" style="animation-delay: 0.2s; background-image: url('https://s5.uupload.ir/files/amirabbas8585/Xrugen/smp.png')">
-        <div class="gamemode-content">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/smp.png" alt="[Image of SMP Logo]" class="gamemode-icon" />
-            <div class="gamemode-title">SMP</div>
-            <div class="gamemode-date">Release: 1404/04/01</div>
-            <div class="gamemode-desc">تجربه بقا در دنیایی بزرگ همراه با دوستان، ساخت و ساز، و ماجراجویی!</div>
-            <div class="tooltip"><i class="fas fa-clock"></i> به‌زودی</div>
-        </div>
-        </div>
-    </div>
-    </div>
-</section>
-
-<!-- بخش "درباره ما" (About Us) -->
-<section id="about-us" class="animated-section section-wrapper">
-    <div class="container">
-    <div class="section-title-container">
-        <h2><span>درباره</span> ما</h2>
-        <p>تیم ماینکرافت X-Rugen متعهد به ارائه بهترین تجربه بازی آنلاین است.</p>
-    </div>
-    <div class="about-us-content">
-        <div class="about-us-image animated">
-            <img src="https://cdn.pixabay.com/photo/2021/07/28/15/34/minecraft-6502844_1280.jpg" alt="[Image of Minecraft]" />
-        </div>
-        <div class="about-us-text animated">
-        <h3>تیم <span>X-Rugen</span></h3>
-        <p>
-            پروژه X-Rugen از تاریخ 2025/05/01 آغاز شد و پس از دو ماه توسعه و آماده‌سازی، در 2025/07/01 به‌صورت رسمی راه‌اندازی شد.
-
-هدف ما از ابتدا، ساخت یکی از متمایزترین و خلاقانه‌ترین تجربه‌های ماینکرفت در ایران بوده است؛ تجربه‌ای که تنها به گیم‌مود محدود نمی‌شود، بلکه شامل ترکیبی از سیستم‌های اختصاصی، گیم‌پلی منسجم، جامعه‌ای پویا و تیمی حرفه‌ای است.
-
-ما با تکیه بر نوآوری مستمر، امنیت بالا و پشتیبانی دائمی تلاش می‌کنیم تا فضایی فراهم کنیم که بازیکنان بتوانند در آن رشد کنند، رقابت کنند و خاطرات ماندگاری بسازند.
-به X-Rugen بپیوندید و بخشی از این مسیر متفاوت باشید.
-        </p>
-        </div>
-    </div>
-    </div>
-</section>
-
-<!-- فوتر -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <div class="footer-logo">
-      <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="Logo" />
-      <div class="name">
-        <span class="part1">X</span><span class="part2">-Rugen</span>
-      </div>
-    </div>
-    
-    <div class="footer-nav">
-      <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
-      <a href="https://www.xrugen.ir/punish/">پانیشمنت</a>
-      <a href="https://www.xrugen.ir/rules/">قوانین</a>
-    </div>
-    
-    <div>
-      تمامی حقوق این سایت متعلق به تیم<span> X-Rugen </span> می باشد
-    </div>
-    
-    <div class="social-links">
-      <a href="https://discord.gg/AJBF5CPmYx" class="social-link" target="_blank">
-        <i class="fab fa-discord"></i>
-      </a>
-      <a href="#" class="social-link" target="_blank">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://t.me/X_Rugen" class="social-link" target="_blank">
-        <i class="fab fa-telegram"></i>
-      </a>
-      <a href="#" class="social-link" target="_blank">
-        <i class="fab fa-youtube"></i>
-      </a>
-    </div>
+  <!-- Preloader (صفحه لودینگ) -->
+  <div id="preloader">
+    <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="X-Rugen Logo" class="loading-logo">
+    <div class="loading-spinner"></div>
   </div>
-</footer>
 
-<!-- عنصر نمایش پیام -->
-<div id="message-display" class="message-display"></div>
+  <!-- پس‌زمینه ذرات -->
+  <div class="particle-bg">
+    <canvas id="particleCanvas"></canvas>
+  </div>
 
-<!-- دکمه بازگشت به بالا -->
-<a href="#top" class="back-to-top" aria-label="بازگشت به بالا">
-    <i class="fas fa-arrow-up"></i>
-</a>
+  <!-- سربرگ -->
+  <header class="topbar" id="top">
+    <div class="topbar-inner">
+      <a class="brand" href="https://xrugen.ir" aria-label="X‑Rugen">
+        <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="لوگوی X‑Rugen">
+        <span class="name"><span class="x">X</span>-Rugen</span>
+      </a>
+      <button class="menu-btn" aria-label="باز/بستن منو"><i class="fa-solid fa-bars"></i></button>
+      <nav id="nav">
+        <a class="nav-link" href="https://www.xrugen.ir/shop/" target="_blank">فروشگاه</a>
+        <a class="nav-link" href="https://www.xrugen.ir/punish/" target="_blank">پانیشمنت</a>
+        <a class="nav-link" href="https://www.xrugen.ir/rules/" target="_blank">قوانین</a>
+      </nav>
+    </div>
+  </header>
 
+  <!-- بخش اصلی -->
+  <section class="hero" id="hero">
+    <div class="hero-card">
+      <div class="hero-logo">
+        <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="لوگو">
+      </div>
+      <div>
+        <h1>به X‑Rugen خوش آمدید</h1>
+        <p>سرور فارسی ماینکرفت با تمرکز بر کیفیت، ثبات و محتوای اختصاصی. همین حالا به جامعه پویا و حرفه‌ای ما ملحق شوید.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="copyIp"><i class="fa-regular fa-clipboard"></i> کپی IP <span class="ip">MC.XRugen.IR</span></button>
+          <a class="btn btn-discord" href="https://discord.gg/AJBF5CPmYx" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i> دیسکورد</a>
+          <a class="btn btn-ghost" href="#modes"><i class="fa-solid fa-compass"></i> دیدن مودها</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-    // تولید ذرات
-    const particlesContainer = document.querySelector(".particles");
-    const particleTypes = ['dirt', 'stone', 'emerald', 'gold'];
-    const numberOfParticles = 30;
+  <!-- ویژگی‌ها -->
+  <section class="section" id="features">
+    <div class="container">
+      <h2 class="section-title hidden">چرا <span style="color:var(--accent)">X‑Rugen</span>؟</h2>
+      <p class="section-sub hidden">چند دلیل ساده که ما را متفاوت می‌کند.</p>
+      <div class="grid grid-3">
+        <article class="card hidden"><i class="fa-solid fa-shield"></i><h3>امنیت و ضدتقلب</h3><p>هسته امنیتی اختصاصی، آنتی‌چیت‌های به‌روز و مانیتورینگ لحظه‌ای.</p></article>
+        <article class="card hidden"><i class="fa-solid fa-gauge-high"></i><h3>کارایی بالا</h3><p>سخت‌افزار قدرتمند + بهینه‌سازی کانفیگ‌ها برای TPS پایدار و پینگ پایین.</p></article>
+        <article class="card hidden"><i class="fa-solid fa-users"></i><h3>جامعه حرفه‌ای</h3><p>ایونت‌های منظم، لیدربوردها و سیستم پاداش برای پلیرهای فعال.</p></article>
+        <article class="card hidden"><i class="fa-solid fa-wand-magic-sparkles"></i><h3>سیستم‌های اختصاصی</h3><p>اقتصاد بالانس، کوئست و پیشرفت، مپ‌سازی و آیتم‌های ویژه.</p></article>
+        <article class="card hidden"><i class="fa-solid fa-headset"></i><h3>پشتیبانی سریع</h3><p>تیم ساپورت آنلاین در دیسکورد و تیکتینگ شفاف.</p></article>
+        <article class="card hidden"><i class="fa-solid fa-repeat"></i><h3>آپدیت مستمر</h3><p>رودمپ شفاف؛ فیچرهای تازه بر اساس بازخورد جامعه.</p></article>
+      </div>
+    </div>
+  </section>
 
-    particlesContainer.innerHTML = ''; /* پاک کردن ذرات موجود */
+  <!-- مودهای بازی -->
+  <section class="section" id="modes">
+    <div class="container">
+      <h2 class="section-title hidden">مودهای <span style="color:var(--accent)">بازی</span></h2>
+      <p class="section-sub hidden">برخی از مدهای اصلی که برای شروع آماده کرده‌ایم.</p>
+      <div class="modes">
+        <!-- SMP — فعال -->
+        <article class="mode hidden">
+          <img alt="SMP" src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/smp.png" />
+          <div class="mode-body">
+            <span class="badge success"><i class="fa-solid fa-circle-check"></i> فعال</span>
+            <h3>SMP</h3>
+            <p>بقا و ساخت‌وساز در دنیایی بزرگ؛ اقتصاد، سرزمین‌ها و ماجراجویی گروهی.</p>
+          </div>
+        </article>
+        <!-- SkyMine — فعال -->
+        <article class="mode hidden">
+          <img alt="SkyMine" src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/skyminelogo.png" />
+          <div class="mode-body">
+            <span class="badge success"><i class="fa-solid fa-circle-check"></i> فعال</span>
+            <h3>SkyMine</h3>
+            <p>جزیره‌سازی، ماین پیشرفته و ارتقا؛ اقتصاد رقابتی و چالش‌های روزانه.</p>
+          </div>
+        </article>
+        <!-- BedWars — به زودی -->
+        <article class="mode hidden" data-countdown="2025-06-25T12:00:00Z">
+          <img alt="BedWars" src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/bedwarslogo.png" />
+          <div class="mode-body">
+            <span class="badge soon"><i class="fa-solid fa-hourglass-half"></i> به‌زودی</span>
+            <h3>BedWars</h3>
+            <p>از تخت خود محافظت کنید و تخت رقبا را نابود کنید؛ رقابتی سریع و تیمی.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-    for (let i = 0; i < numberOfParticles; i++) {
-        const particle = document.createElement("div");
-        particle.classList.add("particle");
-        particle.classList.add(particleTypes[Math.floor(Math.random() * particleTypes.length)]);
-
-        const size = Math.random() * 20 + 8;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
+  <!-- درباره ما -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-card hidden">
+        <h2 class="section-title">درباره ما</h2>
+        <p>پروژه X‑Rugen با هدف ایجاد یک سرور ماینکرفت حرفه‌ای و پایدار برای جامعهٔ فارسی‌زبان آغاز شد. ما باور داریم که تجربهٔ بازی باید فراتر از تنها سرگرمی باشد؛ باید بستری برای رقابت سالم، خلاقیت و دوستی فراهم کند. از اولین روز، تمرکز ما بر روی کیفیت، نوآوری و پشتیبانی بی‌نظیر بوده است.</p>
         
-        const duration = Math.random() * 25 + 15;
-        const delay = Math.random() * 15;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `${delay}s`;
-        
-        particlesContainer.appendChild(particle);
-    }
+        <div class="about-reasons">
+          <div class="about-reason-item">
+            <h3>کیفیت</h3>
+            <p>پرفورمنس، اقتصاد بالانس و تجربهٔ کاربری بی‌نقص.</p>
+          </div>
+          <div class="about-reason-item">
+            <h3>نوآوری</h3>
+            <p>فیچرهای اختصاصی و ایونت‌های برنامه‌ریزی‌شده.</p>
+          </div>
+          <div class="about-reason-item">
+            <h3>همراهی</h3>
+            <p>تصمیم‌گیری با نظر پلیرها و شفافیت کامل.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    // تولید ابرهای ماینکرافت
-    const cloudsContainer = document.querySelector(".minecraft-clouds");
-    const numberOfClouds = 8;
+  <!-- پانویس -->
+  <footer>
+    <div class="footer-inner">
+      <div class="f-brand">
+        <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="لوگو">
+        <div><strong>X‑Rugen</strong><div style="color:var(--muted);font-size:.92rem">MC.XRugen.IR</div></div>
+      </div>
+      <nav class="f-nav">
+        <a href="https://www.xrugen.ir/shop/" target="_blank">فروشگاه</a>
+        <a href="https://www.xrugen.ir/punish/" target="_blank">پانیشمنت</a>
+        <a href="https://www.xrugen.ir/rules/" target="_blank">قوانین</a>
+      </nav>
+      <div class="social">
+        <a href="https://discord.gg/AJBF5CPmYx" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        <a href="https://t.me/X_Rugen" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+      <div class="copy">تمامی حقوق برای تیم <strong>X‑Rugen</strong> محفوظ است.</div>
+    </div>
+  </footer>
 
-    cloudsContainer.innerHTML = ''; /* پاک کردن عناصر ابری موجود */
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    for (let i = 0; i < numberOfClouds; i++) {
-        const cloud = document.createElement("div");
-        cloud.classList.add("minecraft-cloud");
-
-        const width = Math.random() * 300 + 200;
-        const height = Math.random() * 80 + 40;
-        cloud.style.top = `${Math.random() * 500}px`;
-        cloud.style.left = `-${Math.random() * 80}vw`;
-        cloud.style.width = `${width}px`;
-        cloud.style.height = `${height}px`;
-
-        const duration = Math.random() * 120 + 80;
-        cloud.style.animationDuration = `${duration}s`;
-        cloud.style.animationDelay = `-${Math.random() * 80}s`;
-        
-        cloudsContainer.appendChild(cloud);
-    }
-
-    // Intersection Observer برای انیمیشن‌های بخش‌ها
-    const sections = document.querySelectorAll('.animated-section');
-    const aboutUsText = document.querySelector('.about-us-text');
-    const aboutUsImage = document.querySelector('.about-us-image');
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    };
-
-    const sectionObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            // انیمیشن‌های تاخیری برای کارت‌های ویژگی و مودهای بازی
-            if (entry.target.id === 'features') {
-                document.querySelectorAll('#features .feature-card').forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('is-visible');
-                    }, index * 100);
-                });
-            } else if (entry.target.id === 'gamemodes') {
-                document.querySelectorAll('#gamemodes .gamemode').forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('is-visible');
-                    }, index * 150);
-                });
-            }
-            observer.unobserve(entry.target);
-        }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => {
-        sectionObserver.observe(section);
+  <!-- جاوااسکریپت برای عملکرد سایت -->
+  <script>
+    // ===== Preloader Logic =====
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      preloader.classList.add('loaded');
     });
+
+    // ===== Particle Background Logic =====
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const numParticles = 80;
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.2;
+        this.speedY = (Math.random() - 0.5) * 0.2;
+        this.color = 'rgba(255, 255, 255, ' + (Math.random() * 0.5 + 0.2) + ')';
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      particles = [];
+      for (let i = 0; i < numParticles; i++) {
+        particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    window.addEventListener('load', () => {
+      init();
+      animate();
+    });
+
+    // ===== Toggle Mobile Menu =====
+    const menuBtn = document.querySelector('.menu-btn');
+    const nav = document.getElementById('nav');
+    menuBtn?.addEventListener('click',()=>nav.classList.toggle('open'));
+
+    // ===== Copy IP Functionality =====
+    const copyBtn = document.getElementById('copyIp');
+    const toast = document.getElementById('toast');
+    function showToast(msg){
+      toast.textContent = msg; toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'),1800);
+    }
+    copyBtn?.addEventListener('click',async()=>{
+      const ip='MC.XRugen.IR';
+      try{
+          await navigator.clipboard.writeText(ip);
+          showToast('IP با موفقیت کپی شد: '+ip);
+      } catch(e) {
+          showToast('کپی نشد! به‌صورت دستی: '+ip);
+      }
+    });
+
+    // ===== Activate Nav Link on Scroll =====
+    const sections=[...document.querySelectorAll('section')];
+    const links=[...document.querySelectorAll('.nav-link')];
+    const activate=(id)=>{links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id))};
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{if(e.isIntersecting) activate(e.target.id)})
+    },{threshold:.35});
+    sections.forEach(s=>io.observe(s));
     
-    const aboutUsObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+    // ===== Animate Elements on Scroll =====
+    const hiddenElements = document.querySelectorAll('.hidden');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-            aboutUsText.classList.add('animated');
-            aboutUsImage.classList.add('animated');
-            observer.unobserve(entry.target);
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
-        });
-    }, { threshold: 0.3 });
-    
-    aboutUsObserver.observe(aboutUsText);
-
-    // تابع کپی IP - جایگزینی alert() با showMessage()
-    window.copyText = function(text) {
-        if (!navigator.clipboard) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            showMessage('IP سرور با موفقیت کپی شد!', 'success');
-        } catch (err) {
-            showMessage('کپی نشد! لطفا دستی کپی کنید.', 'error');
-        }
-        document.body.removeChild(textArea);
-        return;
-        }
-
-        navigator.clipboard.writeText(text).then(() => {
-        showMessage('IP سرور با موفقیت کپی شد!', 'success');
-        }).catch(() => {
-        showMessage('کپی نشد! لطفا دستی کپی کنید.', 'error');
-        });
-    }
-
-    // تابع showMessage برای نمایش پیام‌های موفقیت/خطا
-    function showCopySuccess() { /* برای سازگاری با نسخه‌های قدیمی نگه داشته شده، اگرچه showMessage ارجح است */
-        const msg = document.getElementById("copy-success-msg");
-        if (msg) { // بررسی وجود عنصر
-            msg.style.display = "block";
-            msg.style.opacity = "1";
-
-            const audio = new Audio('https://www.minecraft-downloads.com/sound/level_up.mp3');
-            audio.volume = 0.5;
-            audio.play().catch(e => console.error("Audio play failed:", e));
-
-            setTimeout(() => {
-                msg.style.opacity = "0";
-                setTimeout(() => {
-                    msg.style.display = "none";
-                    msg.style.opacity = "1"; // بازنشانی شفافیت برای استفاده بعدی
-                }, 500);
-            }, 2500);
-        }
-    }
-
-    function showMessage(message, type) {
-        const msgElement = document.getElementById("message-display");
-        msgElement.textContent = message;
-        msgElement.className = 'message-display'; // بازنشانی کلاس‌ها
-        msgElement.classList.add(type); // اضافه کردن کلاس موفقیت یا خطا
-        
-        msgElement.style.display = "block";
-        msgElement.style.opacity = "1";
-
-        // پخش صدا فقط برای موفقیت
-        if (type === 'success') {
-        const audio = new Audio('https://www.minecraft-downloads.com/sound/level_up.mp3');
-        audio.volume = 0.5;
-        audio.play().catch(e => console.error("Audio play failed:", e));
-        }
-
-        setTimeout(() => {
-        msgElement.style.opacity = "0";
-        setTimeout(() => {
-            msgElement.style.display = "none";
-        }, 600); // محو شدن طولانی‌تر
-        }, 2800); // زمان نمایش طولانی‌تر
-    }
-
-    // برگشت به بالا برای لینک فوتر
-    const backToTopLink = document.querySelector('.back-to-top');
-    if (backToTopLink) {
-        backToTopLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
-    // Add/remove .show class based on scroll position for back-to-top button
-    window.addEventListener('scroll', () => {
-        const backToTopBtn = document.querySelector('.back-to-top');
-        if (backToTopBtn) {
-            if (window.scrollY > 300) { // Show button after scrolling 300px
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        }
+      });
+    }, {
+      threshold: 0.2
     });
-
-    // Handle active navigation link
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav a');
-    navLinks.forEach(link => {
-        // Check if the link's href matches the current page URL
-        if (link.href === window.location.href) {
-            link.classList.add('active');
-        }
-        // More robust matching for paths like /punish/ or /shop/
-        else if (currentPath.includes(link.pathname) && link.pathname !== '/') {
-             link.classList.add('active');
-        }
-    });
-
-    // Hamburger menu toggle functionality
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.nav');
-
-    if (menuToggle && nav) {
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('open');
-            // Toggle between fa-bars and fa-times icons
-            menuToggle.querySelector('i').classList.toggle('fa-bars');
-            menuToggle.querySelector('i').classList.toggle('fa-times');
-        });
-    }
-
-    });
-</script>
+    hiddenElements.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
