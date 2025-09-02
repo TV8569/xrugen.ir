@@ -2,2115 +2,1402 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>X-Rugen - Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X‑Rugen — فروشگاه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.fontcdn.ir/Font/Persian/YekanBakh:400:800:900" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" href="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" type="image/png" />
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraft-4" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    /* Global Variables - Consistent with home.html, punish.html, rules.html */
-    :root {
+    /* ===== متغیره‌های اصلی و استایل پایه ===== */
+    :root{
+      /* پالت رنگی جدید با گرادیانت‌های آبی نفتی و روشن */
       --primary: #1e88e5;
-      --primary-dark: #1565c0;
-      --primary-light: #42a5f5;
+      --primary-2: #42a5f5;
+      --primary-3: #0d47a1;
       --accent: #ffb62f;
-      --accent-dark: #e69a00;
-      --secondary: #00a8de;
-      --secondary-dark: #0089b5;
-      --bg-dark: #121820;
-      --bg-darker: #1a1f26;
-      --bg-light: #22252b; /* Changed for consistency */
-      --text-light: #e8e8e8;
-      --text-lighter: #ffffff;
-      --dirt-brown: #866043;
-      --stone-gray: #7b7b7b;
-      --obsidian: #150d1a;
+      --accent-2: #ffc857;
+      --accent-3: #e69a00;
+      --bg: #0d1e35; /* آبی نفتی تیره */
+      --bg-2: #142742; /* آبی نفتی متوسط */
+      --bg-3: #223c68; /* آبی نفتی روشن */
+      --glass: rgba(13, 30, 53, .65); /* نسخه شفاف پس‌زمینه */
+      --text: #e9eef3;
+      --muted: #bcd0e0;
+      --danger: #ef5350;
+      --success: #26c281;
+      --border: rgba(255, 255, 255, .1);
+      
+      /* گرادیانت‌های اصلی (از index.html) */
+      --grad-bg: radial-gradient(circle at 50% 120%, rgba(3, 21, 58, 1) 0%, rgba(3, 21, 58, 0) 100%), linear-gradient(to bottom, #0d1e35, #0a1727);
+      --grad-topbar: linear-gradient(90deg, #0e1d30, #16243b);
+      --grad-footer: linear-gradient(180deg, #0e1d30, #16243b);
+
+      /* متغیرهای خاص فروشگاه، حفظ شده‌اند */
+      --shadow: 0 10px 30px rgba(0,0,0,0.5);
       --ore-purple: #5f03f4;
       --emerald-green: #4aba27;
       --gold-yellow: #ffb62f;
       --redstone-red: #ff5252;
+      --dirt-brown: #866043;
+      --stone-gray: #7b7b7b;
+      --obsidian: #150d1a;
     }
 
-    /* Base Styles */
+    /* استایل‌های پایه برای بدنه صفحه */
     html {
-      direction: rtl; /* Set base direction to RTL */
       scroll-behavior: smooth;
       box-sizing: border-box;
       font-size: 16px;
+      background: var(--grad-bg);
+      color: var(--text);
+      font-family: 'Vazirmatn', sans-serif;
+      direction: rtl;
     }
-
     *, *::before, *::after {
       box-sizing: inherit;
     }
-
     body {
       margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background: var(--bg-dark) url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/noise.png');
-      color: var(--text-light);
-      overflow-x: hidden;
-      direction: rtl; /* Ensure content is RTL */
-      text-align: right;
-      line-height: 1.6;
-      position: relative;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+      background: var(--grad-bg);
     }
-
     a {
-      text-decoration: none;
       color: inherit;
+      text-decoration: none;
     }
-
     img {
       max-width: 100%;
       height: auto;
-      display: block;
       image-rendering: pixelated;
+      display: block;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    p {
+      margin: 0;
     }
 
-    /* Scrollbar Styling */
+    /* اسکرول بار */
     ::-webkit-scrollbar {
       width: 10px;
-      background: var(--bg-darker);
+      background: var(--bg-2);
     }
-    
     ::-webkit-scrollbar-thumb {
       background: var(--primary);
       border-radius: 4px;
       box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
     }
-    
     ::-webkit-scrollbar-thumb:hover {
-      background: var(--primary-light);
-      box-shadow: 0 0 4px var(--primary-light);
+      background: var(--primary-2);
+      box-shadow: 0 0 4px var(--primary-2);
     }
 
-    .page-container {
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      /* Background image on container is now handled by body for consistency */
-    }
-
-    .particles {
+    /* ===== استایل‌های Preloader ===== */
+    #preloader {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      opacity: 0.8; /* Adjusted for better visibility of content */
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
     }
-    
-    .particle {
-      position: absolute;
-      background-size: cover;
-      border-radius: 0; 
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      animation: float 20s infinite linear;
-      image-rendering: pixelated; 
+    #preloader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loading-logo {
+      width: 80px;
+      height: 80px;
+      animation: bounce 1.5s infinite ease-in-out;
+      image-rendering: pixelated;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-top: 20px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
-    .particle.dirt { background-color: var(--dirt-brown); border: 1px solid rgba(0,0,0,0.2); }
-    .particle.stone { background-color: var(--stone-gray); border: 1px solid rgba(0,0,0,0.2); }
-    .particle.emerald { background-color: var(--emerald-green); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--emerald-green); } /* Updated to emerald-green */
-    .particle.gold { background-color: var(--gold-yellow); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--gold-yellow); } /* Updated to gold-yellow */
-    .particle.diamond { background-color: var(--secondary); border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 0 8px var(--secondary); } /* Added diamond particle */
-
-
-    @keyframes float {
-      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.7; }
-      90% { opacity: 0.7; }
-      100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
-    }
-    
-    .minecraft-clouds {
+    /* ===== استایل‌های پس‌زمینه ذرات (Particles) ===== */
+    .particle-bg {
       position: fixed;
-      top: 100px;
+      top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
+      z-index: -1;
+      overflow: hidden;
+      opacity: 0.9;
+    }
+    #particleCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    /* Cursor Particle Canvas */
+    #cursorCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
       pointer-events: none;
-      opacity: 0.08; /* Adjusted for better visibility of content */
-    }
-    
-    .minecraft-cloud {
-      position: absolute;
-      background: white;
-      border-radius: 10px; /* Changed from 0 to 10px for cloud shape */
-      opacity: 0.7;
-      animation: cloud-movement linear infinite;
-      image-rendering: pixelated;
     }
 
-    @keyframes cloud-movement {
-      0% { transform: translateX(-5%); }
-      100% { transform: translateX(105%); }
-    }
-
-    .content-wrap {
-      flex: 1;
-      position: relative;
-      z-index: 1;
-      padding-top: 88px; /* Space for fixed topbar */
-    }
-
-    /* Topbar (Header) - Default (Desktop) Styles */
+    /* ===== استایل‌های هدر و ناوبری ===== */
     .topbar {
-      background: linear-gradient(90deg, rgba(20, 24, 32, 0.9), rgba(30, 36, 48, 0.9));
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between; /* Logo on right, nav and toggle on left */
-      align-items: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      flex-shrink: 0;
-      position: fixed; /* Changed to fixed for consistency with home.html */
+      background: var(--grad-topbar);
+      backdrop-filter: blur(10px);
+      position: fixed;
       top: 0;
       width: 100%;
       z-index: 100;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 2px solid var(--primary);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border-bottom: 1px solid var(--border);
     }
-
-    .topbar::after {
-      content: "";
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0.6;
-    }
-
-    .logo {
+    .topbar-inner {
       display: flex;
       align-items: center;
-      gap: 15px;
-      transition: all 0.3s ease;
+      justify-content: space-between;
+      padding: 14px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    
-    .logo:hover {
-      transform: scale(1.05);
-    }
-
-    .logo img {
-      width: 58px;
-      height: 58px;
-      border-radius: 6px;
-      box-shadow: 0 0 15px rgba(30, 136, 229, 0.5);
-      transition: all 0.3s ease;
-      border: 2px solid rgba(30, 136, 229, 0.3);
-      image-rendering: pixelated;
-    }
-    
-    .logo:hover img {
-      box-shadow: 0 0 20px rgba(30, 136, 229, 0.8);
-      transform: rotate(5deg);
-    }
-
-    .logo .name {
-      font-size: 2.2em;
-      font-weight: 900;
-      font-family: 'Minecraft', sans-serif;
-      text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
-      transition: all 0.3s ease;
-      letter-spacing: 1px;
-      color: var(--primary);
-    }
-
-    .logo .part1 {
-      color: var(--primary);
-      position: relative;
-    }
-    
-    .logo .part1::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 4px;
-      bottom: -4px;
-      left: 0;
-      background: var(--primary);
-      transform: scaleX(0);
-      transform-origin: bottom right;
-      transition: transform 0.3s ease-out;
-      box-shadow: 0 0 8px var(--primary);
-    }
-    
-    .logo:hover .part1::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
-
-    .logo .part2 {
-      color: var(--text-light);
-    }
-
-    .nav {
+    .brand {
       display: flex;
-      gap: 30px;
-      flex-direction: row-reverse; /* For RTL display from right to left */
-      flex-grow: 1; /* Allows nav to take available space */
-      justify-content: center; /* Centers its content within that space */
+      align-items: center;
+      gap: 12px;
+      font-family: 'Minecraft', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem; /* کوچک شدن فونت */
+      color: var(--primary);
+      text-shadow: 0 0 6px rgba(30,136,229,0.7);
+      user-select: none;
     }
-
-    .nav a {
-      color: var(--text-light);
-      text-decoration: none;
-      font-size: 1.4em;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    .brand img {
+      width: 55px; /* بزرگ‌تر شدن لوگو */
+      height: 55px; /* بزرگ‌تر شدن لوگو */
+      border-radius: 10px;
+      border: 2px solid rgba(66,165,245,0.4);
+      image-rendering: pixelated;
+      box-shadow: 0 0 15px rgba(30,136,229,0.5);
+      transition: transform 0.3s ease;
+    }
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+    .brand:hover img {
+      animation: wobble 0.6s ease-in-out;
+      box-shadow: 0 0 25px rgba(30,136,229,0.8);
+    }
+    .brand .name {
+      color: var(--text);
+      text-shadow: 0 0 2px rgba(0,0,0,0.7);
+    }
+    .brand .name .x {
+      color: var(--primary);
+      text-shadow: 0 0 8px var(--primary);
+    }
+    #nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .nav-link {
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 8px 14px;
+      border-radius: 12px;
+      color: var(--text);
       position: relative;
-      padding: 8px 15px;
-      background: rgba(0,0,0,0.2);
-      border: 2px solid transparent;
-      border-radius: 20px; /* Increased border-radius for rounded corners */
-      white-space: nowrap;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 2px rgba(0,0,0,0.7);
     }
-    
-    .nav a::after {
-      content: '';
+    .nav-link:hover {
+      color: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      border: 1px solid var(--accent);
+      background: rgba(255, 182, 47, 0.15);
+    }
+    .nav-link.active::after {
+      content: "";
       position: absolute;
-      width: 90%;
+      bottom: 4px;
+      left: 10%;
+      width: 80%;
       height: 3px;
-      bottom: -3px;
-      left: 5%;
       background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: bottom right;
-      transition: transform 0.3s ease-out;
-      box-shadow: 0 0 8px var(--accent);
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      border-radius: 2px;
     }
-    
-    .nav a:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
-
-    .nav a:hover {
-      color: var(--text-lighter);
-      text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
-      transform: translateY(-3px);
-      border-color: var(--primary-dark);
-      background: rgba(30, 136, 229, 0.1);
-    }
-    
-    /* Active link style */
-    .nav a.active {
-      color: var(--accent); /* Highlight with accent color */
-      border-color: var(--accent); /* Change border color */
-      text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+    .menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
     }
 
-    .nav a.active::after {
-        transform: scaleX(1); /* Ensure the underline is visible */
-        transform-origin: bottom left;
-        background: var(--accent);
-    }
-
-    /* Hamburger menu for mobile */
-    .menu-toggle {
-        display: none; /* Hidden by default on larger screens */
-        background: none;
-        border: none;
-        color: var(--text-light);
-        font-size: 1.8em;
-        cursor: pointer;
-        padding: 10px;
-        z-index: 101; /* Above other content */
-        order: -1; /* Places toggle to the left of the logo for desktop (but it's hidden) */
+    /* ===== استایل‌های بخش اصلی صفحه فروشگاه ===== */
+    main {
+      padding: 96px 0 48px;
     }
 
     .shop-header {
-      position: relative;
-      min-height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      margin-top: 24px;
+      padding: 48px 20px 40px;
       text-align: center;
-      padding: 40px 20px;
-      margin-bottom: 40px;
+      position: relative;
+      background: var(--bg-2);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(30,136,229,0.3);
+      user-select: none;
+      max-width: 900px;
+      margin: 96px auto 60px;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.4s ease;
       overflow: hidden;
-      background-color: rgba(0,0,0,0.4);
-      margin-top: 0; /* Remove extra margin, padding-top on content-wrap handles this */
     }
-    
+    .shop-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
     .shop-header::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
       right: 0;
       bottom: 0;
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/gold_block.png');
-      background-size: 64px 64px;
-      image-rendering: pixelated;
-      opacity: 0.1;
-      z-index: -1;
-    }
-    
-    .shop-header::after {
-      content: '';
-      position: absolute;
-      top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at center, rgba(30, 136, 229, 0.2) 0%, transparent 70%);
-      z-index: -1;
-      animation: pulse 5s ease-in-out infinite;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: translateX(-100%);
+      transition: transform 0.8s ease-in-out;
+      pointer-events: none;
     }
-    
-    @keyframes pulse {
-      0%, 100% {
-        opacity: 0.5;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 0.7;
-        transform: scale(1.05);
-      }
+    .shop-header:hover::before {
+      transform: translateX(100%);
     }
     
     .shop-header h1 {
-      font-size: 3.2em;
-      margin-bottom: 20px;
-      color: var(--text-lighter);
-      font-weight: 900;
-      position: relative;
-      z-index: 1;
       font-family: 'Minecraft', sans-serif;
-      text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;
+      font-weight: 900;
+      font-size: 3.2rem;
+      color: var(--accent);
+      text-shadow:
+        2px 2px 0 #000,
+        0 0 10px var(--accent);
+      margin-bottom: 12px;
+      transition: text-shadow 0.4s ease, color 0.4s ease;
     }
-    
+    .shop-header:hover h1 {
+      text-shadow:
+        2px 2px 0 #000,
+        0 0 20px var(--accent),
+        0 0 30px var(--accent);
+    }
     .shop-header p {
-      font-size: 1.3em;
-      margin: 5px 0 0;
-      max-width: 700px;
-      color: var(--text-light);
-      text-shadow: 2px 2px 3px rgba(0,0,0,0.8);
-      position: relative;
-      z-index: 1;
-    }
-
-    .ranks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      padding: 20px;
-      max-width: 1400px;
+      font-size: 1.25rem;
+      color: var(--text);
+      max-width: 720px;
       margin: 0 auto;
+      line-height: 1.5;
+      user-select: text;
+      transition: color 0.4s ease;
+    }
+    .shop-header:hover p {
+        color: var(--primary);
     }
 
-    .rank-card {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/dark_oak_planks.png');
-      background-size: 64px 64px;
-      image-rendering: pixelated;
-      border-radius: 8px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 0 4px #3e2912;
-      padding: 30px 25px;
-      text-align: center;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border: 2px solid rgba(60, 30, 15, 0.8);
-      height: 100%;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-    
-    .rank-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      z-index: 0;
-    }
-    
-    .rank-card:hover {
-      transform: translateY(-10px) rotateX(5deg);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 4px #5a3e1f;
-      border-color: var(--accent-dark);
-    }
-    
-    .rank-card.hero {
-      border-color: var(--emerald-green);
-    }
-    
-    .rank-card.hellborn {
-      border-color: var(--redstone-red);
-    }
-    
-    .rank-card.champions {
-      border-color: var(--gold-yellow);
-    }
-    
-    .rank-card.empire {
-      border-color: var(--ore-purple);
-    }
-    
-    .rank-icon {
-      margin: 0 auto 40px;
-      width: 180px;
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s ease;
-      position: relative;
-      z-index: 1;
-      transform-style: preserve-3d;
-    }
-    
-    .rank-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-    }
-    
-    .rank-icon i {
-      font-size: 2.2em;
-    }
-    
-    .hero .rank-icon {
-      color: var(--emerald-green);
-      text-shadow: 0 0 10px var(--emerald-green);
-    }
-    
-    .hellborn .rank-icon {
-      color: var(--redstone-red);
-      text-shadow: 0 0 10px var(--redstone-red);
-    }
-    
-    .champions .rank-icon {
-      color: var(--gold-yellow);
-      text-shadow: 0 0 10px var(--gold-yellow);
-    }
-    
-    .empire .rank-icon {
-      color: var(--ore-purple);
-      text-shadow: 0 0 10px var(--ore-purple);
-    }
-    
-    .rank-card:hover .rank-icon {
-      transform: translateY(-8px) translateZ(30px) scale(1.1);
+    /* Keyframe for subtle container glow */
+    @keyframes container-glow {
+      0% { box-shadow: 0 0 25px rgba(30, 136, 229, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(30, 136, 229, 0.6); }
+      100% { box-shadow: 0 0 25px rgba(30, 136, 229, 0.3); }
     }
 
-    .rank-title {
-      font-size: 2.2em;
-      font-weight: 900;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+    /* کانتینر جدید برای کل بخش کارت‌ها با استایل مشابه shop-header */
+    .ranks-container {
       position: relative;
-      z-index: 1;
-      transition: all 0.3s ease;
-      font-family: 'Minecraft', sans-serif;
-    }
-    
-    .hero .rank-title {
-      color: var(--emerald-green);
-    }
-    
-    .hellborn .rank-title {
-      color: var(--redstone-red);
-    }
-    
-    .champions .rank-title {
-      color: var(--gold-yellow);
-    }
-    
-    .empire .rank-title {
-      color: var(--ore-purple);
-    }
-    
-    .rank-card:hover .rank-title {
-      transform: translateZ(20px);
-      text-shadow: 0 0 15px rgba(255,255,255,0.5);
-    }
-
-    .rank-price {
-      font-size: 1.3em;
-      margin-bottom: 20px;
-      color: var(--text-lighter);
-      font-weight: 700;
-      position: relative;
-      z-index: 1;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
-      transition: all 0.3s ease;
-    }
-    
-    .rank-card:hover .rank-price {
-      transform: translateZ(15px);
-    }
-    
-    .rank-benefits {
-      list-style-type: none;
-      padding: 0;
-      margin: 0 0 25px;
-      text-align: center;
-      flex-grow: 1;
-      position: relative;
-      z-index: 1;
-      /* Default hidden state */
-      max-height: 0;
-      overflow: hidden;
+      background: var(--bg-2);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(30,136,229,0.3);
+      max-width: 1500px; /* بزرگ‌تر شدن کادر برای جا دادن انیمیشن */
+      margin: 80px auto;
+      padding: 60px 40px; /* افزایش فضای داخلی */
+      transform: translateY(20px);
       opacity: 0;
-      transform: translateY(10px);
-      transition: max-height 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      overflow: hidden;
+      animation: container-glow 4s infinite ease-in-out; /* اضافه شدن انیمیشن پالس */
     }
-    
-    /* Removed hover effect on list items from parent card hover. */
-    /* Individual list item styling */
-    .rank-benefits li {
-      padding: 8px 0;
-      color: var(--text-light);
-      position: relative;
-      opacity: 0.9;
-      transition: all 0.3s ease; /* Keep individual item transition for show-benefits state */
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
-    }
-
-    .rank-benefits li::before {
-      content: '✓';
-      color: var(--primary);
-      margin-right: 8px;
-      font-weight: bold;
-      text-shadow: 0 0 8px rgba(30, 136, 229, 0.5);
-    }
-    
-    /* State when benefits are shown (via JS toggle) */
-    .rank-benefits.show-benefits {
-      max-height: 500px; /* Sufficiently large to reveal all items */
+    .ranks-container.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .rank-benefits.show-benefits li {
-        opacity: 1; /* Ensure full opacity when shown */
-        transform: translateY(0); /* Ensure no initial translateY when shown */
-        /* Staggered delay for each item when the list appears. This assumes --i is set on each li. */
-        /* The original HTML does not set --i on li, only on category. Re-evaluate if this animation is critical */
-        /* Keeping this here for now, as it was in original code for hover, but might not apply smoothly on toggle without adjusting JS to set --i on each li or remove this specific li animation for toggle. */
-        transition-delay: calc(0.05s * var(--i));
+    .ranks-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 32px;
+      padding: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin: 0;
+    }
+    
+    .ranks-grid::-webkit-scrollbar {
+      display: none;
     }
 
-    .rank-benefits.show-benefits li:hover {
-        transform: translateY(-2px) translateZ(10px); /* Re-enable hover specific effect */
-        opacity: 1;
+    .rank-card {
+      background: linear-gradient(180deg, var(--glass), rgba(20,28,36,.6));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 0 20px 40px rgba(0,0,0,.25);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+      position: relative;
+      transition: box-shadow .4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background .4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: default;
+      flex-shrink: 0;
+      width: 280px;
+      min-width: 280px;
+      backdrop-filter: blur(8px);
+      transform-style: preserve-3d;
+      z-index: 1; /* Default z-index */
+    }
+    /* بهبود انیمیشن هاور کارت و فیکس مشکل زیر رفتن */
+    .rank-card:hover {
+      box-shadow: 
+        0 25px 50px rgba(0,0,0,0.8), 
+        0 0 20px var(--primary-2),
+        0 0 40px rgba(66, 165, 245, 0.5); /* بهبود نورپردازی */
+      background: linear-gradient(180deg, rgba(20,28,36,0.95), rgba(20,28,36,0.8));
+      border-color: var(--primary-2);
+      z-index: 10;
+    }
+    .rank-card.hero { border-color: var(--emerald-green); }
+    .rank-card.hellborn { border-color: var(--redstone-red); }
+    .rank-card.champions { border-color: var(--gold-yellow); }
+    .rank-card.empire { border-color: var(--ore-purple); }
+
+    .rank-icon {
+      width: 160px;
+      height: 160px;
+      margin-bottom: 20px;
+      position: relative;
+      filter: drop-shadow(0 0 8px rgba(0,0,0,0.6));
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    /* بهبود انیمیشن هاور آیکون */
+    .rank-card:hover .rank-icon {
+      transform: scale(1.15) rotate(5deg);
+      filter: drop-shadow(0 0 30px var(--accent));
+    }
+    .rank-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+    .rank-card.hero .rank-icon { color: var(--emerald-green); text-shadow: 2px 2px 0 #000, 0 0 10px var(--emerald-green); }
+    .rank-card.hellborn .rank-icon { color: var(--redstone-red); text-shadow: 2px 2px 0 #000, 0 0 10px var(--redstone-red); }
+    .rank-card.champions .rank-icon { color: var(--gold-yellow); text-shadow: 2px 2px 0 #000, 0 0 10px var(--gold-yellow); }
+    .rank-card.empire .rank-icon { color: var(--ore-purple); text-shadow: 2px 2px 0 #000, 0 0 10px var(--ore-purple); }
+
+    .rank-title {
+      font-family: 'Minecraft', sans-serif;
+      font-weight: 900;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 0 #000, 0 0 12px var(--accent);
+      color: var(--accent);
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    .rank-card.hero .rank-title { color: var(--emerald-green); text-shadow: 2px 2px 0 #000, 0 0 10px var(--emerald-green); }
+    .rank-card.hellborn .rank-title { color: var(--redstone-red); text-shadow: 2px 2px 0 #000, 0 0 10px var(--redstone-red); }
+    .rank-card.champions .rank-title { color: var(--gold-yellow); text-shadow: 2px 2px 0 #000, 0 0 10px var(--gold-yellow); }
+    .rank-card.empire .rank-title { color: var(--ore-purple); text-shadow: 2px 2px 0 #000, 0 0 10px var(--ore-purple); }
+
+    .rank-price {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      color: var(--text);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
     }
 
+    .rank-benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+      text-align: right;
+      user-select: text;
+    }
+    .rank-benefits.show {
+      max-height: 600px; /* Sufficiently large for all lists */
+      opacity: 1;
+    }
+    .rank-benefits li {
+      margin: 6px 0;
+      padding-right: 12px;
+      font-size: 1rem;
+      color: var(--text);
+      position: relative;
+      text-shadow: 0 0 2px rgba(0,0,0,0.7);
+    }
+    .rank-benefits li::before {
+      content: "\2713"; /* Checkmark unicode */
+      color: var(--accent);
+      position: absolute;
+      right: 0;
+      font-weight: 800;
+      font-size: 1rem;
+      text-shadow: 0 0 4px var(--accent);
+    }
 
     .rank-actions {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      position: relative;
-      z-index: 1;
+      width: 100%;
     }
 
-    .minecraft-btn {
-      background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-dark) 100%);
-      color: #ffffff;
-      border: 3px solid #5a3600;
-      padding: 14px 32px;
-      font-size: 1.3em;
-      font-weight: bold;
-      font-family: 'Minecraft', sans-serif;
+    .btn {
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 700;
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: none;
       cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 8px 0 0 #5a3600, 0 10px 10px rgba(0,0,0,0.5);
-      border-radius: 4px;
-    }
-    
-    .minecraft-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #5a3600, 0 12px 12px rgba(0,0,0,0.5);
-    }
-    
-    .minecraft-btn:active {
-      transform: translateY(4px);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #5a3600, 0 6px 6px rgba(0,0,0,0.5);
-    }
-
-    .btn-buy {
-      background: linear-gradient(to bottom, var(--primary) 0%, var(--primary-dark) 100%);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1), 0 8px 0 0 #0d47a1, 0 10px 10px rgba(0,0,0,0.4);
-      border: 3px solid #0d47a1;
-    }
-
-    .btn-buy:hover {
-      background: linear-gradient(to bottom, var(--primary-light) 0%, var(--primary) 100%);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #0d47a1, 0 12px 12px rgba(0,0,0,0.4);
-    }
-    
-    .btn-buy:active {
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #0d47a1, 0 6px 6px rgba(0,0,0,0.4);
-    }
-
-    .btn-info {
-      background: linear-gradient(to bottom, var(--secondary) 0%, var(--secondary-dark) 100%);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1), 0 8px 0 0 #006680, 0 10px 10px rgba(0,0,0,0.4);
-      border: 3px solid #006680;
-    }
-
-    .btn-info:hover {
-      background: linear-gradient(to bottom, #00bdf2 0%, var(--secondary) 100%);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 10px 0 0 #006680, 0 12px 12px rgba(0,0,0,0.4);
-    }
-    
-    .btn-info:active {
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 0 0 #006680, 0 6px 6px rgba(0,0,0,0.4);
-    }
-    
-    .popular-badge {
-      position: absolute;
-      top: 15px;
-      right: -30px;
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/redstone_block.png');
-      background-size: 32px 32px;
-      color: white;
-      padding: 6px 40px;
-      font-size: 0.9em;
-      font-weight: bold;
-      transform: rotate(45deg);
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
-      z-index: 2;
-      font-family: 'Minecraft', sans-serif;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
-      border: 2px solid #5a0000;
-    }
-    
-    .popular-badge::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.3);
-      z-index: -1;
-    }
-    
-    .best-value-badge {
-      position: absolute;
-      top: 15px;
-      right: -30px;
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/emerald_block.png');
-      background-size: 32px 32px;
-      color: white;
-      padding: 6px 40px;
-      font-size: 0.9em;
-      font-weight: bold;
-      transform: rotate(45deg);
-      box-shadow: 0 0 15px rgba(226, 230, 9, 0.952);
-      z-index: 2;
-      font-family: 'Minecraft', sans-serif;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
-      border: 2px solid #f7ea3c;
-    }
-    
-    .best-value-badge::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.3);
-      z-index: -1;
-    }
-
-    /* Footer Section - Consistent with other pages */
-    footer.site-footer {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/obsidian_texture.png');
-      background-size: 80px 80px;
-      image-rendering: pixelated;
-      color: var(--text-light);
-      text-align: center;
-      padding: 50px 20px 55px;
-      font-size: 1em;
-      border-top: 4px solid var(--primary-dark);
-      box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.8);
-      margin-top: 100px;
-      position: relative;
-      z-index: 2;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 4px rgba(0,0,0,0.7);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
       user-select: none;
-      flex-shrink: 0; /* Prevent footer from shrinking */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-    
-    footer.site-footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      z-index: -1;
+    .btn.btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border: 2px solid var(--primary-3);
     }
-    
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
+    .btn.btn-primary:hover {
+      background: var(--primary-2);
+      box-shadow: 0 0 30px var(--primary-2);
+      transform: translateY(-2px);
+    }
+    .btn.btn-secondary {
+      background: var(--accent);
+      color: #332d1d;
+      border: 2px solid var(--accent-3);
+    }
+    .btn.btn-secondary:hover {
+      background: var(--accent-2);
+      color: #000;
+      box-shadow: 0 0 30px var(--accent-2);
+      transform: translateY(-2px);
+    }
+    .btn.btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn.btn-ghost:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary);
+      background: rgba(30,136,229,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ===== استایل‌های فوتر ===== */
+    footer {
+      background: var(--grad-footer);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 48px 20px 24px;
+      text-align: center;
+      font-family: 'Vazirmatn', sans-serif;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .footer-inner {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      position: relative;
-      z-index: 1;
-      direction: rtl;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    
-    .footer-logo {
+    .f-brand {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
-      justify-content: flex-start;
-      flex-grow: 1;
+      gap: 12px;
       min-width: 200px;
+      font-family: 'Minecraft', sans-serif;
+      font-size: 1.6rem;
     }
-    
-    .footer-logo img {
+    .f-brand img {
       width: 50px;
       height: 50px;
-      margin-left: 15px;
-      border-radius: 8px;
-      border: 3px solid var(--primary-dark);
-      box-shadow: 0 0 12px var(--primary);
+      border-radius: 10px;
+      border: 2px solid rgba(66,165,245,0.4);
+      box-shadow: 0 0 15px rgba(30,136,229,0.6);
+      image-rendering: pixelated;
     }
-    
-    .footer-logo .name {
-      font-size: 1.8em;
-      font-weight: bold;
-      font-family: 'Minecraft', sans-serif;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
-    }
-    
-    .footer-nav {
+    .f-nav {
       display: flex;
-      gap: 20px;
-      margin-bottom: 20px;
+      gap: 18px;
       justify-content: center;
+      flex-wrap: wrap;
       flex-grow: 1;
       min-width: 300px;
     }
-    
-    .footer-nav a {
-      color: var(--text-light);
-      text-decoration: none;
-      transition: all 0.3s;
-      font-weight: bold;
-      font-family: 'Vazirmatn', sans-serif;
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.8);
-      position: relative;
-      padding: 6px 0;
-      font-size: 1.05em;
+    .f-nav a {
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 6px 12px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 3px rgba(0,0,0,0.7);
     }
-
-    .footer-nav a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        background: var(--accent);
-        bottom: 0;
-        right: 0;
-        transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .footer-nav a:hover::after {
-        width: 100%;
-        left: 0;
-    }
-    
-    .footer-nav a:hover {
+    .f-nav a:hover {
       color: var(--accent);
-      text-shadow: 0 0 10px var(--accent-dark);
+      box-shadow: 0 0 10px var(--accent);
+      border: 1px solid var(--accent);
     }
-    
-    .social-links {
+    .social {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       justify-content: flex-end;
-      margin-bottom: 20px;
-      flex-grow: 1;
       min-width: 200px;
     }
-    
-    .social-link {
-      width: 45px;
-      height: 45px;
+    .social a {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.7);
+      border: 2px solid var(--border);
+      color: var(--text);
+      font-size: 1.3rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.7);
-      border: 3px solid var(--primary-dark);
-      border-radius: 10px;
-      color: var(--text-light);
-      font-size: 1.5em;
-      transition: all 0.3s;
-      text-decoration: none;
-      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      transition: all 0.3s ease;
+      text-shadow: 0 0 3px rgba(0,0,0,0.8);
     }
-    
-    .social-link:hover {
+    .social a:hover {
       background: var(--primary);
-      color: var(--text-lighter);
-      transform: translateY(-6px) rotate(8deg);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), 0 0 20px var(--primary-light);
       border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 15px var(--primary);
+      transform: translateY(-4px) scale(1.1);
     }
-
-    footer.site-footer span {
+    .footer-divider {
+      width: 60%; /* خط نازک و کوتاه */
+      margin: 20px auto; /* فاصله و مرکز قرارگیری */
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .copy {
+      flex-basis: 100%;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .copy strong {
       color: var(--accent);
-      font-weight: bold;
+      font-weight: 700;
     }
 
-    footer.site-footer a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 900;
-      transition: 0.3s;
-    }
-
-    footer.site-footer a:hover {
-      color: var(--text-lighter);
-      text-shadow: 0 0 10px var(--primary);
-    }
-    
-    .fade-in { animation: fadeIn 1s ease forwards; }
-    .slide-up { animation: slideUp 1s ease forwards; }
-    .pop-in { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes slideUp {
-      from { 
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to { 
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      80% {
-        transform: scale(1.1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .minecraft-modal-overlay {
+    /* ===== مدال‌ها و نوتیفیکیشن‌ها ===== */
+    .toast {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.7);
+      color: var(--text);
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
       opacity: 0;
       visibility: hidden;
-      transition: all 0.4s ease;
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
+      transform: translateY(20px);
+      transition: all 0.3s ease-in-out;
+      z-index: 1000;
     }
-    
-    .minecraft-modal-overlay.active {
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* مدال برای جزئیات دسترسی‌ها */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+      z-index: 120;
+      direction: rtl;
+    }
+    .modal-overlay.active {
       opacity: 1;
       visibility: visible;
     }
-    
-    .minecraft-modal {
-      background: url('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/img/planks.png');
+    .modal-content {
+      background: url('https://cdn.jsdelivr.net/gh/amir-abdi/personal-assets@main/planks.png');
       background-size: 64px 64px;
-      image-rendering: pixelated;
-      width: 90%;
-      max-width: 600px;
-      border: 6px solid #5c3d24;
-      box-shadow: 0 0 0 3px #271b11, 0 0 30px rgba(0, 0, 0, 0.7);
+      border: 6px solid #4a2d12;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.8);
+      max-width: 800px; /* افزایش عرض پنل */
+      max-height: 85vh; /* افزایش ارتفاع پنل */
+      overflow-y: auto;
+      padding: 24px;
       position: relative;
       transform: translateY(50px) scale(0.9);
       opacity: 0;
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      max-height: 80vh;
-      overflow-y: auto;
-      border-radius: 4px;
-      direction: rtl; /* Ensure modal content is RTL */
+      transition: all 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
     }
-    
-    .minecraft-modal::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: -1;
-    }
-    
-    .minecraft-modal-overlay.active .minecraft-modal {
+    .modal-overlay.active .modal-content {
       transform: translateY(0) scale(1);
       opacity: 1;
     }
-    
-    .minecraft-modal-header {
-      padding: 15px 20px;
-      border-bottom: 4px solid var(--primary);
+    .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+      border-bottom: 4px solid var(--primary);
+      padding-bottom: 12px;
+      user-select: none;
     }
-    
-    .minecraft-modal-header h2 {
-      margin: 0;
+    .modal-header h2 {
       font-family: 'Minecraft', sans-serif;
-      font-size: 1.8em;
-      color: var(--text-lighter);
-      text-shadow: 2px 2px 0 #000;
-    }
-    
-    .hero-modal .minecraft-modal-header {
-      border-bottom-color: var(--emerald-green);
-    }
-    
-    .hellborn-modal .minecraft-modal-header {
-      border-bottom-color: var(--redstone-red);
-    }
-    
-    .champions-modal .minecraft-modal-header {
-      border-bottom-color: var(--gold-yellow);
-    }
-    
-    .empire-modal .minecraft-modal-header {
-      border-bottom-color: var(--ore-purple);
-    }
-    
-    .minecraft-modal-close {
-      background: none;
-      border: none;
-      font-size: 1.5em;
-      color: var(--text-light);
-      cursor: pointer;
-      transition: all 0.3s;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-    }
-    
-    .minecraft-modal-close:hover {
+      font-weight: 900;
+      font-size: 1.8rem;
       color: var(--accent);
-      transform: scale(1.1);
+      text-shadow: 2px 2px 0 #000, 0 0 10px var(--accent);
+      margin: 0;
+    }
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.8rem;
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 4px 8px;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+      color: var(--accent);
       text-shadow: 0 0 10px var(--accent);
     }
-    
-    .minecraft-modal-body {
-      padding: 25px;
-      text-align: right; /* Ensure text aligns right in modal body */
+    .modal-body {
+      margin-top: 20px;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.5;
+      user-select: text;
     }
-    
-    .minecraft-modal-title {
+    .modal-title {
       font-family: 'Minecraft', sans-serif;
-      font-size: 2em;
-      margin-bottom: 20px;
+      font-weight: 900;
+      font-size: 1.8rem;
       text-align: center;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      margin-bottom: 16px;
+      color: var(--accent);
+      text-shadow: 0 0 8px var(--accent);
     }
-    
-    .hero-modal .minecraft-modal-title {
-      color: var(--emerald-green);
-    }
-    
-    .hellborn-modal .minecraft-modal-title {
-      color: var(--redstone-red);
-    }
-    
-    .champions-modal .minecraft-modal-title {
-      color: var(--gold-yellow);
-    }
-    
-    .empire-modal .minecraft-modal-title {
-      color: var(--ore-purple);
-    }
-    
-    .minecraft-permission-list {
-      list-style-type: none;
+    .permission-list {
+      list-style: none;
       padding: 0;
       margin: 0;
     }
-    
-    .minecraft-permission-category {
-      margin-bottom: 25px;
-      animation: fadeIn 0.5s ease forwards;
-      animation-delay: calc(var(--i) * 0.1s);
-      opacity: 0;
+    .permission-category {
+      margin-bottom: 18px;
+      border-right: 4px solid var(--accent);
+      padding-right: 20px; /* اضافه شدن فاصله برای جلوتر کشیدن */
     }
-    
-    .minecraft-permission-category h3 {
+    .permission-category h3 {
       font-family: 'Minecraft', sans-serif;
-      font-size: 1.4em;
-      margin: 0 0 15px;
-      padding: 8px 15px;
-      background: rgba(0,0,0,0.4);
-      border-right: 3px solid;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+      font-weight: 900;
+      font-size: 1.5rem;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-shadow: 0 0 6px var(--accent);
+      user-select: none;
     }
-    
-    .hero-modal .minecraft-permission-category h3 {
-      border-color: var(--emerald-green);
-      color: var(--emerald-green);
-    }
-    
-    .hellborn-modal .minecraft-permission-category h3 {
-      border-color: var(--redstone-red);
-      color: var(--redstone-red);
-    }
-    
-    .champions-modal .minecraft-permission-category h3 {
-      border-color: var(--gold-yellow);
-      color: var(--gold-yellow);
-    }
-    
-    .empire-modal .minecraft-permission-category h3 {
-      border-color: var(--ore-purple);
-      color: var(--ore-purple);
-    }
-    
-    .minecraft-permission-item {
-      padding: 10px 15px;
-      margin-bottom: 8px;
-      background: rgba(0,0,0,0.2);
-      border-radius: 3px;
+    .permission-item {
+      font-size: 1rem;
+      margin: 15px 0; /* افزایش فاصله بین پرمیشن‌ها */
+      padding-right: 8px;
       position: relative;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      animation: slideUp 0.5s ease forwards;
-      animation-delay: calc((var(--j) + var(--i)) * 0.05s + 0.2s);
+      color: var(--text);
+      user-select: text;
+    }
+    .permission-item::before {
+      content: "•"; /* اضافه کردن نقطه بزرگ */
+      color: var(--accent);
+      position: absolute;
+      right: 0;
+      font-weight: 900;
+      font-size: 1.2rem; /* بزرگ‌تر کردن نقطه */
+      text-shadow: 0 0 4px var(--accent);
+    }
+    .gamemode-title {
+      font-family: 'Minecraft', sans-serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      text-shadow: 2px 2px 0 #000, 0 0 10px var(--accent);
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .gamemode-list {
+      padding-right: 20px;
+    }
+
+    /* Animate Elements on Scroll */
+    .hidden {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    
-    .minecraft-permission-item:hover {
-      background: rgba(30, 136, 229, 0.1);
-      transform: translateX(5px);
-    }
-    
-    .minecraft-permission-item::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background-color: var(--primary);
-      margin-left: 10px;
-      box-shadow: 0 0 5px var(--primary);
-    }
-    
-    .hero-modal .minecraft-permission-item::before {
-      background-color: var(--emerald-green);
-      box-shadow: 0 0 5px var(--emerald-green);
-    }
-    
-    .hellborn-modal .minecraft-permission-item::before {
-      background-color: var(--redstone-red);
-      box-shadow: 0 0 5px var(--redstone-red);
-    }
-    
-    .champions-modal .minecraft-permission-item::before {
-      background-color: var(--gold-yellow);
-      box-shadow: 0 0 5px var(--gold-yellow);
-    }
-    
-    .empire-modal .minecraft-permission-item::before {
-      background-color: var(--ore-purple);
-      box-shadow: 0 0 5px var(--ore-purple);
-    }
-    
-    .minecraft-modal-footer {
-      padding: 20px;
-      border-top: 3px solid #3e2912;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
-      text-align: center;
-    }
-    
-    .block-breaking {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-    
-    .breaking-particle {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background-color: rgba(255, 255, 255, 0.8);
-      animation: breakingParticle 0.8s ease-out forwards;
-    }
-    
-    @keyframes breakingParticle {
-      0% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translate(var(--tx), var(--ty)) rotate(var(--r));
-        opacity: 0;
-      }
-    }
-    
-    /* Back to Top Button Styles */
-    .back-to-top {
-        position: fixed;
-        bottom: 30px;
-        left: 30px; /* For RTL, bottom-left */
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        color: var(--text-lighter);
-        border-radius: 50%;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.6), 0 0 25px var(--primary-light);
-        font-size: 1.8em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, background 0.3s ease;
-        opacity: 0;
-        pointer-events: none;
-        z-index: 999;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-        border: 3px solid var(--primary-light);
-        cursor: pointer;
-    }
-
-    .back-to-top:hover {
-        transform: translateY(-8px) scale(1.1);
-        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 0 35px var(--primary-light);
-    }
-
-    .back-to-top.show {
-        opacity: 1;
-        pointer-events: auto;
-        animation: fadeInPop 0.5s ease-out forwards;
-    }
-
-    .back-to-top i {
-        margin: 0;
-        line-height: 1;
-    }
-
-    @keyframes fadeInPop {
-        from { opacity: 0; transform: scale(0.5); }
-        to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 1024px) {
-      html { font-size: 15px; }
-
-      .topbar {
-        flex-direction: row; /* Keep elements in a row */
-        justify-content: space-between; /* Logo on right, hamburger on left */
-        padding: 15px 20px;
-      }
-      .logo { order: 2; } /* Keep logo on the right (start) in RTL */
-      .logo img { width: 50px; height: 50px; } /* Slightly smaller logo on mobile */
-      .logo .name { font-size: 2em; } /* Adjust font size */
-      
-      .nav {
-          display: none; /* Hidden by default on mobile */
-          flex-direction: column;
-          width: 100%;
-          background: linear-gradient(90deg, rgba(20, 24, 32, 0.95), rgba(30, 36, 48, 0.95));
-          position: absolute;
-          top: 88px; /* Below the topbar */
-          left: 0;
-          padding: 20px 0;
-          box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          align-items: center; /* Center links in mobile menu */
-          flex-grow: 0; /* Reset flex-grow for mobile */
-          justify-content: flex-start; /* Reset justify-content for mobile */
-      }
-      .nav.open {
-          display: flex; /* Show nav when open */
-      }
-      .nav a {
-          width: 90%; /* Make links take more width in mobile menu */
-          text-align: center;
-          padding: 12px 15px;
-          font-size: 1.3em;
-          margin-bottom: 10px; /* Spacing between mobile links */
-          border-radius: 15px; /* Ensure rounded corners on mobile menu items */
-      }
-
-      .menu-toggle {
-          display: block; /* Show hamburger on smaller screens */
-          order: 1; /* Place it to the left of the logo in RTL */
-          margin-inline-end: 20px; /* Space from right edge */
-      }
-
-      .shop-header h1 { font-size: 2.8em; }
-      .shop-header p { font-size: 1.2em; }
-
-      .ranks-grid {
-        gap: 30px;
-        padding: 15px;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      }
-
-      .rank-card {
-        padding: 25px 20px;
-      }
-      .rank-icon {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 30px;
-      }
-      .rank-title { font-size: 2em; }
-      .rank-price { font-size: 1.2em; }
-      .rank-benefits li { font-size: 0.95em; }
-      .minecraft-btn { font-size: 1.2em; padding: 12px 28px;}
-
-      .minecraft-modal { max-width: 500px; }
-      .minecraft-modal-header h2 { font-size: 1.6em; }
-      .minecraft-modal-title { font-size: 1.8em; }
-      .minecraft-permission-category h3 { font-size: 1.3em; }
-      .minecraft-permission-item { font-size: 1em; padding: 8px 12px; }
-
-      /* Footer adjustments for mobile */
-      .footer-content {
-          flex-direction: column;
-          gap: 15px;
-          text-align: center;
-      }
-      .footer-logo, .footer-nav, .social-links {
-          justify-content: center;
-          margin-bottom: 0;
-          flex-grow: unset;
-          width: 100%;
-          min-width: unset;
-      }
-      .footer-logo img { margin-left: 0; margin-right: 10px; }
-
-      .back-to-top {
-          width: 50px;
-          height: 50px;
-          font-size: 1.5em;
-          bottom: 20px;
-          left: 20px;
-      }
+    .visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (max-width: 768px) {
-      html { font-size: 14px; }
-
-      .topbar {
-          flex-direction: column; /* Stack logo and nav vertically */
-          gap: 10px;
-          padding: 10px 15px;
+      .menu-btn { display: block; }
+      #nav {
+        display: none;
+        flex-direction: column;
+        background: var(--bg-2);
+        position: absolute;
+        top: 72px;
+        right: 0;
+        width: 100%;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        padding: 16px 0;
+        gap: 8px;
       }
-      .logo { margin-bottom: 5px; } /* Add small margin below logo when stacked */
-      .logo img { width: 45px; height: 45px; } /* Even smaller logo */
-      .logo .name { font-size: 1.8em; }
-
-      .shop-header h1 { font-size: 2.4em; }
-      .shop-header p { font-size: 1.1em; }
-
-      .ranks-grid {
-        gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        padding: 10px;
+      #nav.open { display: flex; }
+      .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 1.2rem;
       }
-      .rank-card {
-        padding: 20px 15px;
-      }
-      .rank-icon {
-        width: 130px;
-        height: 130px;
-        margin-bottom: 25px;
-      }
-      .rank-title { font-size: 1.8em; }
-      .rank-price { font-size: 1.1em; }
-      .rank-benefits li { font-size: 0.9em; }
-      .minecraft-btn { font-size: 1.1em; padding: 10px 20px;}
-
-      .minecraft-modal { max-width: 400px; }
-      .minecraft-modal-header h2 { font-size: 1.4em; }
-      .minecraft-modal-title { font-size: 1.6em; }
-      .minecraft-permission-category h3 { font-size: 1.2em; }
-      .minecraft-permission-item { font-size: 0.9em; padding: 8px 10px; }
-
-      .footer-logo img { margin-right: 5px; }
+      .footer-inner { flex-direction: column; }
+      .f-brand, .f-nav, .social { min-width: auto; }
+      .f-nav, .social { margin-top: 12px; }
+      .ranks-grid { flex-wrap: wrap; }
+      .rank-card { width: calc(50% - 16px); min-width: auto; }
     }
-
     @media (max-width: 480px) {
-        .topbar { padding: 8px 10px; }
-        .logo img { width: 40px; height: 40px; }
-        .logo .name { font-size: 1.6em; }
-        .shop-header h1 { font-size: 2em; }
-        .shop-header p { font-size: 0.9em; }
-        .ranks-grid {
-          grid-template-columns: 1fr; /* Single column layout on very small screens */
-          padding: 10px;
-          gap: 15px;
-        }
-        .rank-card {
-          padding: 15px;
-        }
-        .rank-icon {
-          width: 100px;
-          height: 100px;
-          margin-bottom: 20px;
-        }
-        .rank-title { font-size: 1.6em; }
-        .rank-price { font-size: 1em; }
-        .minecraft-btn { font-size: 1em; padding: 8px 15px;}
-
-        .minecraft-modal { max-width: 95%; }
-        .minecraft-modal-header h2 { font-size: 1.2em; }
-        .minecraft-modal-title { font-size: 1.4em; }
-        .minecraft-permission-category h3 { font-size: 1.1em; }
-        .minecraft-permission-item { font-size: 0.85em; padding: 6px 8px; }
+      .rank-card { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <div class="page-container">
-    
-    <div class="minecraft-clouds" id="minecraft-clouds"></div>
-    
-    <div class="particles" id="particles"></div>
-    
-    <div class="content-wrap">
-      <!-- Topbar - Consistent with other pages -->
-      <div class="topbar">
-        <a href="https://www.xrugen.ir/" style="text-decoration: none;">
-          <div class="logo">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="[Image of X-Rugen Logo]" />
-            <div class="name">
-              <span class="part1">X</span><span class="part2">-Rugen</span>
-            </div>
-          </div>
-        </a>
-        <!-- Hamburger menu button for mobile -->
-        <button class="menu-toggle" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="nav">
-          <a href="https://www.xrugen.ir/punish/"><i class="fas fa-gavel"></i> پانیشمنت</a>
-          <a href="#" class="active"><i class="fas fa-shopping-cart"></i> فروشگاه</a>
-          <a href="https://www.xrugen.ir/rules/"><i class="fas fa-scroll"></i> قوانین</a>
-        </div>
-      </div>
+  <div id="preloader">
+    <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="X-Rugen Logo" class="loading-logo">
+    <div class="loading-spinner"></div>
+  </div>
 
-      <div class="shop-header">
-        <h1 class="fade-in">فروشگاه X-rugen</h1>
-        <p class="slide-up">با خرید رنک ها از امکانات ویژه در سرور بهره مند شوید</p>
-      </div>
+  <div class="particle-bg">
+    <canvas id="particleCanvas"></canvas>
+  </div>
+  <canvas id="cursorCanvas"></canvas>
 
+  <header class="topbar" id="top">
+    <div class="topbar-inner">
+      <a class="brand" href="https://xrugen.ir" aria-label="X‑Rugen">
+        <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="لوگوی X‑Rugen">
+        <span class="name"><span class="x">X</span>-Rugen</span>
+      </a>
+      <button class="menu-btn" aria-label="باز/بستن منو"><i class="fa-solid fa-bars"></i></button>
+      <nav id="nav">
+        <a class="nav-link" href="https://www.xrugen.ir/shop/">فروشگاه</a>
+        <a class="nav-link" href="https://www.xrugen.ir/punish/">پانیشمنت</a>
+        <a class="nav-link" href="https://www.xrugen.ir/rules/">قوانین</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="shop-header hidden" aria-label="معرفی فروشگاه">
+      <h1>فروشگاه X-Rugen</h1>
+      <p>با خرید رنک‌ها و آیتم‌های جذاب در سرور به پیشرفت خود سرعت دهید.</p>
+    </section>
+    
+    <section class="ranks-container hidden" aria-label="لیست رنک‌ها">
       <div class="ranks-grid">
-        
-        <div class="rank-card hero fade-in" style="animation-delay: 0.1s;">
-          <div class="rank-icon">
-            <img src="https://s15.uupload.ir/files/amirabbas8585/Xrugen/1b8cb39e-72ab-4557-8cac-e52538f406b.png" alt="[Image of Hero Rank]" />
+        <article class="rank-card hero" tabindex="0" aria-labelledby="hero-title hero-price" role="region">
+          <div class="rank-icon" aria-hidden="true">
+            <img src="https://s15.uupload.ir/files/amirabbas8585/Xrugen/Hero_Rank.png" alt="آیکون رنک Hero" />
           </div>
-          <div class="rank-title">Hero</div>
-          <div class="rank-price">50,000 تومان</div>
-          <ul class="rank-benefits">
-            <li style="--i:1;">✓ چت رنگی و فرمت‌شده</li>
-            <li style="--i:2;">✓ Cosmetic Hats</li>
-            <li style="--i:3;">✓ Cosmetic Banners</li>
-            <li style="--i:4;">✓ پرواز در لابی BedWars</li>
-            <li style="--i:5;">✓ ۳ نقطه SetHome (SMP, SkyMine)</li>
-            <li style="--i:6;">✓ Crafting Table</li>
-            <li style="--i:7;">✓ آیتم روی سر</li>
-            <li style="--i:8;">✓ فروش تا ۵ آیتم در /ah</li>
-            <li style="--i:9;">✓ مشاهده بازیکنان اطراف با /near</li>
-            <li style="--i:10;">✓ کیت HERO</li>
-          </ul>
+          <h2 id="hero-title" class="rank-title">Hero</h2>
+          <p id="hero-price" class="rank-price">50,000 تومان</p>
           <div class="rank-actions">
-            <button class="minecraft-btn btn-info" data-rank="hero">دسترسی‌ها</button>
-            <button class="minecraft-btn btn-buy">خرید</button>
+            <button class="btn btn-ghost" type="button" data-rank="hero" aria-label="نمایش دسترسی های رنک Hero">دسترسی ها</button>
+            <button class="btn btn-primary" type="button" aria-label="خرید رنک Hero">خرید</button>
           </div>
-        </div>
-        
-        
-        <div class="rank-card hellborn fade-in" style="animation-delay: 0.2s;">
-          <div class="popular-badge">محبوب</div>
-          <div class="rank-icon">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/HellBorn_Rank.png" alt="[Image of Hellborn Rank]" />
-          </div>
-          <div class="rank-title">Hellborn</div>
-          <div class="rank-price">100,000 تومان</div>
-          <ul class="rank-benefits">
-            <li style="--i:1;">✓ تمامی دسترسی‌های Hero</li>
-            <li style="--i:2;">✓ تغییر نام نمایشی با رنگ و فرمت</li>
-            <li style="--i:3;">✓ منوی Glow افکت درخشان</li>
-            <li style="--i:4;">✓ Cosmetic Emotes</li>
-            <li style="--i:5;">✓ Cosmetic Animated Hats</li>
-            <li style="--i:6;">✓ ساخت بازی خصوصی BedWars</li>
-            <li style="--i:7;">✓ ۶ نقطه SetHome (SMP, SkyMine)</li>
-            <li style="--i:8;">✓ Ender Chest, Trash Menu</li>
-            <li style="--i:9;">✓ فروش تا ۱۰ آیتم در /ah</li>
-            <li style="--i:10;">✓ دید در شب (Night Vision)</li>
-            <li style="--i:11;">✓ پرکردن نوار گرسنگی</li>
-            <li style="--i:12;">✓ تبدیل Ingot به Block</li>
-            <li style="--i:13;">✓ کیت HELLBORN</li>
-          </ul>
-          <div class="rank-actions">
-            <button class="minecraft-btn btn-info" data-rank="hellborn">دسترسی‌ها</button>
-            <button class="minecraft-btn btn-buy">خرید</button>
-          </div>
-        </div>
-        
-        
-        <div class="rank-card empire fade-in" style="animation-delay: 0.3s;">
-          <div class="rank-icon">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Empire_Rank.png" alt="[Image of Empire Rank]" />
-          </div>
-          <div class="rank-title">Empire</div>
-          <div class="rank-price">200,000 تومان</div>
-          <ul class="rank-benefits">
-            <li style="--i:1;">✓ تمامی دسترسی‌های Hellborn</li>
-            <li style="--i:2;">✓ عبور از محدودیت AFK</li>
-            <li style="--i:3;">✓ Cosmetic Particles, Cloaks, Pets</li>
-            <li style="--i:4;">✓ شروع فوری بازی BedWars</li>
-            <li style="--i:5;">✓ ۹ نقطه SetHome (SMP, SkyMine)</li>
-            <li style="--i:6;">✓ Anvil (SMP)</li>
-            <li style="--i:7;">✓ فروش تا ۱۵ آیتم در /ah</li>
-            <li style="--i:8;">✓ پرکردن کامل نوار قلب</li>
-            <li style="--i:9;">✓ حفظ XP پس از مرگ (SMP)</li>
-            <li style="--i:10;">✓ تعمیر آیتم در دست (SMP, SkyMine)</li>
-            <li style="--i:11;">✓ حذف تأخیر در تلپورت (SkyMine)</li>
-            <li style="--i:12;">✓ کیت EMPIRE</li>
-          </ul>
-          <div class="rank-actions">
-            <button class="minecraft-btn btn-info" data-rank="empire">دسترسی‌ها</button>
-            <button class="minecraft-btn btn-buy">خرید</button>
-          </div>
-        </div>
-        
-        
-        <div class="rank-card champions fade-in" style="animation-delay: 0.4s;">
-          <div class="best-value-badge">بهترین ارزش</div>
-          <div class="rank-icon">
-            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Champions_Rank.png" alt="[Image of Champions Rank]" />
-          </div>
-          <div class="rank-title">Champions</div>
-          <div class="rank-price">300,000 تومان</div>
-          <ul class="rank-benefits">
-            <li style="--i:1;">✓ تمامی دسترسی‌های Empire</li>
-            <li style="--i:2;">✓ Cosmetic Suits, Gadgets</li>
-            <li style="--i:3;">✓ ۱۲ نقطه SetHome (SMP, SkyMine)</li>
-            <li style="--i:4;">✓ تعمیر تمام آیتم‌ها (SMP, SkyMine)</li>
-            <li style="--i:5;">✓ کندن Spawner (SMP)</li>
-            <li style="--i:6;">✓ نامیرا شدن در جزیره شخصی (SkyMine)</li>
-            <li style="--i:7;">✓ فروش تا ۲۰ آیتم در /ah</li>
-            <li style="--i:8;">✓ کیت CHAMPIONS</li>
-          </ul>
-          <div class="rank-actions">
-            <button class="minecraft-btn btn-info" data-rank="champions">دسترسی‌ها</button>
-            <button class="minecraft-btn btn-buy">خرید</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <footer class="site-footer">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="[Image of Logo]" />
-          <div class="name">
-            <span class="part1">X</span><span class="part2">-Rugen</span>
-          </div>
-        </div>
-        
-        <div class="footer-nav">
-          <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
-          <a href="https://www.xrugen.ir/punish/">پانیشمنت</a>
-          <a href="https://www.xrugen.ir/rules/">قوانین</a>
-        </div>
-        
-        <div>
-          تمامی حقوق این سایت متعلق به تیم<span> X-Rugen </span> می باشد
-        </div>
-        
-        <div class="social-links">
-          <a href="https://discord.gg/AJBF5CPmYx" class="social-link" target="_blank">
-            <i class="fab fa-discord"></i>
-          </a>
-          <a href="#" class="social-link" target="_blank">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://t.me/X_Rugen" class="social-link" target="_blank">
-            <i class="fab fa-telegram"></i>
-          </a>
-          <a href="#" class="social-link" target="_blank">
-            <i class="fab fa-youtube"></i>
-          </a>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-
-<!-- Modals for each rank - Updated with RTL in modal-body -->
-<div class="minecraft-modal-overlay" id="hero-modal">
-  <div class="minecraft-modal hero-modal">
-    <div class="minecraft-modal-header">
-      <h2><i class="fas fa-user-shield"></i> رنک Hero</h2>
-      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="minecraft-modal-body">
-      <div class="minecraft-modal-title">دسترسی‌های رنک Hero</div>
-      <div class="minecraft-permission-list">
-        <div class="minecraft-permission-category" style="--i:1;">
-          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
-          <div class="minecraft-permission-item" style="--j:1;">استفاده از چت رنگی و فرمت‌شده در چت‌ها</div>
-          <div class="minecraft-permission-item" style="--j:2;">Cosmetic Hats</div>
-          <div class="minecraft-permission-item" style="--j:3;">Cosmetic Banners</div>
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:3;">
-          <h3>🌍 SMP</h3>
-          <div class="minecraft-permission-item" style="--j:2;">قابلیت تنظیم 3 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:3;">Crafting Table</div>
-          <div class="minecraft-permission-item" style="--j:4;">امکان قرار دادن آیتم‌ها روی سر</div>
-          <div class="minecraft-permission-item" style="--j:5;">افزایش ظرفیت فروش در /ah تا 5 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:6;">مشاهده بازیکنان اطراف با /near</div>
-          <div class="minecraft-permission-item" style="--j:7;">دریافت کیت HERO</div>
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:4;">
-          <h3>☁️ SkyMine</h3>
-          <div class="minecraft-permission-item" style="--j:1;">پرواز فقط در جزیره شخصی</div>
-          <div class="minecraft-permission-item" style="--j:3;">قابلیت تنظیم 3 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:13;">امکان قرار دادن آیتم‌ها روی سر</div>
-          <div class="minecraft-permission-item" style="--j:14;">افزایش ظرفیت فروش در /ah تا 5 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:15;">مشاهده بازیکنان اطراف با /near</div>
-          <div class="minecraft-permission-item" style="--j:16;">دریافت کیت HERO</div>
-        </div>
-      </div>
-    </div>
-    <div class="minecraft-modal-footer">
-      <button class="minecraft-btn btn-buy">خرید رنک Hero</button>
-    </div>
-  </div>
-</div>
+        </article>
   
-
-<div class="minecraft-modal-overlay" id="hellborn-modal">
-  <div class="minecraft-modal hellborn-modal">
-    <div class="minecraft-modal-header">
-      <h2><i class="fas fa-fire"></i> رنک Hellborn</h2>
-      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="minecraft-modal-body">
-      <div class="minecraft-modal-title">دسترسی‌های رنک Hellborn</div>
-      <div class="minecraft-permission-list">
-        <div class="minecraft-permission-category" style="--i:1;">
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:2;">
-          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
-          <div class="minecraft-permission-item" style="--j:1;">استفاده از چت رنگی و فرمت‌شده</div>
-          <div class="minecraft-permission-item" style="--j:2;">امکان تغییر نام نمایشی با رنگ و فرمت دلخواه</div>
-          <div class="minecraft-permission-item" style="--j:3;">دسترسی به منوی Glow افکت درخشان</div>
-          <div class="minecraft-permission-item" style="--j:4;">Cosmetic Hats</div>
-          <div class="minecraft-permission-item" style="--j:5;">Cosmetic Banners</div>
-          <div class="minecraft-permission-item" style="--j:6;">Cosmetic Emotes</div>
-          <div class="minecraft-permission-item" style="--j:7;">Cosmetic Animated Hats</div>
-        </div>
-
-        
-        <div class="minecraft-permission-category" style="--i:4;">
-          <h3>🌍 SMP</h3>
-          <div class="minecraft-permission-item" style="--j:2;">قابلیت تنظیم 6 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:3;">دسترسی کامل به ابزارهای ویژه:</div>
-          <div class="minecraft-permission-item" style="--j:4;">Crafting Table</div>
-          <div class="minecraft-permission-item" style="--j:5;">Ender Chest</div>
-          <div class="minecraft-permission-item" style="--j:7;">قرار دادن آیتم‌ها روی سر</div>
-          <div class="minecraft-permission-item" style="--j:8;">افزایش ظرفیت فروش در /ah تا 10 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:9;">مشاهده بازیکنان اطراف با /near</div>
-          <div class="minecraft-permission-item" style="--j:11;">پرکردن نوار گرسنگی خود در هر زمان</div>
-          <div class="minecraft-permission-item" style="--j:12;">تبدیل Ingot به Block با یک دستور</div>
-          <div class="minecraft-permission-item" style="--j:13;">دریافت کیت HELLBORN</div>
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:5;">
-          <h3>☁️ SkyMine</h3>
-          <div class="minecraft-permission-item" style="--j:1;">پرواز فقط در جزیره شخصی</div>
-          <div class="minecraft-permission-item" style="--j:3;">قابلیت تنظیم 6 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:6;">Ender Chest</div>
-          <div class="minecraft-permission-item" style="--j:14;">قرار دادن آیتم‌ها روی سر</div>
-          <div class="minecraft-permission-item" style="--j:15;">افزایش ظرفیت فروش در /ah تا 10 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:16;">مشاهده بازیکنان اطراف با /near</div>
-          <div class="minecraft-permission-item" style="--j:17;">تبدیل Ingot به Block</div>
-          <div class="minecraft-permission-item" style="--j:20;">دریافت کیت HELLBORN</div>
-        </div>
-      </div>
-    </div>
-    <div class="minecraft-modal-footer">
-      <button class="minecraft-btn btn-buy">خرید رنک Hellborn</button>
-    </div>
-  </div>
-</div>
+        <article class="rank-card hellborn" tabindex="0" aria-labelledby="hellborn-title hellborn-price" role="region">
+          <div class="rank-icon" aria-hidden="true">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/HellBorn_Rank.png" alt="آیکون رنک Hellborn" />
+          </div>
+          <h2 id="hellborn-title" class="rank-title">Hellborn</h2>
+          <p id="hellborn-price" class="rank-price">100,000 تومان</p>
+          <div class="rank-actions">
+            <button class="btn btn-ghost" type="button" data-rank="hellborn" aria-label="نمایش دسترسی های رنک Hellborn">دسترسی ها</button>
+            <button class="btn btn-primary" type="button" aria-label="خرید رنک Hellborn">خرید</button>
+          </div>
+        </article>
   
-
-<div class="minecraft-modal-overlay" id="empire-modal">
-  <div class="minecraft-modal empire-modal">
-    <div class="minecraft-modal-header">
-      <h2><i class="fas fa-crown"></i> رنک Empire</h2>
-      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="minecraft-modal-body">
-      <div class="minecraft-modal-title">دسترسی‌های رنک Empire</div>
-      <div class="minecraft-permission-list">
-        <div class="minecraft-permission-category" style="--i:1;">
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:2;">
-          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
-          <div class="minecraft-permission-item" style="--j:1;">چت رنگی و فرمت‌شده</div>
-          <div class="minecraft-permission-item" style="--j:2;">تغییر نام نمایشی با رنگ و فرمت دلخواه</div>
-          <div class="minecraft-permission-item" style="--j:3;">منوی Glow (درخشان)</div>
-          <div class="minecraft-permission-item" style="--j:4;">عبور از محدودیت AFK (عدم کیک شدن در حالت Away)</div>
-          <div class="minecraft-permission-item" style="--j:5;">Cosmetic Hats</div>
-          <div class="minecraft-permission-item" style="--j:6;">Cosmetic Banners</div>
-          <div class="minecraft-permission-item" style="--j:7;">Cosmetic Emotes</div>
-          <div class="minecraft-permission-item" style="--j:8;">Cosmetic Animated Hats</div>
-          <div class="minecraft-permission-item" style="--j:9;">Cosmetic Particles</div>
-          <div class="minecraft-permission-item" style="--j:10;">Cosmetic Cloaks</div>
-          <div class="minecraft-permission-item" style="--j:11;">Cosmetic Pets</div>
-        </div>
-        
-        
-        <div class="minecraft-permission-category" style="--i:4;">
-          <h3>🌍 SMP</h3>
-          <div class="minecraft-permission-item" style="--j:2;">تنظیم 9 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:3;">دسترسی کامل به ابزارهای کاربردی:</div>
-          <div class="minecraft-permission-item" style="--j:4;">Crafting Table</div>
-          <div class="minecraft-permission-item" style="--j:5;">Ender Chest</div>
-          <div class="minecraft-permission-item" style="--j:9;">Anvil</div>
-          <div class="minecraft-permission-item" style="--j:10;">قرار دادن آیتم روی سر (Wearable Items)</div>
-          <div class="minecraft-permission-item" style="--j:11;">فروش در /ah تا 15 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:12;">دیدن پلیرهای اطراف با /near</div>
-          <div class="minecraft-permission-item" style="--j:14;">پرکردن غذای خود</div>
-          <div class="minecraft-permission-item" style="--j:15;">پرکردن کامل نوار قلب</div>
-          <div class="minecraft-permission-item" style="--j:16;">تبدیل Ingot به Block</div>
-          <div class="minecraft-permission-item" style="--j:17;">حفظ XP پس از مرگ</div>
-          <div class="minecraft-permission-item" style="--j:18;">تعمیر آیتم در دست</div>
-          <div class="minecraft-permission-item" style="--j:19;">دریافت کیت EMPIRE</div>
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:5;">
-          <h3>☁️ SkyMine</h3>
-          <div class="minecraft-permission-item" style="--j:1;">پرواز در جزیره شخصی</div>
-          <div class="minecraft-permission-item" style="--j:3;">تنظیم 9 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:6;">Ender Chest</div>
-          <div class="minecraft-permission-item" style="--j:14;">قرار دادن آیتم روی سر</div>
-          <div class="minecraft-permission-item" style="--j:15;">فروش در /ah تا ۱5 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:16;">دیدن پلیرهای اطراف با /near</div>
-          <div class="minecraft-permission-item" style="--j:17;">پرکردن غذای خود</div>
-          <div class="minecraft-permission-item" style="--j:19;">پر کردن نوار قلب</div>
-          <div class="minecraft-permission-item" style="--j:20;">تبدیل Ingot به Block</div>
-          <div class="minecraft-permission-item" style="--j:21;">تعمیر آیتم در دست</div>
-          <div class="minecraft-permission-item" style="--j:22;">حذف تأخیر در تلپورت</div>
-          <div class="minecraft-permission-item" style="--j:26;">دریافت کیت EMPIRE</div>
-        </div>
-      </div>
-    </div>
-    <div class="minecraft-modal-footer">
-      <button class="minecraft-btn btn-buy">خرید رنک Empire</button>
-    </div>
-  </div>
-</div>
+        <article class="rank-card empire" tabindex="0" aria-labelledby="empire-title empire-price" role="region">
+          <div class="rank-icon" aria-hidden="true">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Empire_Rank.png" alt="آیکون رنک Empire" />
+          </div>
+          <h2 id="empire-title" class="rank-title">Empire</h2>
+          <p id="empire-price" class="rank-price">200,000 تومان</p>
+          <div class="rank-actions">
+            <button class="btn btn-ghost" type="button" data-rank="empire" aria-label="نمایش دسترسی های رنک Empire">دسترسی ها</button>
+            <button class="btn btn-primary" type="button" aria-label="خرید رنک Empire">خرید</button>
+          </div>
+        </article>
   
-
-<div class="minecraft-modal-overlay" id="champions-modal">
-  <div class="minecraft-modal champions-modal">
-    <div class="minecraft-modal-header">
-      <h2><i class="fas fa-trophy"></i> رنک Champions</h2>
-      <button class="minecraft-modal-close"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="minecraft-modal-body">
-      <div class="minecraft-modal-title">دسترسی‌های رنک Champions</div>
-      <div class="minecraft-permission-list">
-        <div class="minecraft-permission-category" style="--i:1;">
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:2;">
-          <h3>🌐 دسترسی‌های عمومی (All Servers)</h3>
-          <div class="minecraft-permission-item" style="--j:1;">چت رنگی و فرمت‌شده</div>
-          <div class="minecraft-permission-item" style="--j:2;">تغییر نام نمایشی با رنگ و فرمت دلخواه</div>
-          <div class="minecraft-permission-item" style="--j:3;">منوی Glow (درخشان)</div>
-          <div class="minecraft-permission-item" style="--j:4;">عبور از محدودیت AFK (عدم کیک شدن)</div>
-          <div class="minecraft-permission-item" style="--j:5;">Cosmetic Hats</div>
-          <div class="minecraft-permission-item" style="--j:6;">Cosmetic Banners</div>
-          <div class="minecraft-permission-item" style="--j:7;">Cosmetic Emotes</div>
-          <div class="minecraft-permission-item" style="--j:8;">Cosmetic Animated Hats</div>
-          <div class="minecraft-permission-item" style="--j:9;">Cosmetic Particles</div>
-          <div class="minecraft-permission-item" style="--j:10;">Cosmetic Cloaks</div>
-          <div class="minecraft-permission-item" style="--j:11;">Cosmetic Pets</div>
-          <div class="minecraft-permission-item" style="--j:12;">Cosmetic Suits</div>
-          <div class="minecraft-permission-item" style="--j:13;">Cosmetic Gadgets</div>
-        </div>
-        
-        
-        <div class="minecraft-permission-category" style="--i:4;">
-          <h3>🌍 SMP</h3>
-          <div class="minecraft-permission-item" style="--j:2;">تنظیم 12 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:3;">دسترسی کامل به ابزارهای کاربردی:</div>
-          <div class="minecraft-permission-item" style="--j:4;">Crafting Table</div>
-          <div class="minecraft-permission-item" style="--j:5;">Ender Chest</div>
-          <div class="minecraft-permission-item" style="--j:6;">Trash Menu</div>
-          <div class="minecraft-permission-item" style="--j:9;">Anvil</div>
-          <div class="minecraft-permission-item" style="--j:10;">قرار دادن آیتم روی سر</div>
-          <div class="minecraft-permission-item" style="--j:11;">فروش در /ah تا 20 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:12;">دیدن پلیرهای اطراف با /near</div>
-          <div class="minecraft-permission-item" style="--j:15;">پرکردن غذای خود</div>
-          <div class="minecraft-permission-item" style="--j:16;">پرکردن نوار قلب خود</div>
-          <div class="minecraft-permission-item" style="--j:17;">تبدیل Ingot به Block</div>
-          <div class="minecraft-permission-item" style="--j:18;">حفظ XP پس از مرگ</div>
-          <div class="minecraft-permission-item" style="--j:19;">تعمیر آیتم در دست</div>
-          <div class="minecraft-permission-item" style="--j:20;">تعمیر تمام آیتم‌ها</div>
-          <div class="minecraft-permission-item" style="--j:22;">حذف تأخیر در تلپورت</div>
-          <div class="minecraft-permission-item" style="--j:23;">دریافت کیت CHAMPIONS</div>
-        </div>
-        
-        <div class="minecraft-permission-category" style="--i:5;">
-          <h3>☁️ SkyMine</h3>
-          <div class="minecraft-permission-item" style="--j:1;">پرواز در جزیره شخصی</div>
-          <div class="minecraft-permission-item" style="--j:2;">نامیرا شدن در جزیره خود (God Mode Island Only)</div>
-          <div class="minecraft-permission-item" style="--j:4;">تنظیم 12 نقطه خانه (SetHome)</div>
-          <div class="minecraft-permission-item" style="--j:7;">Ender Chest</div>
-          <div class="minecraft-permission-item" style="--j:15;">قرار دادن آیتم روی سر</div>
-          <div class="minecraft-permission-item" style="--j:16;">فروش در /ah تا 20 آیتم</div>
-          <div class="minecraft-permission-item" style="--j:17;">دیدن پلیرهای اطراف</div>
-          <div class="minecraft-permission-item" style="--j:18;">پرکردن غذای خود</div>
-          <div class="minecraft-permission-item" style="--j:20;">پر کردن نوار قلب خود</div>
-          <div class="minecraft-permission-item" style="--j:21;">تبدیل Ingot به Block</div>
-          <div class="minecraft-permission-item" style="--j:22;">تعمیر آیتم در دست</div>
-          <div class="minecraft-permission-item" style="--j:23;">تعمیر تمام آیتم‌ها</div>
-          <div class="minecraft-permission-item" style="--j:24;">حذف تأخیر در تلپورت</div>
-          <div class="minecraft-permission-item" style="--j:25;">دریافت کیت CHAMPIONS</div>
-        </div>
+        <article class="rank-card champions" tabindex="0" aria-labelledby="champions-title champions-price" role="region">
+          <div class="rank-icon" aria-hidden="true">
+            <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/Champions_Rank.png" alt="آیکون رنک Champions" />
+          </div>
+          <h2 id="champions-title" class="rank-title">Champions</h2>
+          <p id="champions-price" class="rank-price">300,000 تومان</p>
+          <div class="rank-actions">
+            <button class="btn btn-ghost" type="button" data-rank="champions" aria-label="نمایش دسترسی های رنک Champions">دسترسی ها</button>
+            <button class="btn btn-primary" type="button" aria-label="خرید رنک Champions">خرید</button>
+          </div>
+        </article>
       </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="f-brand">
+        <img src="https://s5.uupload.ir/files/amirabbas8585/Xrugen/logo.png" alt="لوگو">
+        <div><strong>X‑Rugen</strong><div style="color:var(--muted);font-size:.92rem">MC.XRugen.IR</div></div>
+      </div>
+      <nav class="f-nav">
+        <a href="https://www.xrugen.ir/shop/">فروشگاه</a>
+        <a href="https://www.xrugen.ir/punish/">پانیشمنت</a>
+        <a href="https://www.xrugen.ir/rules/">قوانین</a>
+      </nav>
+      <div class="social">
+        <a href="https://discord.gg/AJBF5CPmYx" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        <a href="https://t.me/X_Rugen" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="copy">تمامی حقوق برای تیم <strong>X‑Rugen</strong> محفوظ است.</div>
     </div>
-    <div class="minecraft-modal-footer">
-      <button class="minecraft-btn btn-buy">خرید رنک Champions</button>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal-overlay" id="rank-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title"></h2>
+        <button class="modal-close" id="close-modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        </div>
     </div>
   </div>
-</div>
-
-  <!-- Back to Top Button -->
-  <a href="#top" class="back-to-top" aria-label="بازگشت به بالا">
-      <i class="fas fa-arrow-up"></i>
-  </a>
+  
+  <div class="modal-overlay" id="purchase-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="purchase-modal-title">مشکل در پرداخت</h2>
+        <button class="modal-close" id="close-purchase-modal">&times;</button>
+      </div>
+      <div class="modal-body" id="purchase-modal-body">
+        <p>در حال حاضر درگاه پرداخت در دسترس نمی‌باشد.</p>
+        <p>لطفاً جهت خرید، از طریق دیسکورد تیکت دهید و یا به ادمین در تلگرام پیام دهید.</p>
+        <p style="margin-top:15px; text-align:center;">
+          <strong>آیدی تلگرام:</strong> <a href="https://t.me/XRugen_dev" target="_blank" style="color:var(--accent);">@XRugen_dev</a>
+        </p>
+        <p style="margin-top:10px; text-align:center;">
+          <a href="https://discord.gg/AJBF5CPmYx" target="_blank" class="btn btn-secondary">
+            <i class="fa-brands fa-discord"></i> دیسکورد
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Particle and Cloud Generation
-      const particles = document.getElementById('particles');
-      const particleCount = 30;
-      const blockTypes = ['dirt', 'stone', 'emerald', 'gold', 'diamond'];
-      
+    // ===== Particles.js from index.html =====
+    function hexToRgb(hex) {
+      const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+      hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+      });
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+    }
+
+    const particleCanvas = document.getElementById('particleCanvas');
+    const ctx = particleCanvas.getContext('2d');
+    let particles = [];
+    const particleCount = 200;
+    const maxDistance = 150;
+    const colors = ['#e9eef3', '#42a5f5', '#ffb62f'];
+
+    function resizeCanvas() {
+      particleCanvas.width = window.innerWidth;
+      particleCanvas.height = window.innerHeight;
+    }
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * particleCanvas.width;
+        this.y = Math.random() * particleCanvas.canvasHeight;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 1.5 + 0.5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > particleCanvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > particleCanvas.height) this.vy *= -1;
+      }
+
+      draw() {
+        const rgb = hexToRgb(this.color);
+        ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.7)`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
       for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        const blockType = blockTypes[Math.floor(Math.random() * blockTypes.length)];
-        particle.classList.add(blockType);
-        
-        const size = Math.random() * 20 + 8;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
-        
-        const duration = Math.random() * 25 + 15;
-        const delay = Math.random() * 15;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `${delay}s`;
-        
-        particles.appendChild(particle);
+        particles.push(new Particle());
       }
-      
-      const clouds = document.getElementById('minecraft-clouds');
-      const cloudCount = 8;
-      
-      for (let i = 0; i < cloudCount; i++) {
-        const cloud = document.createElement('div');
-        cloud.classList.add('minecraft-cloud');
-        
-        const width = Math.random() * 300 + 200;
-        const height = Math.random() * 80 + 40;
-        cloud.style.width = `${width}px`;
-        cloud.style.height = `${height}px`;
-        cloud.style.top = `${Math.random() * 500}px`;
-        cloud.style.left = `-${Math.random() * 80}vw`; /* Adjusted for RTL movement */
-        
-        const duration = Math.random() * 120 + 80;
-        cloud.style.animationDuration = `${duration}s`;
-        cloud.style.animationDelay = `-${Math.random() * 80}s`;
-        
-        clouds.appendChild(cloud);
-      }
-      
-      const buttons = document.querySelectorAll('.minecraft-btn');
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          const audio = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/click.mp3');
-          audio.volume = 0.3;
-          audio.play().catch(e => {});
-        });
-      });
-      
-      const infoButtons = document.querySelectorAll('.btn-info');
-      const modalOverlays = document.querySelectorAll('.minecraft-modal-overlay');
-      const closeButtons = document.querySelectorAll('.minecraft-modal-close');
-      
-      function closeAllModals() {
-        modalOverlays.forEach(overlay => {
-          overlay.classList.remove('active');
-        });
-        
-        const existingParticles = document.querySelectorAll('.block-breaking');
-        existingParticles.forEach(particle => {
-          particle.remove();
-        });
-      }
-      
-      infoButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          const rank = this.getAttribute('data-rank');
-          const modal = document.getElementById(`${rank}-modal`);
-          
-          // Find the parent rank card and its benefits list
-          const rankCard = this.closest('.rank-card');
-          const rankBenefits = rankCard ? rankCard.querySelector('.rank-benefits') : null;
+    }
 
-          // Toggle visibility of rank benefits on the card
-          if (rankBenefits) {
-              // Close all other open rank benefits lists
-              document.querySelectorAll('.rank-benefits.show-benefits').forEach(openBenefits => {
-                  if (openBenefits !== rankBenefits) { // Don't close the current one if it's already open
-                      openBenefits.classList.remove('show-benefits');
-                  }
-              });
-              rankBenefits.classList.toggle('show-benefits');
-          }
+    function animateParticles() {
+      requestAnimationFrame(animateParticles);
+      ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
 
-          const breakSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/stone1.mp3');
-          breakSound.volume = 0.4;
-          breakSound.play().catch(e => {});
-          
-          const blockBreaking = document.createElement('div');
-          blockBreaking.classList.add('block-breaking');
-          
-          for (let i = 0; i < 40; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('breaking-particle');
-            
-            const btnRect = button.getBoundingClientRect();
-            const centerX = btnRect.left + btnRect.width / 2;
-            const centerY = btnRect.top + btnRect.height / 2;
-            
-            particle.style.left = `${centerX}px`;
-            particle.style.top = `${centerY}px`;
-            
-            let color;
-            switch(rank) {
-              case 'hero':
-                color = 'rgba(3, 169, 244, 0.8)';
-                break;
-              case 'hellborn':
-                color = 'rgba(255, 82, 82, 0.8)';
-                break;
-              case 'empire':
-                color = 'rgba(95, 3, 244, 0.8)'; /* Adjusted to ore-purple */
-                break;
-              case 'champions':
-                color = 'rgba(74, 186, 39, 0.8)'; /* Adjusted to emerald-green */
-                break;
-              default:
-                color = 'rgba(255, 255, 255, 0.8)';
-            }
-            
-            particle.style.backgroundColor = color;
-            
-            const tx = (Math.random() - 0.5) * 200;
-            const ty = (Math.random() - 0.5) * 200;
-            const r = Math.random() * 360;
-            
-            particle.style.setProperty('--tx', `${tx}px`);
-            particle.style.setProperty('--ty', `${ty}px`);
-            particle.style.setProperty('--r', `${r}deg`);
-            
-            blockBreaking.appendChild(particle);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < maxDistance) {
+            const opacity = 1 - (distance / maxDistance);
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
           }
+        }
+      }
+    }
+
+    window.addEventListener('load', () => {
+      resizeCanvas();
+      initParticles();
+      animateParticles();
+      document.getElementById('preloader').classList.add('hide');
+    });
+    window.addEventListener('resize', resizeCanvas);
+
+    // ===== All other scripts from index.html & custom for shop.html =====
+    document.addEventListener('DOMContentLoaded', () => {
+      // Handle the mobile menu button
+      const menuBtn = document.querySelector('.menu-btn');
+      const nav = document.querySelector('#nav');
+      menuBtn.addEventListener('click', () => {
+        nav.classList.toggle('open');
+      });
+
+      // Data for modals
+      const rankBenefits = {
+        hero: {
+          title: 'دسترسی‌های رنک Hero',
+          benefits: [
+            '<span class="gamemode-title">دسترسی‌های عمومی (All Servers)</span>',
+            'استفاده از چت رنگی و فرمت‌شده در چت‌ها',
+            'Cosmetic Hats',
+            'Cosmetic Banners',
+            '<span class="gamemode-title">SMP</span>',
+            'قابلیت تنظیم 3 نقطه خانه (SetHome)',
+            'Crafting Table',
+            'امکان قرار دادن آیتم‌ها روی سر',
+            'افزایش ظرفیت فروش در /ah تا 5 آیتم',
+            'مشاهده بازیکنان اطراف با /near',
+            'دریافت کیت HERO',
+            '<span class="gamemode-title">SkyMine</span>',
+            'پرواز فقط در جزیره شخصی',
+            'قابلیت تنظیم 3 نقطه خانه (SetHome)',
+            'امکان قرار دادن آیتم‌ها روی سر',
+            'افزایش ظرفیت فروش در /ah تا 5 آیتم',
+            'مشاهده بازیکنان اطراف با /near',
+            'دریافت کیت HERO'
+          ]
+        },
+        hellborn: {
+          title: 'دسترسی‌های رنک Hellborn',
+          benefits: [
+            '<span class="gamemode-title">دسترسی‌های عمومی (All Servers)</span>',
+            'استفاده از چت رنگی و فرمت‌شده',
+            'امکان تغییر نام نمایشی با رنگ و فرمت دلخواه',
+            'دسترسی به منوی Glow افکت درخشان',
+            'Cosmetic Hats',
+            'Cosmetic Banners',
+            'Cosmetic Emotes',
+            'Cosmetic Animated Hats',
+            '<span class="gamemode-title">SMP</span>',
+            'قابلیت تنظیم 6 نقطه خانه (SetHome)',
+            'دسترسی کامل به ابزارهای ویژه:',
+            'Crafting Table',
+            'Ender Chest',
+            'قرار دادن آیتم‌ها روی سر',
+            'افزایش ظرفیت فروش در /ah تا 10 آیتم',
+            'مشاهده بازیکنان اطراف با /near',
+            'پرکردن نوار گرسنگی خود در هر زمان',
+            'تبدیل Ingot به Block با یک دستور',
+            'دریافت کیت HELLBORN',
+            '<span class="gamemode-title">SkyMine</span>',
+            'پرواز فقط در جزیره شخصی',
+            'قابلیت تنظیم 6 نقطه خانه (SetHome)',
+            'Ender Chest',
+            'قرار دادن آیتم‌ها روی سر',
+            'افزایش ظرفیت فروش در /ah تا 10 آیتم',
+            'مشاهده بازیکنان اطراف با /near',
+            'تبدیل Ingot به Block',
+            'دریافت کیت HELLBORN'
+          ]
+        },
+        empire: {
+          title: 'دسترسی‌های رنک Empire',
+          benefits: [
+            '<span class="gamemode-title">دسترسی‌های عمومی (All Servers)</span>',
+            'چت رنگی و فرمت‌شده',
+            'تغییر نام نمایشی با رنگ و فرمت دلخواه',
+            'منوی Glow (درخشان)',
+            'عبور از محدودیت AFK (عدم کیک شدن در حالت Away)',
+            'Cosmetic Hats',
+            'Cosmetic Banners',
+            'Cosmetic Emotes',
+            'Cosmetic Animated Hats',
+            'Cosmetic Particles',
+            'Cosmetic Cloaks',
+            'Cosmetic Pets',
+            '<span class="gamemode-title">SMP</span>',
+            'تنظیم 9 نقطه خانه (SetHome)',
+            'دسترسی کامل به ابزارهای کاربردی:',
+            'Crafting Table',
+            'Ender Chest',
+            'Anvil',
+            'قرار دادن آیتم روی سر (Wearable Items)',
+            'فروش در /ah تا 15 آیتم',
+            'دیدن پلیرهای اطراف با /near',
+            'پرکردن غذای خود',
+            'پرکردن کامل نوار قلب',
+            'تبدیل Ingot به Block',
+            'حفظ XP پس از مرگ',
+            'تعمیر آیتم در دست',
+            'دریافت کیت EMPIRE',
+            '<span class="gamemode-title">SkyMine</span>',
+            'پرواز در جزیره شخصی',
+            'تنظیم 9 نقطه خانه (SetHome)',
+            'Ender Chest',
+            'قرار دادن آیتم روی سر',
+            'فروش در /ah تا ۱5 آیتم',
+            'دیدن پلیرهای اطراف با /near',
+            'پرکردن غذای خود',
+            'پر کردن نوار قلب',
+            'تبدیل Ingot به Block',
+            'تعمیر آیتم در دست',
+            'حذف تأخیر در تلپورت',
+            'دریافت کیت EMPIRE'
+          ]
+        },
+        champions: {
+          title: 'دسترسی‌های رنک Champions',
+          benefits: [
+            '<span class="gamemode-title">دسترسی‌های عمومی (All Servers)</span>',
+            'چت رنگی و فرمت‌شده',
+            'تغییر نام نمایشی با رنگ و فرمت دلخواه',
+            'منوی Glow (درخشان)',
+            'عبور از محدودیت AFK (عدم کیک شدن)',
+            'Cosmetic Hats',
+            'Cosmetic Banners',
+            'Cosmetic Emotes',
+            'Cosmetic Animated Hats',
+            'Cosmetic Particles',
+            'Cosmetic Cloaks',
+            'Cosmetic Pets',
+            'Cosmetic Suits',
+            'Cosmetic Gadgets',
+            '<span class="gamemode-title">SMP</span>',
+            'تنظیم 12 نقطه خانه (SetHome)',
+            'دسترسی کامل به ابزارهای کاربردی:',
+            'Crafting Table',
+            'Ender Chest',
+            'Trash Menu',
+            'Anvil',
+            'قرار دادن آیتم روی سر',
+            'فروش در /ah تا 20 آیتم',
+            'دیدن پلیرهای اطراف با /near',
+            'پرکردن غذای خود',
+            'پرکردن نوار قلب خود',
+            'تبدیل Ingot به Block',
+            'حفظ XP پس از مرگ',
+            'تعمیر آیتم در دست',
+            'تعمیر تمام آیتم‌ها',
+            'حذف تأخیر در تلپورت',
+            'دریافت کیت CHAMPIONS',
+            '<span class="gamemode-title">SkyMine</span>',
+            'پرواز در جزیره شخصی',
+            'نامیرا شدن در جزیره خود (God Mode Island Only)',
+            'تنظیم 12 نقطه خانه (SetHome)',
+            'Ender Chest',
+            'قرار دادن آیتم روی سر',
+            'فروش در /ah تا 20 آیتم',
+            'دیدن پلیرهای اطراف',
+            'پرکردن غذای خود',
+            'پر کردن نوار قلب خود',
+            'تبدیل Ingot به Block',
+            'تعمیر آیتم در دست',
+            'تعمیر تمام آیتم‌ها',
+            'حذف تأخیر در تلپورت',
+            'دریافت کیت CHAMPIONS'
+          ]
+        }
+      };
+
+      // Modal handling for rank details
+      const rankModal = document.getElementById('rank-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      const closeModalBtn = document.getElementById('close-modal');
+      const infoButtons = document.querySelectorAll('.btn-ghost');
+
+      infoButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const rankId = btn.getAttribute('data-rank');
+          const data = rankBenefits[rankId];
           
-          document.body.appendChild(blockBreaking);
-          
-          setTimeout(() => {
-            closeAllModals(); // This closes all modals before opening the current one
-            modal.classList.add('active');
-            
-            const openSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
-            openSound.volume = 0.3;
-            openSound.play().catch(e => {});
-          }, 400);
+          if (data) {
+            modalTitle.textContent = data.title;
+            const ul = document.createElement('ul');
+            ul.classList.add('permission-list');
+            data.benefits.forEach(benefit => {
+              const li = document.createElement('li');
+              li.classList.add('permission-item');
+              li.innerHTML = benefit;
+              ul.appendChild(li);
+            });
+            modalBody.innerHTML = '';
+            modalBody.appendChild(ul);
+            rankModal.classList.add('active');
+          }
         });
       });
-      
-      closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const modal = this.closest('.minecraft-modal-overlay');
-          
-          const modalElement = this.closest('.minecraft-modal');
-          modalElement.style.transform = 'scale(0.9) translateY(20px)';
-          modalElement.style.opacity = '0';
-          
-          const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
-          closeSound.volume = 0.2;
-          closeSound.play().catch(e => {});
-          
-          setTimeout(() => {
-            modal.classList.remove('active');
-            modalElement.style.transform = '';
-            modalElement.style.opacity = '';
-          }, 300);
-        });
+
+      closeModalBtn.addEventListener('click', () => {
+        rankModal.classList.remove('active');
       });
-      
-      modalOverlays.forEach(overlay => {
-        overlay.addEventListener('click', function(e) {
-          if (e.target === this) {
-            const modalElement = this.querySelector('.minecraft-modal');
-            modalElement.style.transform = 'scale(0.9) translateY(20px)';
-            modalElement.style.opacity = '0';
-            
-            const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
-            closeSound.volume = 0.2;
-            closeSound.play().catch(e => {});
-            
-            setTimeout(() => {
-              this.classList.remove('active');
-              modalElement.style.transform = '';
-              modalElement.style.opacity = '';
-            }, 300);
-          }
-        });
-      });
-      
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          const activeModal = document.querySelector('.minecraft-modal-overlay.active');
-          if (activeModal) {
-            const modalElement = activeModal.querySelector('.minecraft-modal');
-            modalElement.style.transform = 'scale(0.9) translateY(20px)';
-            modalElement.style.opacity = '0';
-            
-            const closeSound = new Audio('https://cdnjs.cloudflare.com/ajax/libs/placeholder-api/1.0.0/sfx/wood_click.mp3');
-            closeSound.volume = 0.2;
-            closeSound.play().catch(e => {});
-            
-            setTimeout(() => {
-              activeModal.classList.remove('active');
-              modalElement.style.transform = '';
-              modalElement.style.opacity = '';
-            }, 300);
-          }
+
+      rankModal.addEventListener('click', (e) => {
+        if (e.target.id === 'rank-modal') {
+          rankModal.classList.remove('active');
         }
       });
 
-      // Back to Top Button Logic
-      const backToTopBtn = document.querySelector('.back-to-top');
-      if (backToTopBtn) {
-          backToTopBtn.addEventListener('click', function(e) {
-              e.preventDefault();
-              window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth'
-              });
-          });
+      // Modal handling for purchase buttons
+      const purchaseModal = document.getElementById('purchase-modal');
+      const closePurchaseModalBtn = document.getElementById('close-purchase-modal');
+      const buyButtons = document.querySelectorAll('.btn-primary');
 
-          window.addEventListener('scroll', () => {
-              if (window.scrollY > 300) { // Show button after scrolling 300px
-                  backToTopBtn.classList.add('show');
-              } else {
-                  backToTopBtn.classList.remove('show');
-              }
+      buyButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+              purchaseModal.classList.add('active');
           });
-      }
-
-      // Handle active navigation link
-      const currentPath = window.location.pathname;
-      const navLinks = document.querySelectorAll('.nav a');
-      navLinks.forEach(link => {
-          if (link.href === window.location.href) {
-              link.classList.add('active');
-          } else if (currentPath.includes(link.pathname) && link.pathname !== '/') {
-               link.classList.add('active');
-          }
       });
 
-      // Hamburger menu toggle functionality
-      const menuToggle = document.querySelector('.menu-toggle');
-      const nav = document.querySelector('.nav');
+      closePurchaseModalBtn.addEventListener('click', () => {
+          purchaseModal.classList.remove('active');
+      });
 
-      if (menuToggle && nav) {
-          menuToggle.addEventListener('click', () => {
-              nav.classList.toggle('open');
-              // Toggle between fa-bars and fa-times icons
-              menuToggle.querySelector('i').classList.toggle('fa-bars');
-              menuToggle.querySelector('i').classList.toggle('fa-times');
+      purchaseModal.addEventListener('click', (e) => {
+          if (e.target.id === 'purchase-modal') {
+              purchaseModal.classList.remove('active');
+          }
+      });
+      
+      // Play click sound on all buttons
+      const allButtons = document.querySelectorAll('.btn');
+      allButtons.forEach(button => {
+          button.addEventListener('click', () => {
+              const audio = new Audio('https://cdn.jsdelivr.net/gh/amir-abdi/personal-assets@main/click.mp3');
+              audio.volume = 0.3;
+              audio.play().catch(() => {});
           });
+      });
+
+      // Animate Elements on Scroll (from index.html)
+      const hiddenElements = document.querySelectorAll('.hidden');
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, {
+          threshold: 0.2
+      });
+      hiddenElements.forEach(el => observer.observe(el));
+      
+      // Cursor Particle Effect
+      const cursorCanvas = document.getElementById('cursorCanvas');
+      const cursorCtx = cursorCanvas.getContext('2d');
+      const cursorParticles = [];
+      const particleColors = ['#e9eef3', '#ffb62f', '#42a5f5'];
+
+      function resizeCursorCanvas() {
+          cursorCanvas.width = window.innerWidth;
+          cursorCanvas.height = window.innerHeight;
       }
+      resizeCursorCanvas();
+      window.addEventListener('resize', resizeCursorCanvas);
+
+      class CursorParticle {
+          constructor(x, y) {
+              this.x = x;
+              this.y = y;
+              this.size = Math.random() * 2 + 1;
+              this.alpha = 1;
+              this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+              this.vx = (Math.random() - 0.5) * 1.5;
+              this.vy = (Math.random() - 0.5) * 1.5;
+          }
+
+          update() {
+              this.x += this.vx;
+              this.y += this.vy;
+              this.size *= 0.97;
+              this.alpha *= 0.98;
+          }
+
+          draw() {
+              cursorCtx.globalAlpha = this.alpha;
+              cursorCtx.fillStyle = this.color;
+              cursorCtx.beginPath();
+              cursorCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+              cursorCtx.fill();
+          }
+      }
+
+      document.addEventListener('mousemove', (e) => {
+          cursorParticles.push(new CursorParticle(e.clientX, e.clientY));
+      });
+
+      function animateCursorParticles() {
+          requestAnimationFrame(animateCursorParticles);
+          cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
+          for (let i = 0; i < cursorParticles.length; i++) {
+              cursorParticles[i].update();
+              cursorParticles[i].draw();
+              if (cursorParticles[i].size < 0.5) {
+                  cursorParticles.splice(i, 1);
+                  i--;
+              }
+          }
+      }
+      animateCursorParticles();
     });
   </script>
 </body>
